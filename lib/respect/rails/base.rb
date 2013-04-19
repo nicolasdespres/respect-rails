@@ -10,15 +10,10 @@ module Respect
         end
 
         def from_controller(controller_name, action_name = nil)
-          begin
-            klass = "#{controller_name}_schema".classify.constantize
-          rescue NameError => e
-            return nil
-          end
-          # We cannot instantiate the class inside the begin-rescue block
-          # because NoMethodError is a sub-class of NameError and we do not
-          # want to silently catch all NoMethodError that may be involved in
-          # this process.
+          klass = "#{controller_name}_schema".classify.safe_constantize
+
+          return nil unless klass
+
           if action_name
             klass.new(action_name)
           else
