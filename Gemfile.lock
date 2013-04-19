@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    respect-rails (0.0.1)
+    respect-rails (0.1.0)
       rails (~> 3.2.13)
 
 GEM

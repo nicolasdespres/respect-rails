@@ -1,3 +1,7 @@
-= RespectRails
+= Respect plugin for Rails
+
+Respect integration for Rails 3.x.
+
+= License
 
 This project rocks and uses MIT-LICENSE.

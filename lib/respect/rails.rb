@@ -1,0 +1,1 @@
+require 'respect/rails/engine'

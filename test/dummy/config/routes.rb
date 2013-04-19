@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
 
-  mount RespectRails::Engine => "/respect-rails"
+  mount Respect::Rails::Engine => "/rest_spec"
 end

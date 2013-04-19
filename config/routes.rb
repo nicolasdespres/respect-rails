@@ -1,2 +1,2 @@
-RespectRails::Engine.routes.draw do
+Respect::Rails::Engine.routes.draw do
 end
