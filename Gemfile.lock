@@ -4,6 +4,13 @@ PATH
     respect-rails (0.1.0)
       rails (~> 3.2.13)
 
+PATH
+  remote: /Users/polrop/src/respect
+  specs:
+    respect (0.1.0)
+      activesupport (~> 3.2.13)
+      json (~> 1.7.7)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -94,5 +101,6 @@ PLATFORMS
 
 DEPENDENCIES
   jquery-rails
+  respect!
   respect-rails!
   sqlite3

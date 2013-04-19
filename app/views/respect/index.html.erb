@@ -1,0 +1,8 @@
+<h1><%= Rails.application.class.parent_name %> REST API Reference documentation</h1>
+
+<h2>Routes index</h2>
+<% @routes.each do |route| %>
+<ul>
+  <li><%= route.spec %></li>
+</ul>
+<% end %>
