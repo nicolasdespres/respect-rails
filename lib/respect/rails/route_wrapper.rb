@@ -47,7 +47,7 @@ module Respect
       end
 
       def spec
-        "#{verb} #{path}"
+        "#{verb} #{path}".strip
       end
 
       def url
