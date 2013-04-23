@@ -6,13 +6,17 @@ module Respect
 
       def initialize
         @engines = {}
-        @routes = collect_routes(::Rails.application.routes.routes)
+        @engines["application"] = collect_routes(::Rails.application.routes.routes)
       end
 
-      attr_reader :routes, :engines
+      attr_reader :engines
+
+      def routes
+        @engines["application"]
+      end
 
       def each(&block)
-        @routes.each(&block)
+        routes.each(&block)
       end
 
       private
