@@ -15,11 +15,11 @@ class AutomaticValidationSchema < ApplicationSchema
   end
 
   def raise_no_method_error
-    raise NoMethodError, "users no method error get raised"
+    raise NoMethodError, "user has raised NoMethodError"
   end
 
   def raise_name_error
-    raise NameError, "users name error get raised"
+    raise NameError, "user has raised a NameError"
   end
 
   def no_request_schema
