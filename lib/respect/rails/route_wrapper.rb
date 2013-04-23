@@ -10,20 +10,30 @@ module Respect
     class RouteWrapper
       include Comparable
 
-      def initialize(route)
+      def initialize(route, mount_point)
         @route = route
+        if !mount_point.is_a?(self.class) && !mount_point.nil? && !mount_point.engine?
+          raise "'#{mount_point.inspect}' must be a route to an engine if set"
+        end
+        @mount_point = mount_point
       end
 
-      attr_reader :route
+      attr_reader :route, :mount_point
 
       def path
-        @route.path.spec.to_s
+        path = @route.path.spec.to_s
+        if @mount_point
+          path = @mount_point.path + path
+        end
+        if path.length > 1 && path =~ %r{/$}
+          path.chop!
+        end
+        path
       end
 
       def internal?
         path =~ %r{\A#{::Rails.application.config.assets.prefix}} \
-        || controller_name =~ /info|respect/ \
-        || route_to_me?
+        || controller_name =~ %r{\Arails/(info|welcome)}
       end
 
       def <=>(other)
@@ -59,12 +69,23 @@ module Respect
         ::Rails.application.routes.url_for(options)
       end
 
-      def engine?
-        @route.app.is_a? ::Rails::Engine
+      def endpoint
+        rack_app ? rack_app.inspect : "#{controller}##{action}"
       end
 
-      def route_to_me?
-        @route.app == Engine
+      def rack_app(app = @route.app)
+        @rack_app ||= begin
+          class_name = app.class.name.to_s
+          if class_name == "ActionDispatch::Routing::Mapper::Constraints"
+            rack_app(app.app)
+          elsif ActionDispatch::Routing::Redirect === app || class_name !~ /^ActionDispatch::Routing/
+            app
+          end
+        end
+      end
+
+      def engine?
+        rack_app && rack_app.respond_to?(:routes)
       end
 
     end # class RouteWrapper
