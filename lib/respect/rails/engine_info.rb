@@ -3,17 +3,17 @@ module Respect
     class EngineInfo
       include Comparable
 
-      def initialize(engine)
-        unless engine < ::Rails::Engine
-          raise "'#{engine}' must be a rails engine."
+      def initialize(engine_class)
+        unless engine_class < ::Rails::Engine
+          raise "'#{engine_class}' must be an ancestor of ::Rails::Engine."
         end
-        @engine = engine
+        @engine_class = engine_class
       end
 
-      attr_reader :engine
+      attr_reader :engine_class
 
       def name
-        @engine.engine_name.underscore
+        @engine_class.engine_name.underscore
       end
 
       attr_accessor :routes
