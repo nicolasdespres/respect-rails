@@ -2,7 +2,7 @@
 # REST API of this application.
 class RespectController < ApplicationController
   def index
-    @routes = Respect::Rails::Info.new
+    @info = Respect::Rails::Info.new
     respond_to do |format|
       format.html # index.html.erb
     end
