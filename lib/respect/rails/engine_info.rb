@@ -13,7 +13,7 @@ module Respect
       attr_reader :engine
 
       def name
-        @engine.engine_name.humanize
+        @engine.engine_name.underscore
       end
 
       attr_accessor :routes

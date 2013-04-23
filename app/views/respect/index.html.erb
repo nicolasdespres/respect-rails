@@ -1,4 +1,4 @@
-<h1><%= @info.app.name %> REST API Reference documentation</h1>
+<h1><%= @info.app.name.titleize %> REST API Reference documentation</h1>
 
 <h2>Routes index</h2>
 
@@ -12,6 +12,6 @@
 
 <ul>
 <% @info.engines.values.sort.each do |engine| %>
-  <li><%= engine.name %></li>
+  <li><%= engine.name.titleize %></li>
 <% end %>
 </ul>

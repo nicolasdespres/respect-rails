@@ -13,7 +13,7 @@ module Respect
       attr_reader :app
 
       def name
-        @app.class.parent_name
+        @app.class.parent_name.underscore
       end
 
     end # class ApplicationInfo

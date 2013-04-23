@@ -11,7 +11,7 @@ class InfoTest < ActiveSupport::TestCase
   end
 
   def test_app_name
-    assert(Respect::Rails.application_name == @info.app.name)
+    assert_equal("dummy", @info.app.name)
   end
 
   def test_app_is_stored_in_engines
