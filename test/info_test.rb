@@ -7,7 +7,7 @@ class InfoTest < ActiveSupport::TestCase
   end
 
   def test_engine_route_are_prefixed
-    assert(@info.any?{|r| r.path =~ %r{^/rest_spec/doc} })
+    assert(@info.routes.any?{|r| r.path =~ %r{^/rest_spec/doc} })
   end
 
   def test_app_name

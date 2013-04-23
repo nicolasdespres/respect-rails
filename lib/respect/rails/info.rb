@@ -3,7 +3,6 @@ module Respect
     # The implementation is strongly inspired from
     # ActionDispatch::Routing::RoutesInspector.
     class Info
-      include Enumerable
 
       def initialize
         @engines = []
@@ -23,8 +22,6 @@ module Respect
       def routes
         @app.routes
       end
-
-      delegate :each, to: :routes
 
       private
 
