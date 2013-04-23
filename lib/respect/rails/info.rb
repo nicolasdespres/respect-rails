@@ -2,7 +2,7 @@ module Respect
   module Rails
     # The implementation is strongly inspired from
     # ActionDispatch::Routing::RoutesInspector.
-    class RoutesSet
+    class Info
       include Enumerable
 
       def initialize
@@ -58,6 +58,6 @@ module Respect
         end
       end
 
-    end # class RoutesSet
+    end # class Info
   end # module Rails
 end # module Respect

@@ -1,9 +1,9 @@
 require "test_helper"
 
-class RoutesSetTest < ActiveSupport::TestCase
+class InfoTest < ActiveSupport::TestCase
 
   def setup
-    @routes = Respect::Rails::RoutesSet.new
+    @routes = Respect::Rails::Info.new
   end
 
   def test_engine_route_are_prefixed

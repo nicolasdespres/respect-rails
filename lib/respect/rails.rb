@@ -6,11 +6,11 @@ module Respect
 
     autoload :Base
     autoload :ResponseSchemaSet
-    autoload :RoutesSet
     autoload :RequestSchema
     autoload :ResponseSchema
     autoload :RequestDef
     autoload :ResponseDef
+    autoload :Info
     autoload :ApplicationInfo
     autoload :EngineInfo
     autoload :RouteInfo
