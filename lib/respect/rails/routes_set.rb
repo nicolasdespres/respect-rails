@@ -3,6 +3,7 @@ module Respect
     # The implementation is strongly inspired from
     # ActionDispatch::Routing::RoutesInspector.
     class RoutesSet
+      include Enumerable
 
       def initialize
         @engines = {}
