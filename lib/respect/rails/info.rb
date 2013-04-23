@@ -5,18 +5,13 @@ module Respect
     class Info
 
       def initialize
-        @engines = []
-        @engines_by_name = {}
+        @engines = {}
         @app = ApplicationInfo.new(::Rails.application)
         @app.routes = collect_routes(::Rails.application.routes.routes)
-        @engines << @app
-        # Engines were collected while collecting routes, so now we sort them.
-        # They won't be touched again.
-        @engines.sort!
+        @engines[@app.name] = @app
       end
 
       attr_reader :engines
-      attr_reader :engines_by_name
       attr_reader :app
 
       def routes
@@ -36,19 +31,18 @@ module Respect
             result << route
           end
         end
-        result.sort!
+        result
       end
 
       def collect_engine_routes(route)
         return unless route.engine?
         engine_info = EngineInfo.new(route.endpoint)
-        return if @engines_by_name[engine_info.name]
+        return if @engines[engine_info.name]
 
         routes = route.rack_app.routes
         if routes.is_a?(ActionDispatch::Routing::RouteSet)
           engine_info.routes = collect_routes(routes.routes, route)
-          @engines << engine_info
-          @engines_by_name[engine_info.name] = engine_info
+          @engines[engine_info.name] = engine_info
           engine_info.routes
         else
           []

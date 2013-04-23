@@ -3,7 +3,7 @@
 <h2>Routes index</h2>
 
 <ul>
-<% @info.routes.each do |route| %>
+<% @info.routes.sort.each do |route| %>
   <li><%= route.spec %></li>
 <% end %>
 </ul>
@@ -11,7 +11,7 @@
 <h2>Table of content</h2>
 
 <ul>
-<% @info.engines.each do |engine| %>
+<% @info.engines.values.sort.each do |engine| %>
   <li><%= engine.name %></li>
 <% end %>
 </ul>

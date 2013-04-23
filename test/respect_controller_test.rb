@@ -6,5 +6,6 @@ class RespectControllerTest < ActionController::TestCase
     assert_response :success
     # FIXME(Nicolas Despres): Test view using assert_select once we
     # have restructured the HTML more cleanly.
+    # FIXME(Nicolas Despres): Test listing are sorted.
   end
 end

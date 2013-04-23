@@ -15,14 +15,8 @@ class InfoTest < ActiveSupport::TestCase
   end
 
   def test_app_is_stored_in_engines
-    assert(@info.engines.include?(@info.app))
+    assert(@info.engines.has_value?(@info.app))
     assert(@info.routes == @info.app.routes)
-  end
-
-  def test_engines_are_sorted_by_names
-    assert_equal 2, @info.engines.size
-    assert_equal "Dummy", @info.engines.first.name
-    assert_equal "Respect", @info.engines.second.name
   end
 
 end
