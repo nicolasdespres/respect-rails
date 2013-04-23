@@ -27,6 +27,11 @@ module Respect
           self.extend_dsl_with(module_name.camelize.constantize)
         end
       end
+
+      # Return the name of the application where Respect's engine is mounted.
+      def application_name
+        ::Rails.application.class.parent_name
+      end
     end # class << self
   end # module Rails
 end # module Respect
