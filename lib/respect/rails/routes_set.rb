@@ -16,9 +16,7 @@ module Respect
         @engines["application"]
       end
 
-      def each(&block)
-        routes.each(&block)
-      end
+      delegate :each, to: :routes
 
       private
 
