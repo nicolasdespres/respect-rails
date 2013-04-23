@@ -1,9 +1,9 @@
 module Respect
   module Rails
-    class ApplicationInfo
-      include Comparable
+    class ApplicationInfo < EngineInfo
 
       def initialize(app)
+        super(app.class)
         unless app.is_a?(::Rails::Application)
           raise "'#{app}' must be a rails application."
         end
@@ -14,12 +14,6 @@ module Respect
 
       def name
         @app.class.parent_name
-      end
-
-      attr_accessor :routes
-
-      def <=>(other)
-        self.name <=> other.name
       end
 
     end # class ApplicationInfo
