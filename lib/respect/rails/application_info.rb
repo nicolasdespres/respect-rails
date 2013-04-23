@@ -2,7 +2,7 @@ module Respect
   module Rails
     class ApplicationInfo < EngineInfo
 
-      def initialize(app_class)
+      def initialize(app_class = ::Rails.application.class)
         super(app_class)
         unless app_class < ::Rails::Application
           raise "'#{app_class}' must be an ancestor of ::Rails::Application."

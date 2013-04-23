@@ -6,7 +6,7 @@ module Respect
 
       def initialize
         @engines = {}
-        @app = ApplicationInfo.new(::Rails.application.class)
+        @app = ApplicationInfo.new
         @app.routes = collect_routes(::Rails.application.routes.routes)
         @engines[@app.name] = @app
       end
