@@ -19,5 +19,11 @@ class RoutesSetTest < ActiveSupport::TestCase
     assert(@routes.routes == @routes.engines[@routes.app_name])
   end
 
+  def test_engine_names
+    engine_names = @routes.engines.keys.sort
+    assert_equal 2, engine_names.size
+    assert_equal "Dummy", engine_names.first
+    assert_equal "Respect", engine_names.second
+  end
 
 end

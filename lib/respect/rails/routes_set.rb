@@ -40,7 +40,7 @@ module Respect
 
       def collect_engine_routes(route)
         return unless route.engine?
-        name = route.endpoint
+        name = route.endpoint_name
         return if @engines[name]
 
         routes = route.rack_app.routes
