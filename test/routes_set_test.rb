@@ -26,4 +26,11 @@ class RoutesSetTest < ActiveSupport::TestCase
     assert_equal "Respect", engine_names.second
   end
 
+  def test_each_engine_yield_sorted_key
+    expected = @routes.engines.keys.sort
+    engine_names = []
+    @routes.each_engine{|name, routes| engine_names << name }
+    assert_equal expected, engine_names
+  end
+
 end

@@ -22,6 +22,11 @@ module Respect
 
       delegate :each, to: :routes
 
+      # Call _block_ for each collected engines. They are yield in alphabetic order.
+      def each_engine(&block)
+        @engines.keys.sort.each{|k| block.call(k, @engines[k]) }
+      end
+
       private
 
       def collect_routes(routes, mounted_point = nil)
