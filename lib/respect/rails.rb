@@ -6,7 +6,6 @@ module Respect
 
     autoload :Base
     autoload :ResponseSchemaSet
-    autoload :RouteWrapper
     autoload :RoutesSet
     autoload :RequestSchema
     autoload :ResponseSchema
@@ -14,6 +13,7 @@ module Respect
     autoload :ResponseDef
     autoload :ApplicationInfo
     autoload :EngineInfo
+    autoload :RouteInfo
 
     class << self
       def load_schema(controller_name, action_name)

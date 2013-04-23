@@ -31,7 +31,7 @@ module Respect
       def collect_routes(routes, mounted_point = nil)
         result = []
         routes.each do |route|
-          route = RouteWrapper.new(route, mounted_point)
+          route = RouteInfo.new(route, mounted_point)
           next if route.internal?
           if route.engine?
             result += collect_engine_routes(route)

@@ -4,10 +4,10 @@ module Respect
     # access to the information we need when generating doc.
     # It is very strongly inspired from ActionDispatch::Routing::RouteWrapper class
     # which is internal and designed to be used with
-    # ActionDispoatch::Routing::RouteInspector. These class are not meant
+    # ActionDispoatch::Routing::RouteInspector. These classes are not meant
     # to be used by external user as far as I can read in rails code base.
     # So, we made up our own so that we can easily adjust it to our need.
-    class RouteWrapper
+    class RouteInfo
       include Comparable
 
       def initialize(route, mount_point)
@@ -88,6 +88,6 @@ module Respect
         rack_app && rack_app.respond_to?(:routes)
       end
 
-    end # class RouteWrapper
+    end # class RouteInfo
   end # module Rails
 end # module Respect
