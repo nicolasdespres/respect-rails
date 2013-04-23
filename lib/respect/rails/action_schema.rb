@@ -1,6 +1,6 @@
 module Respect
   module Rails
-    class Base
+    class ActionSchema
       include ::Rails.application.routes.url_helpers
 
       class << self

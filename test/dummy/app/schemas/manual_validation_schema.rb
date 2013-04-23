@@ -1,4 +1,4 @@
-class ManualValidationSchema < Respect::Rails::Base
+class ManualValidationSchema < Respect::Rails::ActionSchema
   def raise_custom_error
     define_request do |r|
       r.params do |s|

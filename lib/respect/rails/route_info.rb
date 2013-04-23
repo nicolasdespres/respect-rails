@@ -53,7 +53,7 @@ module Respect
       end
 
       def schema_set
-        @controller ||= Base.from_controller(controller_name, action_name)
+        @controller ||= ActionSchema.from_controller(controller_name, action_name)
       end
 
       def spec

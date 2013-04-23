@@ -54,7 +54,7 @@ end
 
 and have your schema written like this
 
-class HotspotSchema < Respect::Rails::Base
+class HotspotSchema < Respect::Rails::ActionSchema
   def around
     define_request do
       schema do |s|

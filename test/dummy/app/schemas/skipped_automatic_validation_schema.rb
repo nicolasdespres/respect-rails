@@ -1,4 +1,4 @@
-class SkippedAutomaticValidationSchema < Respect::Rails::Base
+class SkippedAutomaticValidationSchema < Respect::Rails::ActionSchema
   def basic_get
     define_request do |r|
       r.params do |s|

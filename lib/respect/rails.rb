@@ -4,7 +4,7 @@ module Respect
   module Rails
     extend ActiveSupport::Autoload
 
-    autoload :Base
+    autoload :ActionSchema
     autoload :ResponseSchemaSet
     autoload :RequestSchema
     autoload :ResponseSchema
@@ -17,7 +17,7 @@ module Respect
 
     class << self
       def load_schema(controller_name, action_name)
-        Base.from_controller(controller_name, action_name)
+        ActionSchema.from_controller(controller_name, action_name)
       end
 
       # Install all user-defined macros in app/helpers/respect and extend the DSL with

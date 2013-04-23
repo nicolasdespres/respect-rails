@@ -1,4 +1,4 @@
-class DisabledSchema < Respect::Rails::Base
+class DisabledSchema < Respect::Rails::ActionSchema
   def basic
     define_request do |r|
       r.params do |s|
