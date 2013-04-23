@@ -7,3 +7,11 @@
   <li><%= route.spec %></li>
 </ul>
 <% end %>
+
+<h2>Table of content</h2>
+
+<ul>
+<% @routes.each_engine do |name, routes| %>
+  <li><%= name %></li>
+<% end %>
+</ul>
