@@ -10,10 +10,6 @@ class InfoTest < ActiveSupport::TestCase
     assert(@info.routes.any?{|r| r.path =~ %r{^/rest_spec/doc} })
   end
 
-  def test_app_name
-    assert_equal("dummy", @info.app.name)
-  end
-
   def test_app_is_stored_in_engines
     assert(@info.engines.has_value?(@info.app))
     assert(@info.routes == @info.app.routes)
