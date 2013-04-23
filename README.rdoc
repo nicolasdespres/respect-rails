@@ -1,16 +1,19 @@
 = Respect plugin for Rails
 
-Respect integration for Rails 3.x.
+Respect [FIXME:url] integration for Rails 3.x.
 
 = Features
 
+* Based on Respect [FIXME:url] to compactly specify your REST API.
 * Controllers' helpers to automatically validates and sanitize incoming parameters.
 * A Rails engine to mount in your application to publish your public REST API documentation.
-  * Read the full API documentation.
-  * Query a particular route schema.
-  * Query a particular controller's action schema.
-  * A validator web service to test whether your clients request are valid.
+  * Your documentation will always be up to date with your application.
+  * Access the full API documentation.
+  * Query a schema given a route or a controller's action.
+  * A validator web service your clients can use to check their requests.
 * A DSL to group your requests and responses schema by controllers.
+
+= Getting started!
 
 = License
 
