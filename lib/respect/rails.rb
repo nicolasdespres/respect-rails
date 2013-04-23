@@ -12,6 +12,8 @@ module Respect
     autoload :ResponseSchema
     autoload :RequestDef
     autoload :ResponseDef
+    autoload :ApplicationInfo
+    autoload :EngineInfo
 
     class << self
       def load_schema(controller_name, action_name)

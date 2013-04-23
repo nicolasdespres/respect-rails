@@ -1,4 +1,4 @@
-<h1><%= @routes.app_name %> REST API Reference documentation</h1>
+<h1><%= @routes.app.name %> REST API Reference documentation</h1>
 
 <h2>Routes index</h2>
 
@@ -11,7 +11,7 @@
 <h2>Table of content</h2>
 
 <ul>
-<% @routes.each_engine do |name, routes| %>
-  <li><%= name %></li>
+<% @routes.engines.each do |engine| %>
+  <li><%= engine.name %></li>
 <% end %>
 </ul>

@@ -6,26 +6,25 @@ module Respect
       include Enumerable
 
       def initialize
-        @engines = {}
-        @engines[app_name] = collect_routes(::Rails.application.routes.routes)
+        @engines = []
+        @engines_by_name = {}
+        @app = ApplicationInfo.new(::Rails.application)
+        @app.routes = collect_routes(::Rails.application.routes.routes)
+        @engines << @app
+        # Engines were collected while collecting routes, so now we sort them.
+        # They won't be touched again.
+        @engines.sort!
       end
 
       attr_reader :engines
+      attr_reader :engines_by_name
+      attr_reader :app
 
       def routes
-        @engines[app_name]
-      end
-
-      def app_name
-        @app_name ||= Rails.application_name
+        @app.routes
       end
 
       delegate :each, to: :routes
-
-      # Call _block_ for each collected engines. They are yield in alphabetic order.
-      def each_engine(&block)
-        @engines.keys.sort.each{|k| block.call(k, @engines[k]) }
-      end
 
       private
 
@@ -45,12 +44,15 @@ module Respect
 
       def collect_engine_routes(route)
         return unless route.engine?
-        name = route.endpoint_name
-        return if @engines[name]
+        engine_info = EngineInfo.new(route.endpoint)
+        return if @engines_by_name[engine_info.name]
 
         routes = route.rack_app.routes
         if routes.is_a?(ActionDispatch::Routing::RouteSet)
-          @engines[name] = collect_routes(routes.routes, route)
+          engine_info.routes = collect_routes(routes.routes, route)
+          @engines << engine_info
+          @engines_by_name[engine_info.name] = engine_info
+          engine_info.routes
         else
           []
         end

@@ -11,26 +11,18 @@ class RoutesSetTest < ActiveSupport::TestCase
   end
 
   def test_app_name
-    assert(Respect::Rails.application_name == @routes.app_name)
+    assert(Respect::Rails.application_name == @routes.app.name)
   end
 
-  def test_app_routes_are_stored_in_engine_named_after_app
-    assert(@routes.engines.has_key?(@routes.app_name))
-    assert(@routes.routes == @routes.engines[@routes.app_name])
+  def test_app_is_stored_in_engines
+    assert(@routes.engines.include?(@routes.app))
+    assert(@routes.routes == @routes.app.routes)
   end
 
-  def test_engine_names
-    engine_names = @routes.engines.keys.sort
-    assert_equal 2, engine_names.size
-    assert_equal "Dummy", engine_names.first
-    assert_equal "Respect", engine_names.second
-  end
-
-  def test_each_engine_yield_sorted_key
-    expected = @routes.engines.keys.sort
-    engine_names = []
-    @routes.each_engine{|name, routes| engine_names << name }
-    assert_equal expected, engine_names
+  def test_engines_are_sorted_by_names
+    assert_equal 2, @routes.engines.size
+    assert_equal "Dummy", @routes.engines.first.name
+    assert_equal "Respect", @routes.engines.second.name
   end
 
 end

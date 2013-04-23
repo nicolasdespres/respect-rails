@@ -70,15 +70,7 @@ module Respect
       end
 
       def endpoint
-        rack_app ? rack_app.inspect : "#{controller_name}##{action_name}"
-      end
-
-      def endpoint_name
-        if rack_app && rack_app.respond_to?(:engine_name)
-          rack_app.engine_name.humanize
-        else
-          "#{controller_name} #{action_name}".humanize
-        end
+        rack_app ? rack_app : nil
       end
 
       def rack_app(app = @route.app)
