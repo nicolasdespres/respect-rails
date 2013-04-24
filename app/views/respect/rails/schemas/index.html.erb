@@ -37,7 +37,9 @@
 
   <% if schema.request_schema %>
     <h4>Request schema</h4>
-    <%= schema.request_schema.params %>
+    <pre><code>
+<%= schema.request_schema.params %>
+    </pre></code>
   <% end %>
 
   <% end %>
