@@ -52,8 +52,8 @@ module Respect
         @route.requirements[:action] || ':action'
       end
 
-      def schema_set
-        @controller ||= ActionSchema.from_controller(controller_name, action_name)
+      def schema
+        @schema ||= ActionSchema.from_controller(controller_name, action_name)
       end
 
       def spec
@@ -61,7 +61,7 @@ module Respect
       end
 
       def url
-        if schema_set
+        if schema
           options = schema_set.default_url_options
         else
           options = @route.defaults.merge({ format: 'json' })
