@@ -43,5 +43,13 @@
   </pre></code>
 <% end %>
 
+<h4>Response schema</h4>
+<% schema.response_schemas.each do |status, response_schema| %>
+  <h5><%= response_schema.status %> [<%= response_schema.http_status %>]</h5>
+  <pre><code>
+<%= response_schema.body %>
+  </pre></code>
+<% end %>
+
 <% end %>
 <% end %>
