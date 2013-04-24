@@ -26,21 +26,22 @@
 <h2>Schema</h2>
 
 <% @info.toc.keys.sort.each do |controller_name| %>
-  <% @info.toc[controller_name].keys.sort.each do |action_name| %>
-  <% route = @info.toc[controller_name][action_name] %>
-  <% schema = route.schema %>
+<% @info.toc[controller_name].keys.sort.each do |action_name| %>
 
-  <h3><%= controller_name.titleize %> > <%= action_name.titleize %></h3>
+<% route = @info.toc[controller_name][action_name] %>
+<% schema = route.schema %>
 
-  <h4>Route</h4>
-  <%= route.spec %>
+<h3><%= controller_name.titleize %> > <%= action_name.titleize %></h3>
 
-  <% if schema.request_schema %>
-    <h4>Request schema</h4>
-    <pre><code>
+<h4>Route</h4>
+<%= route.spec %>
+
+<% if schema.request_schema %>
+  <h4>Request schema</h4>
+  <pre><code>
 <%= schema.request_schema.params %>
-    </pre></code>
-  <% end %>
+  </pre></code>
+<% end %>
 
-  <% end %>
+<% end %>
 <% end %>
