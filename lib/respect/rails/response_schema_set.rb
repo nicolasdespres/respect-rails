@@ -41,6 +41,8 @@ module Respect
         self.class.each_response_file(@controller_name, @action_name, &block)
       end
 
+      delegate :each, to: :@set
+
       private
 
       def collect_from_files
