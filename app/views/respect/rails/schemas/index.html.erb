@@ -11,7 +11,14 @@
 <h2>Table of content</h2>
 
 <ul>
-<% @info.engines.values.sort.each do |engine| %>
-  <li><%= engine.name.titleize %></li>
+<% @info.toc.keys.sort.each do |controller_name| %>
+  <li>
+    <%= controller_name.titleize %>
+    <ul>
+      <% @info.toc[controller_name].keys.sort.each do |action_name| %>
+      <li><%= action_name.titleize %></li>
+      <% end %>
+    </ul>
+  </li>
 <% end %>
 </ul>

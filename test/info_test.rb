@@ -15,4 +15,8 @@ class InfoTest < ActiveSupport::TestCase
     assert(@info.routes == @info.app.routes)
   end
 
+  def test_toc
+    # FIXME(Nicolas Despres): Use a moch instead of relying on the dummy app which may change too often.
+    assert_equal 4, @info.toc.size
+  end
 end

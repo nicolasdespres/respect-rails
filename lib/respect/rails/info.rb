@@ -9,10 +9,12 @@ module Respect
         @app = ApplicationInfo.new
         @app.routes = collect_routes(::Rails.application.routes.routes)
         @engines[@app.name] = @app
+        @toc = build_toc(self.routes)
       end
 
       attr_reader :engines
       attr_reader :app
+      attr_reader :toc
 
       def routes
         @app.routes
@@ -47,6 +49,20 @@ module Respect
         else
           []
         end
+      end
+
+      def build_toc(routes)
+        toc = {}
+        routes.each do |route|
+          next if route.engine?
+          if route.schema
+            controller = route.controller_name
+            action = route.action_name
+            toc[controller] ||= {}
+            toc[controller][action] = route
+          end
+        end
+        toc
       end
 
     end # class Info
