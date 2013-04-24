@@ -1,6 +1,8 @@
 require 'test_helper'
 
-class RespectControllerTest < ActionController::TestCase
+class SchemasControllerTest < ActionController::TestCase
+  tests Respect::Rails::SchemasController
+
   def test_should_get_index
     get :index, use_route: :respect
     assert_response :success
