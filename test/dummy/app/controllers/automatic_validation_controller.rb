@@ -116,6 +116,15 @@ class AutomaticValidationController < ApplicationController
     raise "Error should be raised before me!!"
   end
 
+  def response_contextual_error
+    respond_to do |format|
+      format.json do
+        result = { o1: { o2: { i: 42 } } }
+        render json: result, status: :ok
+      end
+    end
+  end
+
   # It is mandatory to prepend the after filter so that it is
   # executed before load_response_schema. Or you have to call it
   # yourself.

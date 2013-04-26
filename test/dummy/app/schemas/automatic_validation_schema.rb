@@ -80,4 +80,18 @@ class AutomaticValidationSchema < ApplicationSchema
     end
   end
 
+  def response_contextual_error
+    response_for do |status|
+      status.ok do
+        body_with_object do |s|
+          s.object "o1" do |s|
+            s.object "o2" do |s|
+              s.integer "i", equal_to: 51
+            end
+          end
+        end
+      end
+    end
+  end
+
 end

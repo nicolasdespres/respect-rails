@@ -111,4 +111,14 @@ class AutomaticValidationControllerTest < ActionController::TestCase
     end
   end
 
+  def test_response_validation_error_have_context
+    begin
+      get :response_contextual_error, format: 'json'
+      assert false
+    rescue Respect::ValidationError => e
+      assert(e.context.first == e.message)
+      assert_equal(4, e.context.size)
+    end
+  end
+
 end

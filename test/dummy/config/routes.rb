@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       match 'dump_uri_helpers'
       match 'default_response_schema_in_file'
       match 'request_contextual_error'
+      match 'response_contextual_error'
     end
     scope controller: 'manual_validation', path: 'manual_validation', as: "manual_validation" do
       match 'raise_custom_error'

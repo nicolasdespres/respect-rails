@@ -94,7 +94,7 @@ module Respect
           log_msg += " in #{(measure * 1000).ceil}ms"
           ::Rails.logger.info log_msg
           if valid == false
-            raise ValidationError, last_validation_error.message
+            raise last_validation_error
           end
           true
         end
