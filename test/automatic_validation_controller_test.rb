@@ -101,4 +101,14 @@ class AutomaticValidationControllerTest < ActionController::TestCase
     assert !response.has_schema?
   end
 
+  def test_request_validation_error_have_context
+    begin
+      get :request_contextual_error, format: 'json', o1: { o2: { i: 54 } }
+      assert false
+    rescue Respect::ValidationError => e
+      assert(e.context.first == e.message)
+      assert_equal(4, e.context.size)
+    end
+  end
+
 end

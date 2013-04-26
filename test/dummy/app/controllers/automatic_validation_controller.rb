@@ -112,6 +112,10 @@ class AutomaticValidationController < ApplicationController
     end
   end
 
+  def request_contextual_error
+    raise "Error should be raised before me!!"
+  end
+
   # It is mandatory to prepend the after filter so that it is
   # executed before load_response_schema. Or you have to call it
   # yourself.

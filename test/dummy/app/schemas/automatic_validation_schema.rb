@@ -68,4 +68,16 @@ class AutomaticValidationSchema < ApplicationSchema
     # - Default response for :ok is defined in automatic_validation/default_response_in_file.schema
   end
 
+  def request_contextual_error
+    request do
+      body_params do |s|
+        s.object "o1" do |s|
+          s.object "o2" do |s|
+            s.integer "i", equal_to: 42
+          end
+        end
+      end
+    end
+  end
+
 end
