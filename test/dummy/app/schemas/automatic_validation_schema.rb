@@ -2,7 +2,12 @@ class AutomaticValidationSchema < ApplicationSchema
   def basic_get
     request do
       params do |s|
-        s.integer "param1", equal_to: 42
+        s.integer "param1", equal_to: 42 do |m|
+          m.title "A parameter"
+          m.description do
+            "An important parameter that should be equal to 42."
+          end
+        end
       end
     end
     response_for do |status|
