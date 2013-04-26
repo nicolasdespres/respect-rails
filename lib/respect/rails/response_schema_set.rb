@@ -13,6 +13,10 @@ module Respect
               raise "should never ever happens"
             end
           end
+          ok_file = Pathname.new("#{::Rails.root}/app/schemas/#{controller_name}/#{action_name}.schema")
+          if ok_file.exist?
+            block.call(ok_file, :ok)
+          end
         end
       end
 

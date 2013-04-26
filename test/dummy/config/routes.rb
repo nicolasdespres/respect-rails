@@ -11,6 +11,7 @@ Rails.application.routes.draw do
             constraints: lambda { |req| req.params["param1"] == "42" }
       match 'composite_custom_types'
       match 'dump_uri_helpers'
+      match 'default_response_schema_in_file'
     end
     scope controller: 'manual_validation', path: 'manual_validation', as: "manual_validation" do
       match 'raise_custom_error'

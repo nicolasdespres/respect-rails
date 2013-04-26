@@ -98,6 +98,20 @@ class AutomaticValidationController < ApplicationController
     end
   end
 
+  def default_response_schema_in_file
+    respond_to do |format|
+      format.json do
+        if params[:failure]
+          result = { error: "failure" }
+          render json: result, status: :unprocessable_entity
+        else
+          result = { id: 42 }
+          render json: result, status: :ok
+        end
+      end
+    end
+  end
+
   # It is mandatory to prepend the after filter so that it is
   # executed before load_response_schema. Or you have to call it
   # yourself.

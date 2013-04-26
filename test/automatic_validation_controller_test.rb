@@ -88,4 +88,17 @@ class AutomaticValidationControllerTest < ActionController::TestCase
     assert_equal "/rest_spec/", json['respect']['root_path']
   end
 
+  def test_default_response_schema_in_file_found_for_ok
+    get :default_response_schema_in_file, format: 'json', failure: false
+    assert_response :ok
+    assert response.has_schema?
+    assert response.validate_schema?
+  end
+
+  def test_default_response_schema_in_file_not_found_for_not_ok
+    get :default_response_schema_in_file, format: 'json', failure: true
+    assert_response :unprocessable_entity
+    assert !response.has_schema?
+  end
+
 end
