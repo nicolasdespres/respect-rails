@@ -1,6 +1,6 @@
 class DisabledSchema < Respect::Rails::ActionSchema
   def basic
-    define_request do |r|
+    request do |r|
       r.params do |s|
         s.integer "param1", equal_to: 42
       end

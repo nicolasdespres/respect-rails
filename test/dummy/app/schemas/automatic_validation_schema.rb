@@ -1,6 +1,6 @@
 class AutomaticValidationSchema < ApplicationSchema
   def basic_get
-    define_request do
+    request do
       params do |s|
         s.integer "param1", equal_to: 42
       end
@@ -43,7 +43,7 @@ class AutomaticValidationSchema < ApplicationSchema
   end
 
   def route_constraints
-    define_request do
+    request do
       params do |s|
         s.string "param1", equal_to: "42"
       end
@@ -51,7 +51,7 @@ class AutomaticValidationSchema < ApplicationSchema
   end
 
   def composite_custom_types
-    define_request do
+    request do
       params do |s|
         s.circle "circle"
       end

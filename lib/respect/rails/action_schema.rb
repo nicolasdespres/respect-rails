@@ -32,7 +32,7 @@ module Respect
 
       attr_reader :controller_name, :action_name
 
-      def define_request(&block)
+      def request(&block)
         @request_schema = RequestSchema.define(controller_name, action_name, &block)
       end
 

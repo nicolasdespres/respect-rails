@@ -56,7 +56,7 @@ and have your schema written like this
 
 class HotspotSchema < Respect::Rails::ActionSchema
   def around
-    define_request do
+    request do
       schema do |s|
         s.circle "area"
       end

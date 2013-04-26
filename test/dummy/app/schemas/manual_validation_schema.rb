@@ -1,6 +1,6 @@
 class ManualValidationSchema < Respect::Rails::ActionSchema
   def raise_custom_error
-    define_request do |r|
+    request do |r|
       r.params do |s|
         s.integer "param1", equal_to: 42
       end
@@ -18,7 +18,7 @@ class ManualValidationSchema < Respect::Rails::ActionSchema
 
   # FIXME(Nicolas Despres): Factor this schema with "raise_custom_error
   def raise_custom_error_without_rescue
-    define_request do |r|
+    request do |r|
       r.params do |s|
         s.integer "param1", equal_to: 42
       end
