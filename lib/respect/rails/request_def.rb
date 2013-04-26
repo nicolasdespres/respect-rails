@@ -10,6 +10,11 @@ module Respect
 
       def initialize(*args)
         @request_schema = RequestSchema.new(*args)
+        @request_schema.url_params = ObjectSchema.define do |s|
+          s.string "format", equal_to: "json"
+          s.string "controller", equal_to: @request_schema.controller.to_s
+          s.string "action", equal_to: @request_schema.action.to_s
+        end
       end
 
       def eval(&block)
@@ -17,13 +22,12 @@ module Respect
         @request_schema
       end
 
-      def params(&block)
-        @request_schema.params = ObjectSchema.define do |s|
-          s.string "format", equal_to: "json"
-          s.string "controller", equal_to: @request_schema.controller.to_s
-          s.string "action", equal_to: @request_schema.action.to_s
-          s.eval(&block)
-        end
+      def url_params(&block)
+        @request_schema.url_params.eval(&block)
+      end
+
+      def body_params(&block)
+        @request_schema.body_params = ObjectSchema.define(&block)
       end
 
     end # class RequestDef

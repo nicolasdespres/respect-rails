@@ -15,9 +15,38 @@ module Respect
 
       attr_reader :controller, :action
 
-      attr_accessor :params
-
       delegate :validate, :validate?, :validate!, :last_error, to: :params, allow_nil: true
+
+      attr_reader :url_params, :body_params, :params
+
+      def url_params=(url_params)
+        @url_params = url_params
+        update_params
+        @url_params
+      end
+
+      def body_params=(body_params)
+        @body_params = body_params
+        update_params
+        @body_params
+      end
+
+      private
+
+      def update_params
+        @params = (
+          if url_params && body_params
+            body_params.merge(url_params)
+          elsif body_params
+            body_params
+          elsif url_params
+            url_params
+          else
+            nil
+          end
+          )
+      end
+
     end
   end
 end
