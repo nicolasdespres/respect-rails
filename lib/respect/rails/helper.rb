@@ -17,7 +17,7 @@ module Respect
         # Raise a ValidationError exception if this request does not validate
         # the schema.
         def validate_schema
-          log_msg = "Request schema validation: "
+          log_msg = "  Request validation: "
           valid = nil
           measure = Benchmark.realtime do
             valid = !!request_schema.validate!(params) unless request_schema.nil?
@@ -31,7 +31,7 @@ module Respect
               log_msg += "failure"
             end
           end
-          log_msg += " in #{(measure * 1000).ceil}ms"
+          log_msg += " (%.1fms)" % [ measure * 1000 ]
           ::Rails.logger.info log_msg
           if valid == false
             raise last_validation_error
@@ -77,7 +77,7 @@ module Respect
         end
 
         def validate_schema
-          log_msg = "Response schema validation: "
+          log_msg = "  Response validation: "
           valid = nil
           measure = Benchmark.realtime do
             valid = schema.validate?(ActiveSupport::JSON.decode(body)) if schema
@@ -91,7 +91,7 @@ module Respect
               log_msg += "failure"
             end
           end
-          log_msg += " in #{(measure * 1000).ceil}ms"
+          log_msg += " (%.1fms)" % [ measure * 1000 ]
           ::Rails.logger.info log_msg
           if valid == false
             raise last_validation_error
