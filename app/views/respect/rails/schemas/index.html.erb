@@ -39,12 +39,16 @@
 <% if schema.request_schema %>
   <h4>Request schema</h4>
 
-  <h5>URL params</h5>
+  <h5>URL parameters</h5>
+  <% if schema.request_schema.url_params.documented_properties.empty? %>
+    No URL parameters schema.
+  <% else %>
   <pre><code>
 <%= schema.request_schema.url_params %>
   </pre></code>
+  <% end %>
 
-  <h5>Body params</h5>
+  <h5>Body parameters</h5>
   <pre><code>
 <%= schema.request_schema.body_params %>
   </pre></code>
