@@ -38,8 +38,15 @@
 
 <% if schema.request_schema %>
   <h4>Request schema</h4>
+
+  <h5>URL params</h5>
   <pre><code>
-<%= schema.request_schema.params %>
+<%= schema.request_schema.url_params %>
+  </pre></code>
+
+  <h5>Body params</h5>
+  <pre><code>
+<%= schema.request_schema.body_params %>
   </pre></code>
 <% end %>
 
