@@ -1,4 +1,4 @@
-class ManualValidationSchema < Respect::Rails::ActionSchema
+class ManualValidationControllerSchema < Respect::Rails::ActionSchema
   def raise_custom_error
     request do |r|
       r.body_params do |s|

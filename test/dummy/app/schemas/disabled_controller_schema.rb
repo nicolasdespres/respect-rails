@@ -1,5 +1,5 @@
-class SkippedAutomaticValidationSchema < Respect::Rails::ActionSchema
-  def basic_get
+class DisabledControllerSchema < Respect::Rails::ActionSchema
+  def basic
     request do |r|
       r.body_params do |s|
         s.integer "param1", equal_to: 42
@@ -7,8 +7,10 @@ class SkippedAutomaticValidationSchema < Respect::Rails::ActionSchema
     end
     response_for do |status|
       status.ok do |r|
-        r.body_with_object do |s|
-          s.integer "id", equal_to: 42
+        r.body do |s|
+          s.object do |s|
+            s.integer "id", equal_to: 42
+          end
         end
       end
     end

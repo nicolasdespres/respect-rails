@@ -1,4 +1,4 @@
-class ApplicationSchema < Respect::Rails::ActionSchema
+class ApplicationControllerSchema < Respect::Rails::ActionSchema
   def default_url_options
     super.merge(
       {

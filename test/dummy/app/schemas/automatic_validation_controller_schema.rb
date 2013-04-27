@@ -1,4 +1,4 @@
-class AutomaticValidationSchema < ApplicationSchema
+class AutomaticValidationControllerSchema < ApplicationControllerSchema
   def basic_get
     request do
       body_params do |s|

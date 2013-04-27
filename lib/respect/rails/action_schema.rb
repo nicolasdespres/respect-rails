@@ -6,11 +6,11 @@ module Respect
       class << self
 
         def controller_name
-          name.sub(/Schema$/, '').underscore
+          name.sub(/ControllerSchema$/, '').underscore
         end
 
         def from_controller(controller_name, action_name = nil)
-          klass = "#{controller_name}_schema".classify.safe_constantize
+          klass = "#{controller_name}_controller_schema".classify.safe_constantize
 
           return nil unless klass
 
