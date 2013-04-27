@@ -4,7 +4,7 @@
 
 <ul>
 <% @info.routes.sort.each do |route| %>
-  <li><%= route.spec %></li>
+  <li><%= link_to route.spec, anchor: route.anchor %></li>
 <% end %>
 </ul>
 
@@ -16,7 +16,8 @@
     <%= controller_name.titleize %>
     <ul>
       <% @info.toc[controller_name].keys.sort.each do |action_name| %>
-      <li><%= link_to action_name.titleize, anchor: "#{controller_name}_#{action_name}" %></li>
+        <% route = @info.toc[controller_name][action_name] %>
+        <li><%= link_to action_name.titleize, anchor: route.anchor %></li>
       <% end %>
     </ul>
   </li>
@@ -32,7 +33,7 @@
 <% schema = route.schema %>
 
 <h3>
-<%= content_tag :a, "#{controller_name.titleize} > #{action_name.titleize}", id: "#{controller_name}_#{action_name}" %>
+<%= content_tag :a, "#{controller_name.titleize} > #{action_name.titleize}", id: route.anchor %>
 </h3>
 
 <h4>Route</h4>

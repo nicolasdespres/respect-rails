@@ -88,6 +88,10 @@ module Respect
         rack_app && rack_app.respond_to?(:routes)
       end
 
+      def anchor
+        "#{controller_name}_#{action_name}"
+      end
+
     end # class RouteInfo
   end # module Rails
 end # module Respect
