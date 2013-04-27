@@ -2,12 +2,12 @@ class AutomaticValidationSchema < ApplicationSchema
   def basic_get
     request do
       body_params do |s|
-        s.integer "param1", equal_to: 42 do |m|
-          m.title "A parameter"
-          m.description do
-            "An important parameter that should be equal to 42."
-          end
-        end
+        s.doc <<-EOS.strip_heredoc
+          A parameter
+
+          An important parameter that should be equal to 42.
+          EOS
+        s.integer "param1", equal_to: 42
       end
     end
     response_for do |status|
