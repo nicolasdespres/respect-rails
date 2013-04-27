@@ -43,7 +43,7 @@ module Respect
         self.class.each_response_file(@controller_name, @action_name, &block)
       end
 
-      delegate :each, to: :@set
+      delegate :each, :empty?, to: :@set
 
       def <<(response_schema)
         @set[response_schema.http_status] = response_schema
