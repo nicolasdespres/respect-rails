@@ -4,9 +4,15 @@ module Respect
     # REST API of this application.
     class SchemasController < ApplicationController
       def index
-        @info = Respect::Rails::Info.new
         respond_to do |format|
           format.html # index.html.erb
+        end
+      end
+
+      def doc
+        @info = Respect::Rails::Info.new
+        respond_to do |format|
+          format.html # doc.html.erb
         end
       end
     end
