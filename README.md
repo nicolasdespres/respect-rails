@@ -1,10 +1,10 @@
-= Respect plugin for Rails
+# Respect plugin for Rails
 
-Respect [FIXME:url] integration for Rails 3.x.
+[Respect](https://github.com/nicolasdespres/respect) integration for Rails 3.x.
 
-= Features
+# Features
 
-* Based on Respect [FIXME:url] to compactly specify your REST API.
+* Based on [Respect](https://github.com/nicolasdespres/respect) to compactly specify your REST API.
 * Controllers' helpers to automatically validates and sanitize incoming parameters.
 * A Rails engine to mount in your application to publish your public REST API documentation.
   * Your documentation will always be up to date with your application.
@@ -13,8 +13,8 @@ Respect [FIXME:url] integration for Rails 3.x.
   * A validator web service your clients can use to check their requests.
 * A DSL to group your requests and responses schema by controllers.
 
-= Getting started!
+# Getting started!
 
-= License
+# License
 
-This project rocks and uses MIT-LICENSE.
+_Respect for Rails_ is released under the term of the [MIT License](http://opensource.org/licenses/MIT)
