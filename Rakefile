@@ -13,6 +13,7 @@ YARD::Rake::YardocTask.new do |t|
     'README.md',
     'FAQ.md',
   ]
+  t.options = %w(--markup=markdown --markup-provider=redcarpet)
   # t.options = ['--any', '--extra', '--opts'] # optional
 end
 
