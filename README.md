@@ -15,6 +15,10 @@
 
 # Getting started!
 
+# Further documentation
+
+* {file:FAQ.md Frequently Asked Question}
+
 # License
 
 _Respect for Rails_ is released under the term of the [MIT License](http://opensource.org/licenses/MIT)

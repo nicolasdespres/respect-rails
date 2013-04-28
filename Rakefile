@@ -11,7 +11,7 @@ YARD::Rake::YardocTask.new do |t|
     'lib/**/*.rb',
     '-',
     'README.md',
-    'FAQ.txt',
+    'FAQ.md',
   ]
   # t.options = ['--any', '--extra', '--opts'] # optional
 end

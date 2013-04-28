@@ -1,9 +1,10 @@
-= Why using Respect for Rails since I do most of my parameter checking in my model?
+# Why using Respect for Rails since I do most of my parameters checking in my model?
 
 This is true that complex parameters ckecking/conversions are often done in the model in
 order to factor code when multiple endpoints use them. For instance, consider the following
 case where the user must provide a circle, via a center point and a radius:
 
+```ruby
 class Hotspot < ActiveRecord::Base
   # Returns the list of hot-spots around the given circle.
   #
@@ -27,6 +28,7 @@ class HotspotController < ActionController::Base
     Hotspot.around(params[:area])
   end
 end
+```
 
 In this case all the sanitization process is handle by the Circle::from_h method.  This code
 is clean.  However, it has some drawbacks:
@@ -42,6 +44,7 @@ is clean.  However, it has some drawbacks:
 We can get Respect for Rails do this work for you by adding helper method which create a circle
 object for you when validating the JSON document (FIXME: update the example):
 
+```ruby
 def point
   float "x"
   float "y"
@@ -51,9 +54,11 @@ def circle
   point "center"
   float "radius", greater_than: 0.0
 end
+```
 
 and have your schema written like this
 
+```ruby
 class HotspotSchema < Respect::Rails::ActionSchema
   def around
     request do
@@ -63,3 +68,4 @@ class HotspotSchema < Respect::Rails::ActionSchema
     end
   end
 end
+```
