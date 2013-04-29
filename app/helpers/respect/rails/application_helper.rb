@@ -4,15 +4,19 @@ module Respect
 
       # FIXME(Nicolas Despres): Move to its own file and add unit test.
       class JsonSchemaHighlighter
-        def initialize
+        def initialize(json_schema)
           @indent_level = 0
           @indent_size = 2
+          @json_schema = json_schema
         end
 
-        def dump(json)
-          result = %q{<div class="highlight"><pre>}
-          result << dump_json(json)
-          result << "</pre></div>"
+        def dump(output = "")
+          @output = output
+          @output ||= String.new
+          @output = %q{<div class="highlight"><pre>}
+          @output << dump_json(@json_schema)
+          @output << "</pre></div>"
+          @output
         end
 
         private
@@ -129,7 +133,7 @@ module Respect
       end
 
       def highlight_json_schema(json_schema)
-        JsonSchemaHighlighter.new.dump(json_schema).html_safe
+        JsonSchemaHighlighter.new(json_schema).dump.html_safe
       end
 
     end
