@@ -16,20 +16,37 @@ body { background-color: #fff; color: #333; }
 
 body, p, ol, ul, td {
   font-family: helvetica, verdana, arial, sans-serif;
-  font-size:   13px;
-  line-height: 18px;
+  font-size:   14px;
+  line-height: 1.4;
 }
 
 pre {
-  background-color: #eee;
+  background-color: #f8f8f8;
   padding: 10px;
-  font-size: 11px;
-  white-space: pre-wrap;
+  font-family: monospace;
+  font-size: 13px;
+  white-space: pre;
   border-style: solid;
   border-width: 1px;
-  border-color: #bbb;
+  border-color: #ccc;
 }
 
 a { color: #000; }
 a:visited { color: #666; }
 a:hover { color: #fff; background-color:#000; }
+
+.highlight .keyword {
+  font-weight: bold;
+}
+
+.highlight .numeric {
+  color: #099;
+}
+
+.highlight .key {
+  color: #000080;
+}
+
+.highlight .string {
+  color: #d14;
+}

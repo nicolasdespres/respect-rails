@@ -43,43 +43,65 @@ module Respect
         end
 
         def dump_hash(json)
-          result = "<span>{</span>"
+          result = plain_text("{")
           indent do
             result << newline
             keys = json.keys
             keys.each_with_index do |key, i|
-              result << "<span>#{key.to_s.inspect}</span><span>:</span> "
+              result << span("key", key.to_s.inspect) << plain_text(":") << " "
               result << dump_json(json[key])
               if i < keys.size - 1
-                result << "<span>,</span>"
+                result << plain_text(",")
                 result << newline
               end
             end
           end
           result << newline
-          result << "<span>}</span>"
+          result << plain_text("}")
           result
         end
 
         def dump_array(json)
-          result = "<span>[</span>"
+          result = plain_text("[")
           indent do
             result << newline
             json.each_with_index do |item, i|
               result << dump_json(item)
               if i < json.size - 1
-                result << "<span>,</span>"
+                result << plain_text(",")
                 result << newline
               end
             end
           end
           result << newline
-          result << "<span>]</span>"
+          result << plain_text("]")
           result
         end
 
         def dump_terminal(json)
-          "<span>#{json.inspect}</span>"
+          css = (case json
+                 when TrueClass, FalseClass
+                   "keyword"
+                 when String
+                   "string"
+                 when Numeric
+                   "numeric"
+                 else
+                   "plain"
+                 end)
+          span(css, json.inspect)
+        end
+
+        def plain_text(text)
+          span("plain", text)
+        end
+
+        def tag(tag, klass, value)
+          "<#{tag} class=\"#{klass}\">#{value}</#{tag}>"
+        end
+
+        def span(klass, value)
+          tag("span", klass, value)
         end
       end
 
