@@ -25,6 +25,9 @@ pre {
   padding: 10px;
   font-size: 11px;
   white-space: pre-wrap;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #bbb;
 }
 
 a { color: #000; }
