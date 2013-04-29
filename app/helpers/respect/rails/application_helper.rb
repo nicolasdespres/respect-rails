@@ -48,6 +48,22 @@ module Respect
             result << newline
             keys = json.keys
             keys.each_with_index do |key, i|
+              if json[key].is_a? Hash
+                doc = ""
+                if json[key].key? "title"
+                  doc << json[key]["title"]
+                  json[key].delete("title")
+                end
+                if json[key].key? "description"
+                  doc << "\n\n"
+                  doc << json[key]["description"]
+                  json[key].delete("description")
+                end
+                unless doc.empty?
+                  result << comment(doc)
+                  result << newline
+                end
+              end
               result << span("key", key.to_s.inspect) << plain_text(":") << " "
               result << dump_json(json[key])
               if i < keys.size - 1
@@ -102,6 +118,13 @@ module Respect
 
         def span(klass, value)
           tag("span", klass, value)
+        end
+
+        def comment(text)
+          s = text.dup
+          s.sub!(/\n*\Z/m, '')
+          s.gsub!(/\n/m, "\n#{indentation}// ")
+          span("comment", "// #{s}")
         end
       end
 

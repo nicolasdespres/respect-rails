@@ -50,3 +50,7 @@ a:hover { color: #fff; background-color:#000; }
 .highlight .string {
   color: #d14;
 }
+
+.highlight .comment {
+  color: rgb(236, 166, 18);
+}
