@@ -6,6 +6,7 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
           A parameter
 
           An important parameter that should be equal to 42.
+          Yes really!.
           EOS
         s.integer "param1", equal_to: 42
       end
