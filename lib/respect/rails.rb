@@ -20,7 +20,7 @@ module Respect
         ActionSchema.from_controller(controller_name, action_name)
       end
 
-      # Install all user-defined macros in app/helpers/respect and extend the DSL with
+      # Install all user-defined macros in +app/helpers/respect+ and extend the DSL with
       # them.
       def install_macros
         Pathname.glob("#{::Rails.root}/app/helpers/#{self.name.underscore}/*_macros.rb") do |path|
