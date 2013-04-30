@@ -12,11 +12,184 @@
   * Deployed transparently with your application so you don't have to worry about it.
 * A DSL to group your requests and responses schema by controllers.
 
-# Take a tour!
+# Take a tour
 
+_Respect for Rails_ let's you easily describe the structure of incoming requests and outgoing responses
+using a simple and compact Ruby DSL. Assuming you have the scaffold of a `ContactsController`, the structure
+for its `create` action may look like this:
 
+```ruby
+# in app/schemas/contacts_controller_schema.rb
+class ContactsControllerSchema < ApplicationControllerSchema
+  def create
+    request do
+      body_params do |s|
+        s.object "contact" do |s|
+          s.string "name"
+          s.integer "age"
+          s.uri "homepage"
+        end
+      end
+    end
+    response_for do |status|
+      status.ok # contacts/create.schema
+      status.unprocessable_entity do
+        body_with_object do |s|
+          s.string "error"
+        end
+      end
+    end
+  end
+end
+```
 
-# Getting started!
+Long response schema may be defined in another file instead of inlined in the controller code:
+
+```ruby
+# in app/schemas/contacts/create.schema
+body_with_object do |s|
+  s.object "contact" do |s|
+    s.integer "id"
+    s.string "name"
+    s.integer "age"
+    s.uri "homepage"
+  end
+end
+```
+
+As you have probably noticed there is some repetition in this code. To avoid it you can create an helper
+like this:
+
+```ruby
+# in app/helpers/respect/application_macros.rb
+module Respect
+  module ApplicationMacros
+    def contact_attributes
+      string "name"
+      integer "age"
+      uri "homepage"
+    end
+  end
+end
+```
+
+Now the request schema can be rewritten like this:
+
+```ruby
+# in ContactsControllerSchema#create
+request do
+  body_params do |s|
+    s.object "contact" do |s|
+      s.contact_attributes
+    end
+  end
+end
+```
+
+and the response schema like that:
+
+```ruby
+# in app/schemas/contacts/create.schema
+body_with_object do |s|
+  s.object "contact" do |s|
+    s.integer "id"
+    s.contact_attributes
+  end
+end
+```
+
+This schema definition will serve you in several purposes:
+
+1. To automatically generate a reference documentation of your REST API.
+2. To validate the incoming requests and outgoing responses of your Web application.
+3. To sanitize incoming parameters.
+
+To get the generated documentation, you only need to mount the Rails engine provided by this library.
+
+```ruby
+# in config/routes.rb
+mount Respect::Rails::Engine => "/rest_spec"
+```
+
+This will add a new `/rest_spec` path under which you have access to your REST API documentation.
+In particular `/rest_spec/doc` should render something like that for the "create" request schema:
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "contact": {
+      "type": "object",
+      "required": true,
+      "properties": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "age": {
+          "type": "integer",
+          "required": true
+        },
+        "homepage": {
+          "type": "string",
+          "required": true,
+          "format": "uri"
+        }
+      }
+    }
+  }
+}
+```
+
+To validate the request and response with your schema definition, you simply need to add a filter
+like this:
+
+```ruby
+class ApplicationController < ActionController::Base
+  protect_from_forgery
+
+  around_filter :validate_schemas
+end
+```
+
+The filter searches for a schema associated to a controller's action. If it can find one it validates
+and sanitizes the parameters.
+
+If the request's parameters do not validate the schema a `Respect::ValidationError` exception will be
+raised before your controller's action is called. If they are valid, they will be sanitized in place.
+So the `homepage` parameter will be a `URI` object instead of a simple string:
+
+```ruby
+class ContactsController < ApplicationController
+  def create
+    params["homepage"].is_a?(URI::Generic)              #=> true
+  end
+end
+```
+
+The filter you have just installed is an "around" filter which mean the response will be validated too.
+An exception will be raised too. This validation does not happens in production environment, so it will
+save you some typing in your tests but does not bother you in production.
+
+# Getting started
+
+The easiest way to install _Respect for Rails_ is to add it to your `Gemfile`:
+
+```ruby
+gem "respect-rails", require: "respect/rails"
+```
+
+Then, after running the `bundle install` command, you can mount the Rails engine provided by this library
+by adding this line at the beginning of your `config/routes.rb` file.
+
+```ruby
+mount Respect::Rails::Engine => "/rest_spec"
+```
+
+Then, you can start your application web server as usual at point your web browser to
+`http://localhost:3000/rest_spec/doc`.
+
+FIXME: speak about generators ?
 
 # Getting help
 
