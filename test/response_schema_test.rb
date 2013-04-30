@@ -38,4 +38,22 @@ class ResponseSchemaTest < Test::Unit::TestCase
     assert(s1 != s2)
   end
 
+  def test_define_from_file
+    # Prepare mock file name and contents
+    filename = "/path/to/definition_file.rb"
+    file_content = <<-EOS.strip_heredoc
+      body_with_object do |s|
+        s.integer "result"
+      end
+      EOS
+    File.stubs(:read).with(filename).returns(file_content)
+    # Compute the expected response schema.
+    expected_response_schema = Respect::Rails::ResponseSchema.new
+    expected_response_schema.body = Respect::ObjectSchema.define do |s|
+      s.integer "result"
+    end
+    # Do the test.
+    rs = Respect::Rails::ResponseSchema.from_file(:ok, filename)
+    assert_equal expected_response_schema, rs
+  end
 end

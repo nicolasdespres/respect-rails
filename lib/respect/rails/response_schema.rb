@@ -12,6 +12,13 @@ module Respect
           ResponseDef.eval(*args, &block)
         end
 
+        # Read the response schema definition from the given +filename+ and
+        # evaluate it as a block passed to {ResponseSchema.define}
+        def from_file(status, filename)
+          define(status) do |r|
+            r.instance_eval(File.read(filename), filename)
+          end
+        end
       end
 
       def initialize(status = :ok)
