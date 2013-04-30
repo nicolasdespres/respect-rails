@@ -22,4 +22,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "sqlite3"
   s.add_development_dependency 'yard', '~> 0.8.5.2'
   s.add_development_dependency 'redcarpet', '~> 2.2.2'
+  s.add_development_dependency 'mocha', '~> 0.13.3'
 end
