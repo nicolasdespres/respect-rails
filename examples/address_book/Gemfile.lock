@@ -1,3 +1,9 @@
+PATH
+  remote: ../..
+  specs:
+    respect-rails (0.1.0)
+      rails (~> 3.2.13)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -107,6 +113,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   jquery-rails
   rails (= 3.2.13)
+  respect-rails!
   sass-rails (~> 3.2.3)
   sqlite3
   uglifier (>= 1.0.3)
