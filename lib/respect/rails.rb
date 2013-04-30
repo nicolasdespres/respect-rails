@@ -23,10 +23,10 @@ module Respect
       # Install all user-defined macros in +app/helpers/respect+ and extend the DSL with
       # them.
       def install_macros
-        Pathname.glob("#{::Rails.root}/app/helpers/#{self.name.underscore}/*_macros.rb") do |path|
+        Pathname.glob("#{::Rails.root}/app/helpers/respect/*_macros.rb") do |path|
           require path.to_s
           module_name = path.sub_ext('').sub(%r{^#{::Rails.root}/app/helpers/}, '').to_s
-          self.extend_dsl_with(module_name.camelize.constantize)
+          Respect.extend_dsl_with(module_name.camelize.constantize)
         end
       end
 
