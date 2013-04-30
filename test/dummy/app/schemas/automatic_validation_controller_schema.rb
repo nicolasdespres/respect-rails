@@ -95,4 +95,12 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
     end
   end
 
+  def request_format
+    request do
+      body_params do |s|
+        s.integer "id", required: false
+      end
+    end
+  end
+
 end

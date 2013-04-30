@@ -125,6 +125,18 @@ class AutomaticValidationController < ApplicationController
     end
   end
 
+  def request_format
+    respond_to do |format|
+      format.json do
+        render json: { id: 42 }, status: :ok
+      end
+      format.html # request_format.html.erb
+      format.pdf do
+        render pdf: "foo", status: :ok
+      end
+    end
+  end
+
   # It is mandatory to prepend the after filter so that it is
   # executed before load_response_schema. Or you have to call it
   # yourself.

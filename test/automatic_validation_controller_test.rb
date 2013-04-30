@@ -121,4 +121,24 @@ class AutomaticValidationControllerTest < ActionController::TestCase
     end
   end
 
+  def test_format_is_not_required
+    get :request_format
+    assert_response :success
+  end
+
+  def test_format_html_validate
+    get :request_format, format: "html"
+    assert_response :success
+  end
+
+  def test_format_json_validate
+    get :request_format, format: "json"
+    assert_response :success
+  end
+
+  def test_format_pdf_validate
+    get :request_format, format: "pdf"
+    assert_response :success
+  end
+
 end
