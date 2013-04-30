@@ -2,6 +2,9 @@ module Respect
   module Rails
     class ResponseSchemaSet
 
+      # FIXME(Nicolas Despres): Factor all file related code. This code should belongs to
+      # ResponseSchema as other way to define it.
+
       class << self
         def each_response_file(controller_name, action_name, &block)
           glob = "#{::Rails.root}/app/schemas/#{controller_name}/#{action_name}-*.schema"
@@ -32,7 +35,21 @@ module Respect
       attr_reader :controller_name, :action_name
 
       def method_missing(method_name, *arguments, &block)
-        self << ResponseSchema.define(method_name.to_sym, *arguments, &block)
+        if block
+          self << ResponseSchema.define(method_name.to_sym, *arguments, &block)
+        else
+          status = method_name.to_sym
+          filenames = [ "#{::Rails.root}/app/schemas/#@controller_name/#@action_name-#{status}.schema" ]
+          if status == :ok
+            filenames << "#{::Rails.root}/app/schemas/#@controller_name/#@action_name.schema"
+          end
+          filenames.each do |filename|
+            if File.exists?(filename)
+              self << ResponseSchema.from_file(status, filename)
+              break
+            end
+          end
+        end
       end
 
       def [](http_status)
