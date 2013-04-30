@@ -19,4 +19,23 @@ class ResponseSchemaTest < Test::Unit::TestCase
     assert_equal s, rs.body
   end
 
+  def test_duplicata_are_equal
+    s = Respect::Rails::ResponseSchema.new(:ok)
+    assert_equal s, s.dup
+  end
+
+  def test_differs_from_status
+    s1 = Respect::Rails::ResponseSchema.new(:ok)
+    s2 = Respect::Rails::ResponseSchema.new(:created)
+    assert(s1 != s2)
+  end
+
+  def test_differs_from_body
+    s1 = Respect::Rails::ResponseSchema.new
+    s1.body = Respect::IntegerSchema.new
+    s2 = Respect::Rails::ResponseSchema.new
+    s2.body = Respect::StringSchema.new
+    assert(s1 != s2)
+  end
+
 end

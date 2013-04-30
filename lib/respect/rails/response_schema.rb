@@ -27,6 +27,10 @@ module Respect
       attr_accessor :body
 
       delegate :validate, :validate?, :last_error, to: :body, allow_nil: true
+
+      def ==(other)
+        @status == other.status && @body == other.body
+      end
     end
   end
 end
