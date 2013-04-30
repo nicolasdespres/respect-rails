@@ -53,9 +53,7 @@ module Respect
 
       def collect_from_files
         each_response_file do |path, status|
-          self << ResponseSchema.define(status) do |r|
-            r.instance_eval(path.read, path.to_s)
-          end
+          self << ResponseSchema.from_file(status, path.to_s)
         end
       end
 
