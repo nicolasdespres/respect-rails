@@ -16,5 +16,6 @@ gem "jquery-rails"
 # To use debugger
 # gem 'debugger'
 
-# FIXME(Nicolas Despres): Move to gemspec!!!
-gem "respect", path: "#{ENV["HOME"]}/src/respect"
+if File.exists?("EdgeGemfile")
+  eval(File.read("EdgeGemfile"))
+end
