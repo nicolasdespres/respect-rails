@@ -72,7 +72,8 @@ class AutomaticValidationControllerTest < ActionController::TestCase
   def test_composite_custom_types
     # assert_nothing_raised do
       get :composite_custom_types, format: 'json',
-          circle: { center: { x: "1.0", y: "2.0" }, radius: "5.5" }
+          circle: { center: { x: "1.0", y: "2.0" }, radius: "5.5" },
+          color: [ 0.0, 0.1, 0.2, 0.3 ]
     # end
     assert_response :success
   end

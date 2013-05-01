@@ -76,6 +76,11 @@ class AutomaticValidationController < ApplicationController
     unless circle == expected_circle
       raise "parameter circle '#{circle.inspect}' is not equal to '#{expected_circle.inspect}'"
     end
+    expected_color = Rgba.new(0.0, 0.1, 0.2, 0.3)
+    color = params[:color]
+    unless color == expected_color
+      raise "parameter color '#{color.inspect}' is not equal to '#{expected_color.inspect}'"
+    end
     respond_to do |format|
       format.json do
         render json: true, status: :ok

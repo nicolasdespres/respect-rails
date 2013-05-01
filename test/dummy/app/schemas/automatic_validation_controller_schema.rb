@@ -60,6 +60,7 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
     request do
       body_params do |s|
         s.circle "circle"
+        s.rgba "color"
       end
     end
   end
