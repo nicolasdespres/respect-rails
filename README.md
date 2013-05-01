@@ -73,6 +73,15 @@ module Respect
 end
 ```
 
+and install this helper in the schema definition DSL like that:
+
+```ruby
+# in app/schemas/application_controller_schema.rb
+class ApplicationControllerSchema < Respect::Rails::ActionSchema
+  helper Respect::ApplicationMacros
+end
+```
+
 Now the request schema can be rewritten like this:
 
 ```ruby
