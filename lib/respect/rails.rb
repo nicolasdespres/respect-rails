@@ -20,16 +20,6 @@ module Respect
         ActionSchema.from_controller(controller_name, action_name)
       end
 
-      # Install all user-defined macros in +app/helpers/respect+ and extend the DSL with
-      # them.
-      def install_macros
-        Pathname.glob("#{::Rails.root}/app/helpers/respect/*_macros.rb") do |path|
-          require path.to_s
-          module_name = path.sub_ext('').sub(%r{^#{::Rails.root}/app/helpers/}, '').to_s
-          Respect.extend_dsl_with(module_name.camelize.constantize)
-        end
-      end
-
       # Return the name of the application where Respect's engine is mounted.
       def application_name
         ::Rails.application.class.parent_name

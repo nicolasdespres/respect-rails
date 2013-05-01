@@ -8,9 +8,6 @@ module Respect
       isolate_namespace Respect::Rails
       engine_name 'respect'
 
-      initializer "respect.install_macros" do
-        Respect::Rails.install_macros
-      end
     end # class Engine
 
   end # module Rails
