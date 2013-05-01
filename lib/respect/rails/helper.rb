@@ -20,7 +20,7 @@ module Respect
           log_msg = "  Request validation: "
           valid = nil
           measure = Benchmark.realtime do
-            valid = !!request_schema.validate!(params) unless request_schema.nil?
+            valid = request_schema.validate!(params) unless request_schema.nil?
           end
           if valid.nil?
             log_msg += "none"
