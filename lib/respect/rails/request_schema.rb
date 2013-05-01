@@ -20,20 +20,20 @@ module Respect
       attr_reader :url_params, :body_params, :params
 
       def url_params=(url_params)
+        update_params(@body_params, url_params)
         @url_params = url_params
-        update_params
-        @url_params
       end
 
       def body_params=(body_params)
+        update_params(body_params, @url_params)
         @body_params = body_params
-        update_params
-        @body_params
       end
 
       private
 
-      def update_params
+      # We update the params value each time url_params or body_params changes, because we
+      # must retains the stat of @params to handle consecutive call to {#validate} and {#last_error}
+      def update_params(body_params, url_params)
         @params = (
           if url_params && body_params
             body_params.merge(url_params)
