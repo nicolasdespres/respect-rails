@@ -122,7 +122,7 @@ module Respect
       def validate_schemas
         validate_request_schema
         yield
-        validate_response_schema
+        validate_response_schema if Respect::Rails::Engine.validate_response
       end
 
       # This before filter validate the request if it has been instrumented.
