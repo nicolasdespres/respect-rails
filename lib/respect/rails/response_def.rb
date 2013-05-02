@@ -13,7 +13,7 @@ module Respect
       end
 
       def eval(&block)
-        self.instance_exec(self, &block)
+        block.call(self)
         @response_schema
       end
 

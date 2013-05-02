@@ -1,7 +1,7 @@
 class AutomaticValidationControllerSchema < ApplicationControllerSchema
   def basic_get
-    request do
-      body_params do |s|
+    request do |r|
+      r.body_params do |s|
         s.doc <<-EOS.strip_heredoc
           A parameter
 
@@ -12,8 +12,8 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
       end
     end
     response_for do |status|
-      status.ok do
-        body_with_object do |s|
+      status.ok do |r|
+        r.body_with_object do |s|
           s.integer "id", equal_to: 42
         end
       end
@@ -30,8 +30,8 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
 
   def no_request_schema
     response_for do |status|
-      status.ok do
-        body_with_object do |s|
+      status.ok do |r|
+        r.body_with_object do |s|
           s.integer "id", equal_to: 42
         end
       end
@@ -49,16 +49,16 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
   end
 
   def route_constraints
-    request do
-      body_params do |s|
+    request do |r|
+      r.body_params do |s|
         s.string "param1", equal_to: "42"
       end
     end
   end
 
   def composite_custom_types
-    request do
-      body_params do |s|
+    request do |r|
+      r.body_params do |s|
         s.circle "circle"
         s.rgba "color"
       end
@@ -71,8 +71,8 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
   end
 
   def request_contextual_error
-    request do
-      body_params do |s|
+    request do |r|
+      r.body_params do |s|
         s.object "o1" do |s|
           s.object "o2" do |s|
             s.integer "i", equal_to: 42
@@ -84,8 +84,8 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
 
   def response_contextual_error
     response_for do |status|
-      status.ok do
-        body_with_object do |s|
+      status.ok do |r|
+        r.body_with_object do |s|
           s.object "o1" do |s|
             s.object "o2" do |s|
               s.integer "i", equal_to: 51
@@ -97,8 +97,8 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
   end
 
   def request_format
-    request do
-      body_params do |s|
+    request do |r|
+      r.body_params do |s|
         s.integer "id", required: false
       end
     end

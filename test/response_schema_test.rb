@@ -5,8 +5,8 @@ class ResponseSchemaTest < Test::Unit::TestCase
     s = Respect::ObjectSchema.define do |s|
       s.integer "result"
     end
-    block_def = Proc.new do
-      body_with_object do |s|
+    block_def = Proc.new do |r|
+      r.body_with_object do |s|
         s.integer "result"
       end
     end
