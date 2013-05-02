@@ -10,10 +10,6 @@ module Respect
 
       def initialize(*args)
         @request_schema = RequestSchema.new(*args)
-        @request_schema.url_params = ObjectSchema.define do |s|
-          s.string "controller", equal_to: @request_schema.controller.to_s, doc: false
-          s.string "action", equal_to: @request_schema.action.to_s, doc: false
-        end
       end
 
       def eval(&block)

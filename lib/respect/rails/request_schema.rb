@@ -11,6 +11,11 @@ module Respect
       def initialize(controller, action)
         @controller = controller
         @action = action
+        @url_params = ObjectSchema.define do |s|
+          s.string "controller", equal_to: @controller.to_s, doc: false
+          s.string "action", equal_to: @action.to_s, doc: false
+        end
+        @body_params = ObjectSchema.new
       end
 
       attr_reader :controller, :action
