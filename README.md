@@ -213,6 +213,24 @@ You can also read these documents for further documentation:
 * [Repect for Rails API reference documentation](FIXME)
 * {file:FAQ.md Frequently Asked Question}
 
+# Coming soon
+
+Many other great features are planned for the next releases. Here a short list of what is coming soon:
+
+* Resource schema: organize your schema as you organize your application resources.
+* Generator tasks: template for controller schema, helpers, etc...
+* Statistic about how much routes you have documented.
+* Rake tasks to quickly access a controller action schema from the terminal.
+* A web service to programmatically inspect your API schemas
+* A web service to check a request is valid without actually performing the request.
+* Specify request and response header
+* Try to fetch URL parameters from route's constraints: this may be tricky so no promise.
+* Try to fetch resource schema validator from model validator: again this may be tricky so no promise.
+* Partial response schema.
+* An helper to easily specify nested attributes.
+
+And many more... see the issue tracker with tag FIXME for more information.
+
 # Reporting bugs
 
 Even if I prefer patches, I also like bug reports. Feel free to create new issues in this project bug tracker on
