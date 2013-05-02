@@ -36,4 +36,11 @@ class ActionSchemaTest < ActiveSupport::TestCase
     assert_equal("http://my_application.org/no_schema/basic.json",
       s.no_schema_basic_url(format: "json"))
   end
+
+  test "has_schema" do
+    assert(!Respect::Rails::ActionSchema.from_controller(:automatic_validation, :no_schema_at_all).has_schema?)
+    assert(Respect::Rails::ActionSchema.from_controller(:automatic_validation, :response_schema_from_file).has_schema?)
+    assert(Respect::Rails::ActionSchema.from_controller(:automatic_validation, :response_schema_from_file_unknown_status).has_schema?)
+    assert(Respect::Rails::ActionSchema.from_controller(:automatic_validation, :no_request_schema).has_schema?)
+  end
 end

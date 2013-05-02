@@ -50,7 +50,11 @@
   <% end %>
 
   <h5>Body parameters</h5>
-  <%= highlight_json_schema schema.request_schema.body_params.to_h %>
+  <% if schema.request_schema.body_params && schema.request_schema.body_params.documented_properties.empty? %>
+    <%= highlight_json_schema schema.request_schema.body_params.to_h %>
+  <% else %>
+    No body parameters schema.
+  <% end %>
 <% end %>
 
 <% unless schema.response_schemas.empty? %>

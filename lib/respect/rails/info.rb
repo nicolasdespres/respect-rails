@@ -30,7 +30,9 @@ module Respect
           if route.engine?
             result += collect_engine_routes(route)
           else
-            result << route
+            if route.has_schema?
+              result << route
+            end
           end
         end
         result
@@ -55,7 +57,7 @@ module Respect
         toc = {}
         routes.each do |route|
           next if route.engine?
-          if route.schema
+          if route.has_schema?
             controller = route.controller_name
             action = route.action_name
             toc[controller] ||= {}

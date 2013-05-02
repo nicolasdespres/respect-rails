@@ -63,6 +63,11 @@ module Respect
           format: "json",
         }
       end
+
+      # Whether there is at least a request schema or one response schema for this action.
+      def has_schema?
+        request_schema || !response_schemas.empty?
+      end
     end
   end
 end

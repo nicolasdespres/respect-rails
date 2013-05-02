@@ -17,6 +17,22 @@ class InfoTest < ActiveSupport::TestCase
 
   def test_toc
     # FIXME(Nicolas Despres): Use a moch instead of relying on the dummy app which may change too often.
-    assert_equal 4, @info.toc.size
+    assert_equal 5, @info.toc.size
+  end
+
+  def test_route_not_collected_if_no_schema
+    # FIXME(Nicolas Despres): Use a moch instead of relying on the dummy app which may change too often.
+    assert(@info.routes.none?{|r| r.path =~ %r{/automatic_validation/no_schema_at_all} })
+    assert(@info.routes.any?{|r| r.path =~ %r{/automatic_validation/no_request_schema} })
+    assert(@info.routes.none?{|r| r.path =~ %r{/manual_validation/no_schema} })
+    assert(@info.routes.none?{|r| r.path =~ %r{/no_schema/basic} })
+  end
+
+  def test_action_not_in_toc_if_no_schemas
+    # FIXME(Nicolas Despres): Use a moch instead of relying on the dummy app which may change too often.
+    assert(!@info.toc["automatic_validation"].key?("no_schema_at_all"))
+    assert(@info.toc["automatic_validation"].key?("no_request_schema"))
+    assert(!@info.toc["manual_validation"].key?("no_schema"))
+    assert(!@info.toc.key?("no_schema"))
   end
 end

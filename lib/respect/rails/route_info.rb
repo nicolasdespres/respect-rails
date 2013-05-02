@@ -56,6 +56,10 @@ module Respect
         @schema ||= ActionSchema.from_controller(controller_name, action_name)
       end
 
+      def has_schema?
+        schema && schema.has_schema?
+      end
+
       def spec
         "#{verb} #{path}".strip
       end
