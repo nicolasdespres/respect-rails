@@ -34,6 +34,9 @@ module Respect
           log_msg += " (%.1fms)" % [ measure * 1000 ]
           ::Rails.logger.info log_msg
           if valid == false
+            last_validation_error.context.each do |msg|
+              ::Rails.logger.info "    #{msg}"
+            end
             raise last_validation_error
           end
           true
@@ -94,6 +97,9 @@ module Respect
           log_msg += " (%.1fms)" % [ measure * 1000 ]
           ::Rails.logger.info log_msg
           if valid == false
+            last_validation_error.context.each do |msg|
+              ::Rails.logger.info "    #{msg}"
+            end
             raise last_validation_error
           end
           true
