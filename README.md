@@ -220,7 +220,7 @@ GitHub. I will tag them. Before you start just a few reminders:
 
 1. A bug that I can reproduce on my machine is a half-fixed bug. So please, include as much information as you can.
    The best would be to include a failing test or a small ruby script reproducing the bug. If you can't be sure to
-   mention the version of Ruby you have used, th full backtrace of the exception if you add one, etc...
+   mention the version of Ruby you have used, the full back-trace of the exception if you had one, etc...
 1. A documented and tested feature is a half-implemented features. Sometimes English and natural languages in general
    failed to describe your thought precisely. A failing test will mean exactly what you want.
 1. Do not post question in the issue trackers. Use the [Respect discussion group](FIXME) instead.
