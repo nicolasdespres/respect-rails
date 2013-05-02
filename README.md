@@ -231,6 +231,11 @@ Many other great features are planned for the next releases. Here a short list o
 
 And many more... see the issue tracker with tag FIXME for more information.
 
+# Feedback
+
+I would love to hear what you think about this library. Feel free to post any comments/remarks on the
+[Respect discussion group](FIXME).
+
 # Reporting bugs
 
 Even if I prefer patches, I also like bug reports. Feel free to create new issues in this project bug tracker on
@@ -252,6 +257,8 @@ on GitHub. Before you start a few reminders:
 1. Every commits must have a comprehensive commit message.
 1. Whenever you are fixing a bug or adding a new features, tests are required.
 1. A bit of documentation so that others can understand your code.
+
+Don't worry these rules are not strict. If you can't make it I will be glade to help.
 
 # License
 
