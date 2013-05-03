@@ -228,6 +228,7 @@ Many other great features are planned for the next releases. Here a short list o
 * Try to fetch resource schema validator from model validator: again this may be tricky so no promise.
 * Partial response schema.
 * An helper to easily specify nested attributes.
+* More appealing documentation rendering.
 
 And many more... see the issue tracker with tag FIXME for more information.
 
