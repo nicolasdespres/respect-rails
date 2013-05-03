@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     match '/disabled/basic' => 'disabled#basic'
     match '/skipped_automatic_validation/basic_get' => 'skipped_automatic_validation#basic_get'
   end
+  match 'caught_exception/request_validator' => "caught_exception#request_validator", via: :get
 
   mount Respect::Rails::Engine => "/rest_spec"
 end
