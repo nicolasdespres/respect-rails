@@ -162,11 +162,11 @@ end
 ```
 
 The filter searches for a schema associated to a controller's action. If it can find one it validates
-and sanitizes the parameters.
+and sanitizes the parameters incoming parameters.
 
-If the request's parameters do not validate the schema a `Respect::ValidationError` exception will be
-raised before your controller's action is called. If they are valid, they will be sanitized in place.
-So the `homepage` parameter will be a `URI` object instead of a simple string:
+If the request's parameters do not validate the schema a `Respect::Rails::RequestValidationError`
+exception will be raised before your controller's action is called. If they are valid, they will be
+sanitized in place. Thus, the `homepage` parameter will be a `URI` object instead of a simple string:
 
 ```ruby
 class ContactsController < ApplicationController
@@ -176,9 +176,35 @@ class ContactsController < ApplicationController
 end
 ```
 
-The filter you have just installed is an "around" filter which mean the response will be validated too.
-An exception will be raised too. This validation does not happens in production environment, so it will
-save you some typing in your tests but does not bother you in production.
+The filter you have just installed is an "around" filter which means the response will be validated too.
+Actually, the validation takes place only if the response content type is `application/json`. A
+`Respect::Rails::ResponseValidationError` will be raised in case of error. This validation is executed
+only in development and test mode, so it won't bother you in production.
+
+Instead of the regular exception reporting view, you can get a dedicated one for
+`Respect::Rails::RequestValidationError` in development mode. You just have to add something like that
+to your `ApplicationController`:
+
+```ruby
+rescue_from_request_valiation_error if Rails.env.development?
+```
+
+This helper can render the error in both HTML and JSON.
+
+A response validation error handler is also available in development but only for JSON. In test mode
+you can use the `assert_valid_response_schema` helper in your functional test like that:
+
+```ruby
+require "respect/rails/unit_test_helper"
+class ContactsControllerTest < ActionController::TestCase
+  test "should get index" do
+    get :index
+    assert_response :success
+    assert_not_nil assigns(:contacts)
+    assert_valid_response_schema
+  end
+end
+```
 
 # Getting started
 
