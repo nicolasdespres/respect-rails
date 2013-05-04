@@ -4,7 +4,7 @@ class CaughtExceptionController < ApplicationController
     respond_to do |format|
       format.html do
         @error = exception
-        render template: "respect/rails/validation_exception", layout: false, status: :internal_server_error
+        render template: "respect/rails/request_validation_exception", layout: false, status: :internal_server_error
       end
       format.json do
         render json: exception.to_json, status: :internal_server_error

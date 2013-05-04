@@ -5,7 +5,7 @@ class CaughtExceptionControllerTest < ActionController::TestCase
   def test_request_validation_error_rendered_when_rescued_in_html_format
     get :request_validator, format: 'html', id: "error_value"
     assert_response :internal_server_error
-    assert_select "title", { count: 1, text: "Validation error" }
+    assert_select "title", { count: 1, text: "Request validation error caught" }
     assert_select "h1", { count: 1, text: /validation error/i }
     assert_select "h1", /in CaughtExceptionController#request_validator/
     assert_select "pre", /\bin object property\b/

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Validation error</title>
+  <title>Request validation error caught</title>
   <style>
     body { background-color: #fff; color: #333; }
 
@@ -25,8 +25,9 @@
   </style>
 </head>
 <body>
-  <h1>Validation error in <%= "#{controller_name.camelize}Controller##{action_name}" %></h1>
+  <h1>Request validation error in <%= "#{controller_name.camelize}Controller##{action_name}" %></h1>
   <p>
+    Invalid parameters schema:
     <pre><%= @error.context.join("\n") %></pre>
   </p>
 </body>
