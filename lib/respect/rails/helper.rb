@@ -122,6 +122,22 @@ module Respect
         around_filter :load_schemas
       end
 
+      module ClassMethods
+        def rescue_from_request_validation_error
+          rescue_from Respect::Rails::RequestValidationError do |exception|
+            respond_to do |format|
+              format.html do
+                @error = exception
+                render template: "respect/rails/request_validation_exception", layout: false, status: :internal_server_error
+              end
+              format.json do
+                render json: exception.to_json, status: :internal_server_error
+              end
+            end
+          end
+        end
+      end
+
       private
 
       # This around filter calls validation_request_schema and validation_response_schema
