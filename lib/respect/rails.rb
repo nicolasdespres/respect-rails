@@ -46,6 +46,12 @@ module Respect
       end
 
       attr_reader :part
+
+      def to_h
+        h = super
+        h[:error][:part] = @part
+        h
+      end
     end
 
     # Raised when we fail to validate an outgoing response.
