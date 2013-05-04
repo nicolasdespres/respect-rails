@@ -14,4 +14,16 @@ class CaughtExceptionController < ApplicationController
       end
     end
   end
+
+  def response_validator
+    @id = params[:id]
+    respond_to do |format|
+      format.html
+      format.json do
+        result = { id: @id }
+        render json: result
+      end
+    end
+  end
+
 end

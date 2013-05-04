@@ -33,6 +33,20 @@ module Respect
 
       attr_reader :validation_error
       delegate :context, :message, to: :@validation_error
+
+      def to_h
+        {
+          error: {
+            class: self.class.name,
+            message: message,
+            context: context,
+          }
+        }
+      end
+
+      def to_json
+        ActiveSupport::JSON.encode(self.to_h)
+      end
     end
 
     class << self

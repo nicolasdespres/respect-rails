@@ -102,7 +102,12 @@ module Respect
             last_validation_error.context.each do |msg|
               ::Rails.logger.info "    #{msg}"
             end
-            raise last_validation_error
+            if Respect::Rails::Engine.catch_response_validation_error
+              self.body = last_validation_error.to_json
+              self.status = :internal_server_error
+            else
+              raise last_validation_error
+            end
           end
           true
         end
