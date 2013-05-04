@@ -102,6 +102,13 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
         s.integer "id", required: false
       end
     end
+    response_for do |status|
+      status.ok do |r|
+        r.body_with_object do |s|
+          s.integer "id", equal_to: 42
+        end
+      end
+    end
   end
 
 end

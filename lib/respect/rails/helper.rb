@@ -83,7 +83,9 @@ module Respect
           log_msg = "  Response validation: "
           valid = nil
           measure = Benchmark.realtime do
-            valid = schema.validate?(ActiveSupport::JSON.decode(body)) if schema
+            if schema && content_type == Mime::JSON
+              valid = schema.validate?(ActiveSupport::JSON.decode(body))
+            end
           end
           if valid.nil?
             log_msg += "none"
