@@ -19,6 +19,12 @@ module Respect
       mattr_accessor :catch_response_validation_error
       self.catch_response_validation_error = ::Rails.env.development?
 
+      # Whether to load response schema. If the response schema is not loaded the
+      # response object is not instrumented.
+      # By default it is +true+ in development and test mode.
+      mattr_accessor :load_response_schema
+      self.load_response_schema = (::Rails.env.development? || ::Rails.env.test?)
+
     end # class Engine
 
   end # module Rails
