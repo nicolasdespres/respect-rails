@@ -2,7 +2,7 @@ require 'test_helper'
 
 class CaughtExceptionControllerTest < ActionController::TestCase
 
-  def test_request_validation_error_not_raised_when_rescued
+  def test_request_validation_error_rendered_when_rescued_in_html
     get :request_validator, id: "error_value"
     assert_response :internal_server_error
     assert_select "title", { count: 1, text: "Validation error" }
