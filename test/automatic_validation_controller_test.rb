@@ -24,7 +24,7 @@ class AutomaticValidationControllerTest < ActionController::TestCase
     get :no_request_schema, format: 'json', returned_id: 42
     assert_response :success
     assert response.has_schema?
-    assert response.validate_schema?
+    assert_valid_response_schema
   end
 
   def test_no_request_schema_still_invalidate_wrong_response
@@ -37,7 +37,7 @@ class AutomaticValidationControllerTest < ActionController::TestCase
     get :response_schema_from_file, format: 'json', returned_id: 42
     assert_response :created
     assert response.has_schema?
-    assert response.validate_schema?
+    assert_valid_response_schema
   end
 
   def test_response_schema_from_file_for_created_status_with_wrong_response
@@ -50,7 +50,7 @@ class AutomaticValidationControllerTest < ActionController::TestCase
     get :response_schema_from_file, format: 'json', failure: true
     assert_response :unprocessable_entity
     assert response.has_schema?
-    assert response.validate_schema?
+    assert_valid_response_schema
   end
 
   def test_response_schema_from_file_for_unknown_status
@@ -93,7 +93,7 @@ class AutomaticValidationControllerTest < ActionController::TestCase
     get :default_response_schema_in_file, format: 'json', failure: false
     assert_response :ok
     assert response.has_schema?
-    assert response.validate_schema?
+    assert_valid_response_schema
   end
 
   def test_default_response_schema_in_file_not_found_for_not_ok
