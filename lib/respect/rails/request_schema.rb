@@ -35,11 +35,13 @@ module Respect
       # Returns +true+ on success.
       def validate(doc)
         begin
+          url_params.options[:strict] = false
           url_params.validate(doc)
         rescue Respect::ValidationError => e
           raise RequestValidationError.new(e, :url)
         end
         begin
+          body_params.options[:strict] = false
           body_params.validate(doc)
         rescue Respect::ValidationError => e
           raise RequestValidationError.new(e, :body)
