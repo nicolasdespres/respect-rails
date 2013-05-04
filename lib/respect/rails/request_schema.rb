@@ -30,20 +30,22 @@ module Respect
         @url_params = @default_url_params.merge(url_params)
       end
 
-      # Validate +doc+ against a merged version of {#url_params} and {#body_params}.
-      # Raise {RequestValidationError} if the validation process fails.
+      # Validate +doc+ against {#body_params} and {#url_params}.
+      # Raise a {RequestValidationError} if an +doc+ is invalid.
+      # Returns +true+ on success.
       def validate(doc)
-        @last_params = body_params.merge(url_params)
         begin
-          @last_params.validate(doc)
+          url_params.validate(doc)
         rescue Respect::ValidationError => e
-          raise RequestValidationError.new(e)
+          raise RequestValidationError.new(e, :url)
         end
+        begin
+          body_params.validate(doc)
+        rescue Respect::ValidationError => e
+          raise RequestValidationError.new(e, :body)
+        end
+        true
       end
-
-      # Get the last parameters schema used for validation.
-      # Reset each time {#validate} is called.
-      attr_reader :last_params
 
       def validate?(doc)
         begin
@@ -63,7 +65,8 @@ module Respect
       def validate!(doc)
         valid = validate?(doc)
         if valid
-          last_params.sanitize_doc(doc, last_params.sanitized_doc)
+          url_params.sanitize_doc(doc, url_params.sanitized_doc)
+          body_params.sanitize_doc(doc, body_params.sanitized_doc)
         end
         valid
       end

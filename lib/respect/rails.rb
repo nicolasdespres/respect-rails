@@ -40,6 +40,12 @@ module Respect
 
     # Raised when we fail to validate an incoming request.
     class RequestValidationError < ValidationError
+      def initialize(error, part)
+        super(error)
+        @part = ActiveSupport::StringInquirer.new(part.to_s)
+      end
+
+      attr_reader :part
     end
 
     # Raised when we fail to validate an outgoing response.

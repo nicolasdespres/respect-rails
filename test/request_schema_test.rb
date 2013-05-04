@@ -23,12 +23,9 @@ class RequestSchemaTest < Test::Unit::TestCase
 
   def test_validate_both_body_and_url_params
     doc = {}
-    schema = Respect::ObjectSchema.new
-    result = Object.new
-    schema.stubs(:validate).with(doc).returns(result).once
-    @rs.body_params.stubs(:merge).with(@rs.url_params).returns(schema).once
-    assert_equal result.object_id, @rs.validate(doc).object_id
-    assert_equal schema.object_id, @rs.last_params.object_id
+    @rs.url_params.stubs(:validate).with(doc).once
+    @rs.body_params.stubs(:validate).with(doc).once
+    assert_equal true, @rs.validate(doc)
   end
 
   def test_validate_raise_request_validation_error_on_validation_error
@@ -47,7 +44,7 @@ class RequestSchemaTest < Test::Unit::TestCase
 
   def test_validate_query_returns_false_on_error_and_store_last_error
     doc = {}
-    error = Respect::Rails::RequestValidationError.new(Respect::ValidationError.new("message"))
+    error = Respect::Rails::RequestValidationError.new(Respect::ValidationError.new("message"), :url)
     @rs.stubs(:validate).with(doc).raises(error).once
     assert_equal false, @rs.validate?(doc)
     assert_equal error, @rs.last_error
@@ -56,11 +53,8 @@ class RequestSchemaTest < Test::Unit::TestCase
   def test_validate_shebang_returns_true_on_success_and_sanitize
     doc = {}
     @rs.stubs(:validate?).with(doc).returns(true).once
-    schema = Respect::ObjectSchema.new
-    @rs.stubs(:last_params).returns(schema)
-    sanitized_doc = {}
-    schema.stubs(:sanitized_doc).returns(sanitized_doc).once
-    schema.stubs(:sanitize_doc).with(doc, sanitized_doc).once
+    @rs.url_params.stubs(:sanitize_doc).with(doc, @rs.url_params.sanitized_doc).once
+    @rs.body_params.stubs(:sanitize_doc).with(doc, @rs.body_params.sanitized_doc).once
     assert_equal true, @rs.validate!(doc)
   end
 
