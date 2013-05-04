@@ -191,20 +191,8 @@ rescue_from_request_valiation_error if Rails.env.development?
 
 This helper can render the error in both HTML and JSON.
 
-A response validation error handler is also available in development but only for JSON. In test mode
-you can use the `assert_schema_validate_response` helper in your functional test like that:
-
-```ruby
-require "respect/rails/unit_test_helper"
-class ContactsControllerTest < ActionController::TestCase
-  test "should get index" do
-    get :index
-    assert_response :success
-    assert_not_nil assigns(:contacts)
-    assert_schema_validate_response
-  end
-end
-```
+A response validation error handler is also available but only in development. In test mode the exception
+would be raised as usual.
 
 # Getting started
 
