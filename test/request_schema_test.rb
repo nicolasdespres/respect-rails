@@ -53,8 +53,8 @@ class RequestSchemaTest < Test::Unit::TestCase
   def test_validate_shebang_returns_true_on_success_and_sanitize
     doc = {}
     @rs.stubs(:validate?).with(doc).returns(true).once
-    @rs.url_params.stubs(:sanitize_doc).with(doc, @rs.url_params.sanitized_doc).once
-    @rs.body_params.stubs(:sanitize_doc).with(doc, @rs.body_params.sanitized_doc).once
+    @rs.url_params.stubs(:sanitize_doc!).with(doc, @rs.url_params.sanitized_doc).once
+    @rs.body_params.stubs(:sanitize_doc!).with(doc, @rs.body_params.sanitized_doc).once
     assert_equal true, @rs.validate!(doc)
   end
 

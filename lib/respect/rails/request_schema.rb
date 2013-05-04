@@ -65,8 +65,8 @@ module Respect
       def validate!(doc)
         valid = validate?(doc)
         if valid
-          url_params.sanitize_doc(doc, url_params.sanitized_doc)
-          body_params.sanitize_doc(doc, body_params.sanitized_doc)
+          url_params.sanitize_doc!(doc, url_params.sanitized_doc)
+          body_params.sanitize_doc!(doc, body_params.sanitized_doc)
         end
         valid
       end
