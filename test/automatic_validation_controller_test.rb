@@ -9,7 +9,7 @@ class AutomaticValidationControllerTest < ActionController::TestCase
   end
 
   def test_basic_request_error_raises_exception
-    assert_raise(Respect::ValidationError) do
+    assert_raise(Respect::Rails::RequestValidationError) do
       get :basic_get, format: 'json', param1: 54
     end
   end
@@ -106,7 +106,7 @@ class AutomaticValidationControllerTest < ActionController::TestCase
     begin
       get :request_contextual_error, format: 'json', o1: { o2: { i: 54 } }
       assert false
-    rescue Respect::ValidationError => e
+    rescue Respect::Rails::RequestValidationError => e
       assert(e.context.first == e.message)
       assert_equal(4, e.context.size)
     end

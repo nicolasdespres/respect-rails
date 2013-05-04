@@ -9,7 +9,7 @@ module Respect
         def validate_schema?
           begin
             validate_schema
-          rescue ValidationError => e
+          rescue Respect::Rails::RequestValidationError
             false
           end
         end

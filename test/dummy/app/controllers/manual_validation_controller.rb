@@ -4,7 +4,7 @@ class ManualValidationController < ApplicationController
   def raise_custom_error
     begin
       request.validate_schema
-    rescue Respect::ValidationError
+    rescue Respect::Rails::RequestValidationError
       raise "invalid request schema"
     end
   end

@@ -15,6 +15,16 @@ module Respect
     autoload :EngineInfo
     autoload :RouteInfo
 
+    # Raised when we fail to validate an incoming request.
+    class RequestValidationError < StandardError
+      def initialize(validation_error)
+        @validation_error = validation_error
+      end
+
+      attr_reader :validation_error
+      delegate :context, :message, to: :@validation_error
+    end
+
     class << self
       def load_schema(controller_name, action_name)
         ActionSchema.from_controller(controller_name, action_name)

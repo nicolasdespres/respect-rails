@@ -1,6 +1,6 @@
 class CaughtExceptionController < ApplicationController
   around_filter :validate_schemas
-  rescue_from Respect::ValidationError do |exception|
+  rescue_from Respect::Rails::RequestValidationError do |exception|
     @error = exception
     render template: "respect/rails/validation_exception", layout: false, status: :internal_server_error
   end
