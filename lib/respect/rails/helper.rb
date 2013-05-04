@@ -5,7 +5,7 @@ module Respect
 
       module Request
         # Return whether the request validate the schema.
-        # You can get the validation error via _last_validation_error_.
+        # You can get the validation error via {#last_validation_error}.
         def validate_schema?
           begin
             validate_schema
@@ -14,7 +14,7 @@ module Respect
           end
         end
 
-        # Raise a ValidationError exception if this request does not validate
+        # Raise a {Respect::Rails::ValidationError} exception if this request does not validate
         # the schema.
         def validate_schema
           log_msg = "  Request validation: "
@@ -74,7 +74,7 @@ module Respect
         def validate_schema?
           begin
             validate_schema
-          rescue ValidationError => e
+          rescue Respect::Rails::ResponseValidationError => e
             false
           end
         end

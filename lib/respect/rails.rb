@@ -15,8 +15,7 @@ module Respect
     autoload :EngineInfo
     autoload :RouteInfo
 
-    # Raised when we fail to validate an incoming request.
-    class RequestValidationError < StandardError
+    class ValidationError < StandardError
       def initialize(validation_error)
         @validation_error = validation_error
       end
@@ -39,28 +38,12 @@ module Respect
       end
     end
 
+    # Raised when we fail to validate an incoming request.
+    class RequestValidationError < ValidationError
+    end
+
     # Raised when we fail to validate an outgoing response.
-    class ResponseValidationError < StandardError
-      def initialize(validation_error)
-        @validation_error = validation_error
-      end
-
-      attr_reader :validation_error
-      delegate :context, :message, to: :@validation_error
-
-      def to_h
-        {
-          error: {
-            class: self.class.name,
-            message: message,
-            context: context,
-          }
-        }
-      end
-
-      def to_json
-        ActiveSupport::JSON.encode(self.to_h)
-      end
+    class ResponseValidationError < ValidationError
     end
 
     class << self

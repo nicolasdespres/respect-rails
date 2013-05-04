@@ -36,7 +36,7 @@ module Respect
         @last_params = body_params.merge(url_params)
         begin
           @last_params.validate(doc)
-        rescue ValidationError => e
+        rescue Respect::ValidationError => e
           raise RequestValidationError.new(e)
         end
       end
