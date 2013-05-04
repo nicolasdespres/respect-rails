@@ -18,7 +18,7 @@ class ManualValidationControllerTest < ActionController::TestCase
     get :no_schema, format: 'json', param1: 1664
     assert_response :success
     assert !response.has_schema?
-    assert_response_validate_schema
+    assert_schema_validate_response
   end
 
 end

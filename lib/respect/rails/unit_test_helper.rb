@@ -1,7 +1,7 @@
 module Respect
   module Rails
     module UnitTestHelper
-      def assert_valid_response_schema
+      def assert_schema_validate_response
         return unless response.has_schema?
         if !response.validate_schema?
           assert false, response.last_validation_error.context.join(" ")
