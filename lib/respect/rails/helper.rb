@@ -140,7 +140,7 @@ module Respect
 
       private
 
-      # This around filter calls validation_request_schema and validation_response_schema
+      # This "around" filter calls +validation_request_schema+ and +validation_response_schema+
       # respectively before and after the controller's action.
       def validate_schemas
         validate_request_schema
@@ -148,34 +148,36 @@ module Respect
         validate_response_schema if Respect::Rails::Engine.validate_response
       end
 
-      # This before filter validate the request if it has been instrumented.
+      # This "before" filter validates the request if it has been instrumented.
       def validate_request_schema
         request.validate_schema if request.respond_to? :validate_schema
       end
 
-      # This after filter validates the response with the schema associated to the
+      # This "after" filter validates the response with the schema associated to the
       # response status if one is found in the instrumented request.
       def validate_response_schema
         load_response_schema
         response.validate_schema if response.respond_to? :validate_schema
       end
 
-      # This around filter calls load_request_schema and load_response_schema
-      # respectively before and after the controller's action.
+      # This "around" filter calls +load_request_schema+ and +load_response_schema+
+      # respectively before and after the controller's action. It is useful
+      # if you want to do the validation yourself. It only instruments the request
+      # and the response object.
       def load_schemas
         load_request_schema
         yield
         load_response_schema
       end
 
-      # This before filter extends the request object with validation methods
+      # This "before" filter extends the request object with validation methods
       # and load the associated schema.
       def load_request_schema
         request.extend(Request)
         request.send(:endpoint_schema=, Respect::Rails.load_schema(controller_name, action_name))
       end
 
-      # This after filter extends the response object with validation methods
+      # This "after" filter extends the response object with validation methods
       # and load the associated schema.
       # You can safely call this filter multiple times (i.e. from other after
       # filters callbacks).
