@@ -1,6 +1,10 @@
 require "test_helper"
 
 class ResponseSchemaTest < Test::Unit::TestCase
+  def setup
+    @rs = Respect::Rails::ResponseSchema.new
+  end
+
   def test_define_with_block
     s = Respect::ObjectSchema.define do |s|
       s.integer "result"
@@ -55,5 +59,38 @@ class ResponseSchemaTest < Test::Unit::TestCase
     # Do the test.
     rs = Respect::Rails::ResponseSchema.from_file(:ok, filename)
     assert_equal expected_response_schema, rs
+  end
+
+  def test_validate_raise_response_validation_error_on_validation_error
+    doc = {}
+    schema = Respect::ObjectSchema.new
+    @rs.stubs(:body).returns(schema)
+    schema.stubs(:validate).with(doc).raises(Respect::ValidationError.new("message"))
+    assert_raises(Respect::Rails::ResponseValidationError) do
+      @rs.validate(doc)
+    end
+  end
+
+  def test_validate_returns_schema_validation_on_success
+    doc = {}
+    schema = Respect::ObjectSchema.new
+    @rs.stubs(:body).returns(schema)
+    result = Object.new
+    schema.stubs(:validate).with(doc).returns(result)
+    assert_equal result.object_id, @rs.validate(doc).object_id
+  end
+
+  def test_validate_query_returns_true_when_no_error
+    doc = {}
+    @rs.stubs(:validate).with(doc).returns(nil)
+    assert_equal true, @rs.validate?(doc)
+  end
+
+  def test_validate_query_returns_false_on_error_and_store_last_error
+    doc = {}
+    error = Respect::Rails::ResponseValidationError.new(Respect::ValidationError.new("message"))
+    @rs.stubs(:validate).with(doc).raises(error).once
+    assert_equal false, @rs.validate?(doc)
+    assert_equal error, @rs.last_error
   end
 end

@@ -28,7 +28,7 @@ class AutomaticValidationControllerTest < ActionController::TestCase
   end
 
   def test_no_request_schema_still_invalidate_wrong_response
-    assert_raises(Respect::ValidationError) do
+    assert_raises(Respect::Rails::ResponseValidationError) do
       get :no_request_schema, format: 'json', returned_id: 6666666
     end
   end
@@ -41,7 +41,7 @@ class AutomaticValidationControllerTest < ActionController::TestCase
   end
 
   def test_response_schema_from_file_for_created_status_with_wrong_response
-    assert_raise(Respect::ValidationError) do
+    assert_raise(Respect::Rails::ResponseValidationError) do
       get :response_schema_from_file, format: 'json', returned_id: 51
     end
   end
@@ -116,7 +116,7 @@ class AutomaticValidationControllerTest < ActionController::TestCase
     begin
       get :response_contextual_error, format: 'json'
       assert false
-    rescue Respect::ValidationError => e
+    rescue Respect::Rails::ResponseValidationError => e
       assert(e.context.first == e.message)
       assert_equal(4, e.context.size)
     end

@@ -33,11 +33,29 @@ module Respect
 
       attr_accessor :body
 
-      delegate :validate, :validate?, :last_error, to: :body, allow_nil: true
-
       def ==(other)
         @status == other.status && @body == other.body
       end
+
+      def validate(doc)
+        begin
+          body.validate(doc)
+        rescue Respect::ValidationError => e
+          raise Respect::Rails::ResponseValidationError.new(e)
+        end
+      end
+
+      def validate?(doc)
+        begin
+          validate(doc)
+          true
+        rescue Respect::Rails::ResponseValidationError => e
+          @last_error = e
+          false
+        end
+      end
+
+      attr_reader :last_error
     end
   end
 end
