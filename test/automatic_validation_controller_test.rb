@@ -40,7 +40,7 @@ class AutomaticValidationControllerTest < ActionController::TestCase
     assert response.validate_schema?
   end
 
-  def test_response_schema_from_file_for_created_status__with_wrong_response
+  def test_response_schema_from_file_for_created_status_with_wrong_response
     assert_raise(Respect::ValidationError) do
       get :response_schema_from_file, format: 'json', returned_id: 51
     end
