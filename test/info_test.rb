@@ -17,7 +17,7 @@ class InfoTest < ActiveSupport::TestCase
 
   def test_toc
     # FIXME(Nicolas Despres): Use a moch instead of relying on the dummy app which may change too often.
-    assert_equal 5, @info.toc.size
+    assert_equal 6, @info.toc.size
   end
 
   def test_route_not_collected_if_no_schema

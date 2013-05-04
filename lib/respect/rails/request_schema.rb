@@ -11,45 +11,66 @@ module Respect
       def initialize(controller, action)
         @controller = controller
         @action = action
-        @url_params = ObjectSchema.define do |s|
+        @default_url_params = ObjectSchema.define do |s|
           s.string "controller", equal_to: @controller.to_s, doc: false
           s.string "action", equal_to: @action.to_s, doc: false
         end
+        @url_params = @default_url_params.dup
         @body_params = ObjectSchema.new
       end
 
       attr_reader :controller, :action
 
-      delegate :validate, :validate?, :validate!, :last_error, to: :params, allow_nil: true
+      attr_accessor :body_params
 
-      attr_reader :url_params, :body_params, :params
+      attr_reader :url_params, :default_url_params
 
+      # Merge +url_params+ with {#default_url_params} and store it.
       def url_params=(url_params)
-        update_params(@body_params, url_params)
-        @url_params = url_params
+        @url_params = @default_url_params.merge(url_params)
       end
 
-      def body_params=(body_params)
-        update_params(body_params, @url_params)
-        @body_params = body_params
+      # Validate +doc+ against {#body_params} and {#url_params}.
+      # Raise a {RequestValidationError} if an +doc+ is invalid.
+      # Returns +true+ on success.
+      def validate(doc)
+        begin
+          url_params.options[:strict] = false
+          url_params.validate(doc)
+        rescue Respect::ValidationError => e
+          raise RequestValidationError.new(e, :url)
+        end
+        begin
+          body_params.options[:strict] = false
+          body_params.validate(doc)
+        rescue Respect::ValidationError => e
+          raise RequestValidationError.new(e, :body)
+        end
+        true
       end
 
-      private
+      def validate?(doc)
+        begin
+          validate(doc)
+          true
+        rescue RequestValidationError => e
+          @last_error = e
+          false
+        end
+      end
 
-      # We update the params value each time url_params or body_params changes, because we
-      # must retains the stat of @params to handle consecutive call to {#validate} and {#last_error}
-      def update_params(body_params, url_params)
-        @params = (
-          if url_params && body_params
-            body_params.merge(url_params)
-          elsif body_params
-            body_params
-          elsif url_params
-            url_params
-          else
-            nil
-          end
-          )
+      # Return the last validation error that happens during the
+      # validation process. (set by {#validate?})
+      # Reset each time {#validate?} is called.
+      attr_reader :last_error
+
+      def validate!(doc)
+        valid = validate?(doc)
+        if valid
+          url_params.sanitize_doc!(doc, url_params.sanitized_doc)
+          body_params.sanitize_doc!(doc, body_params.sanitized_doc)
+        end
+        valid
       end
 
     end

@@ -5,16 +5,16 @@ module Respect
 
       module Request
         # Return whether the request validate the schema.
-        # You can get the validation error via _last_validation_error_.
+        # You can get the validation error via {#last_validation_error}.
         def validate_schema?
           begin
             validate_schema
-          rescue ValidationError => e
+          rescue Respect::Rails::RequestValidationError
             false
           end
         end
 
-        # Raise a ValidationError exception if this request does not validate
+        # Raise a {Respect::Rails::ValidationError} exception if this request does not validate
         # the schema.
         def validate_schema
           log_msg = "  Request validation: "
@@ -74,7 +74,7 @@ module Respect
         def validate_schema?
           begin
             validate_schema
-          rescue ValidationError => e
+          rescue Respect::Rails::ResponseValidationError => e
             false
           end
         end
@@ -102,7 +102,12 @@ module Respect
             last_validation_error.context.each do |msg|
               ::Rails.logger.info "    #{msg}"
             end
-            raise last_validation_error
+            if Respect::Rails::Engine.catch_response_validation_error
+              self.body = last_validation_error.to_json
+              self.status = :internal_server_error
+            else
+              raise last_validation_error
+            end
           end
           true
         end
@@ -117,9 +122,25 @@ module Respect
         around_filter :load_schemas
       end
 
+      module ClassMethods
+        def rescue_from_request_validation_error
+          rescue_from Respect::Rails::RequestValidationError do |exception|
+            respond_to do |format|
+              format.html do
+                @error = exception
+                render template: "respect/rails/request_validation_exception", layout: false, status: :internal_server_error
+              end
+              format.json do
+                render json: exception.to_json, status: :internal_server_error
+              end
+            end
+          end
+        end
+      end
+
       private
 
-      # This around filter calls validation_request_schema and validation_response_schema
+      # This "around" filter calls +validation_request_schema+ and +validation_response_schema+
       # respectively before and after the controller's action.
       def validate_schemas
         validate_request_schema
@@ -127,34 +148,38 @@ module Respect
         validate_response_schema if Respect::Rails::Engine.validate_response
       end
 
-      # This before filter validate the request if it has been instrumented.
+      # This "before" filter validates the request if it has been instrumented.
       def validate_request_schema
         request.validate_schema if request.respond_to? :validate_schema
       end
 
-      # This after filter validates the response with the schema associated to the
+      # This "after" filter validates the response with the schema associated to the
       # response status if one is found in the instrumented request.
       def validate_response_schema
         load_response_schema
         response.validate_schema if response.respond_to? :validate_schema
       end
 
-      # This around filter calls load_request_schema and load_response_schema
-      # respectively before and after the controller's action.
+      # This "around" filter calls +load_request_schema+ and +load_response_schema+
+      # respectively before and after the controller's action. It is useful
+      # if you want to do the validation yourself. It only instruments the request
+      # and the response object.
       def load_schemas
         load_request_schema
         yield
-        load_response_schema
+        if Respect::Rails::Engine.validate_response || Respect::Rails::Engine.load_response_schema
+          load_response_schema
+        end
       end
 
-      # This before filter extends the request object with validation methods
+      # This "before" filter extends the request object with validation methods
       # and load the associated schema.
       def load_request_schema
         request.extend(Request)
         request.send(:endpoint_schema=, Respect::Rails.load_schema(controller_name, action_name))
       end
 
-      # This after filter extends the response object with validation methods
+      # This "after" filter extends the response object with validation methods
       # and load the associated schema.
       # You can safely call this filter multiple times (i.e. from other after
       # filters callbacks).
