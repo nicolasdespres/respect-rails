@@ -1,7 +1,7 @@
 class DisabledControllerSchema < Respect::Rails::ActionSchema
   def basic
     request do |r|
-      r.body_params do |s|
+      r.body_parameters do |s|
         s.integer "param1", equal_to: 42
       end
     end

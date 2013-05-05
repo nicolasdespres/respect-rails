@@ -23,7 +23,7 @@ for its `create` action may look like this:
 class ContactsControllerSchema < ApplicationControllerSchema
   def create
     request do
-      body_params do |s|
+      body_parameters do |s|
         s.object "contact" do |s|
           s.string "name"
           s.integer "age"
@@ -34,7 +34,7 @@ class ContactsControllerSchema < ApplicationControllerSchema
     response_for do |status|
       status.ok # contacts/create.schema
       status.unprocessable_entity do
-        body do |s|
+        body_parameters do |s|
           s.string "error"
         end
       end
