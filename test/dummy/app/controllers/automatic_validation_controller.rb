@@ -28,7 +28,7 @@ class AutomaticValidationController < ApplicationController
     respond_to do |format|
       format.json do
         result = { id: params[:returned_id] }
-        render json: result
+        render json: result, status: 200
       end
     end
   end
