@@ -5,25 +5,25 @@ class RequestSchemaTest < Test::Unit::TestCase
     @rs = Respect::Rails::RequestSchema.new("ctrl", "action")
   end
 
-  def test_default_url_params
-    assert_equal "ctrl", @rs.default_url_params["controller"].options[:equal_to]
-    assert_equal false, @rs.default_url_params["controller"].doc
-    assert_equal "action", @rs.default_url_params["action"].options[:equal_to]
-    assert_equal false, @rs.default_url_params["action"].doc
+  def test_default_path_parameters
+    assert_equal "ctrl", @rs.default_path_parameters["controller"].options[:equal_to]
+    assert_equal false, @rs.default_path_parameters["controller"].doc
+    assert_equal "action", @rs.default_path_parameters["action"].options[:equal_to]
+    assert_equal false, @rs.default_path_parameters["action"].doc
   end
 
-  def test_url_params_are_merged_with_default
+  def test_path_parameters_are_merged_with_default
     params = Respect::ObjectSchema.new
     result = Respect::ObjectSchema.new
-    @rs.default_url_params.stubs(:merge).with(params).returns(result).once
-    assert_not_equal result.object_id, @rs.url_params.object_id
-    assert_equal result.object_id, @rs.public_send(:url_params=, params).object_id
-    assert_equal result.object_id, @rs.url_params.object_id
+    @rs.default_path_parameters.stubs(:merge).with(params).returns(result).once
+    assert_not_equal result.object_id, @rs.path_parameters.object_id
+    assert_equal result.object_id, @rs.public_send(:path_parameters=, params).object_id
+    assert_equal result.object_id, @rs.path_parameters.object_id
   end
 
-  def test_validate_both_body_and_url_params
+  def test_validate_both_body_and_path_parameters
     doc = {}
-    @rs.url_params.stubs(:validate).with(doc).once
+    @rs.path_parameters.stubs(:validate).with(doc).once
     @rs.body_params.stubs(:validate).with(doc).once
     assert_equal true, @rs.validate(doc)
   end
@@ -44,7 +44,7 @@ class RequestSchemaTest < Test::Unit::TestCase
 
   def test_validate_query_returns_false_on_error_and_store_last_error
     doc = {}
-    error = Respect::Rails::RequestValidationError.new(Respect::ValidationError.new("message"), :url)
+    error = Respect::Rails::RequestValidationError.new(Respect::ValidationError.new("message"), :path)
     @rs.stubs(:validate).with(doc).raises(error).once
     assert_equal false, @rs.validate?(doc)
     assert_equal error, @rs.last_error
@@ -53,7 +53,7 @@ class RequestSchemaTest < Test::Unit::TestCase
   def test_validate_shebang_returns_true_on_success_and_sanitize
     doc = {}
     @rs.stubs(:validate?).with(doc).returns(true).once
-    @rs.url_params.stubs(:sanitize_doc!).with(doc, @rs.url_params.sanitized_doc).once
+    @rs.path_parameters.stubs(:sanitize_doc!).with(doc, @rs.path_parameters.sanitized_doc).once
     @rs.body_params.stubs(:sanitize_doc!).with(doc, @rs.body_params.sanitized_doc).once
     assert_equal true, @rs.validate!(doc)
   end

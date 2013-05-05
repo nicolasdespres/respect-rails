@@ -17,8 +17,8 @@ module Respect
         @request_schema
       end
 
-      def url_params(&block)
-        @request_schema.url_params.eval(&block)
+      def path_parameters(&block)
+        @request_schema.path_parameters.eval(&block)
       end
 
       def body_params(&block)

@@ -11,11 +11,11 @@ module Respect
       def initialize(controller, action)
         @controller = controller
         @action = action
-        @default_url_params = ObjectSchema.define do |s|
+        @default_path_parameters = ObjectSchema.define do |s|
           s.string "controller", equal_to: @controller.to_s, doc: false
           s.string "action", equal_to: @action.to_s, doc: false
         end
-        @url_params = @default_url_params.dup
+        @path_parameters = @default_path_parameters.dup
         @body_params = ObjectSchema.new
       end
 
@@ -23,22 +23,22 @@ module Respect
 
       attr_accessor :body_params
 
-      attr_reader :url_params, :default_url_params
+      attr_reader :path_parameters, :default_path_parameters
 
-      # Merge +url_params+ with {#default_url_params} and store it.
-      def url_params=(url_params)
-        @url_params = @default_url_params.merge(url_params)
+      # Merge +path_parameters+ with {#default_path_parameters} and store it.
+      def path_parameters=(path_parameters)
+        @path_parameters = @default_path_parameters.merge(path_parameters)
       end
 
-      # Validate +doc+ against {#body_params} and {#url_params}.
+      # Validate +doc+ against {#body_params} and {#path_parameters}.
       # Raise a {RequestValidationError} if an +doc+ is invalid.
       # Returns +true+ on success.
       def validate(doc)
         begin
-          url_params.options[:strict] = false
-          url_params.validate(doc)
+          path_parameters.options[:strict] = false
+          path_parameters.validate(doc)
         rescue Respect::ValidationError => e
-          raise RequestValidationError.new(e, :url)
+          raise RequestValidationError.new(e, :path)
         end
         begin
           body_params.options[:strict] = false
@@ -67,7 +67,7 @@ module Respect
       def validate!(doc)
         valid = validate?(doc)
         if valid
-          url_params.sanitize_doc!(doc, url_params.sanitized_doc)
+          path_parameters.sanitize_doc!(doc, path_parameters.sanitized_doc)
           body_params.sanitize_doc!(doc, body_params.sanitized_doc)
         end
         valid

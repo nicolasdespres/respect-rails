@@ -27,8 +27,8 @@
 <body>
   <h1>Request validation error in <%= "#{controller_name.camelize}Controller##{action_name}" %></h1>
   <p>
-    <% if @error.part.url? %>
-      Invalid URL parameters:
+    <% if @error.part.path? %>
+      Invalid path parameters:
       <pre><%= @error.context.join("\n") %></pre>
     <% elsif @error.part.body? %>
       Invalid body parameters:
