@@ -246,6 +246,16 @@ You can also read these documents for further documentation:
 * [Repect for Rails API reference documentation](FIXME)
 * {file:FAQ.md Frequently Asked Question}
 
+# Compatibility
+
+_Respect for Rails_ has been tested with:
+
+* Ruby 1.9.3-p392 (should be compatible with all 1.9.x family)
+* Rails 3.2.13
+* Respect 0.1.0
+
+Note that it uses `ActiveSupport::JSON` to encode/decode JSON objects.
+
 # Feedback
 
 I would love to hear what you think about this library. Feel free to post any comments/remarks on the
