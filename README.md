@@ -214,19 +214,6 @@ Then, you can start your application web server as usual at point your web brows
 
 FIXME: speak about generators ?
 
-# Getting help
-
-The easiest way to get help about how to use this library is to post your question on the
-[Respect discussion group](FIXME). I will be glade to answer. I may have already answered the
-same question so before, you post your question take a bit of time to search the group.
-
-You can also read these documents for further documentation:
-
-* [Respect documentation](FIXME)
-* [Repect API reference documentation](FIXME)
-* [Repect for Rails API reference documentation](FIXME)
-* {file:FAQ.md Frequently Asked Question}
-
 # Coming soon
 
 Many other great features are planned for the next releases. Here a short list of what is coming soon:
@@ -245,6 +232,19 @@ Many other great features are planned for the next releases. Here a short list o
 * More appealing documentation rendering.
 
 And many more... see the issue tracker with tag FIXME for more information.
+
+# Getting help
+
+The easiest way to get help about how to use this library is to post your question on the
+[Respect discussion group](FIXME). I will be glade to answer. I may have already answered the
+same question so before, you post your question take a bit of time to search the group.
+
+You can also read these documents for further documentation:
+
+* [Respect documentation](FIXME)
+* [Repect API reference documentation](FIXME)
+* [Repect for Rails API reference documentation](FIXME)
+* {file:FAQ.md Frequently Asked Question}
 
 # Feedback
 
