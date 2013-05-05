@@ -4,7 +4,7 @@ module Respect
       extend ActiveSupport::Concern
 
       module Request
-        # Return whether the request validate the schema.
+        # Return whether this request validates the schema.
         # You can get the validation error via {#last_validation_error}.
         def validate_schema?
           begin
@@ -14,8 +14,8 @@ module Respect
           end
         end
 
-        # Raise a {Respect::Rails::ValidationError} exception if this request does not validate
-        # the schema.
+        # Raise a {Respect::Rails::RequestValidationError} exception if this
+        # request does not validate the schema.
         def validate_schema
           log_msg = "  Request validation: "
           valid = nil
@@ -71,6 +71,8 @@ module Respect
           !!@schema
         end
 
+        # Return whether this response validates the schema.
+        # You can get the validation error via {#last_validation_error}.
         def validate_schema?
           begin
             validate_schema
@@ -79,6 +81,8 @@ module Respect
           end
         end
 
+        # Raise a {Respect::Rails::ResponseValidationError} exception if this
+        # response does not validate the schema.
         def validate_schema
           log_msg = "  Response validation: "
           valid = nil
