@@ -84,7 +84,7 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
 
   def response_contextual_error
     response_for do |status|
-      status.ok do |r|
+      status.is 200 do |r|
         r.body do |s|
           s.object "o1" do |s|
             s.object "o2" do |s|
@@ -103,7 +103,7 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
       end
     end
     response_for do |status|
-      status.ok do |r|
+      status.is :ok do |r|
         r.body do |s|
           s.integer "id", equal_to: 42
         end

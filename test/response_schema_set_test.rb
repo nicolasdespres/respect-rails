@@ -28,4 +28,15 @@ class ResponseSchemaSetTest < Test::Unit::TestCase
     rss.ok
     assert(rss[200].equal?(rs))
   end
+
+  def test_normalize_status
+    assert_equal :ok, Respect::Rails::ResponseSchemaSet.symbolize_status(:ok)
+    assert_equal :ok, Respect::Rails::ResponseSchemaSet.symbolize_status("ok")
+    assert_equal :ok, Respect::Rails::ResponseSchemaSet.symbolize_status(200)
+    assert_equal :ok, Respect::Rails::ResponseSchemaSet.symbolize_status("200")
+    assert_equal :ok, Respect::Rails::ResponseSchemaSet.symbolize_status(200.5)
+    assert_raises(ArgumentError) do
+      Respect::Rails::ResponseSchemaSet.symbolize_status(Object.new)
+    end
+  end
 end

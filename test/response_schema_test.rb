@@ -93,4 +93,11 @@ class ResponseSchemaTest < Test::Unit::TestCase
     assert_equal false, @rs.validate?(doc)
     assert_equal error, @rs.last_error
   end
+
+  def test_symbolize_http_status
+    assert_equal :ok, Respect::Rails::ResponseSchema.symbolize_http_status(200)
+    assert_equal :internal_server_error, Respect::Rails::ResponseSchema.symbolize_http_status(0)
+    assert_equal :gateway_timeout, Respect::Rails::ResponseSchema.symbolize_http_status(504)
+    assert_equal :http_version_not_supported, Respect::Rails::ResponseSchema.symbolize_http_status(505)
+  end
 end

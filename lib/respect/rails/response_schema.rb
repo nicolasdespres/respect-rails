@@ -8,6 +8,12 @@ module Respect
           Rack::Utils.status_code(status)
         end
 
+        # FIXME(Nicolas Despres): Move me to another module/class.
+        def symbolize_http_status(http_status)
+          h = Rack::Utils::HTTP_STATUS_CODES
+          (h[http_status] || h[500]).downcase.gsub(/\s|-/, '_').to_sym
+        end
+
         def define(*args, &block)
           ResponseDef.eval(*args, &block)
         end
