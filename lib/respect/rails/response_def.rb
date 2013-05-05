@@ -17,12 +17,16 @@ module Respect
         @response_schema
       end
 
-      def body(&block)
-        @response_schema.body = Schema.define(&block)
-      end
-
-      def body_with_object(&block)
-        @response_schema.body = ObjectSchema.define(&block)
+      # Define the schema of the response body.
+      # @option options [Boolean] root (true) whether to wrap the schema in an object.
+      def body(options = {}, &block)
+        @response_schema.body = (
+          if options.fetch(:root, true)
+            ObjectSchema.define(&block)
+          else
+            Schema.define(&block)
+          end
+          )
       end
 
     end # class ResponseDef

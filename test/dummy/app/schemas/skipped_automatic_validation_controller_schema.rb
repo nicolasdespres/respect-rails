@@ -7,7 +7,7 @@ class SkippedAutomaticValidationControllerSchema < Respect::Rails::ActionSchema
     end
     response_for do |status|
       status.ok do |r|
-        r.body_with_object do |s|
+        r.body do |s|
           s.integer "id", equal_to: 42
         end
       end

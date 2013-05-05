@@ -34,7 +34,7 @@ class ContactsControllerSchema < ApplicationControllerSchema
     response_for do |status|
       status.ok # contacts/create.schema
       status.unprocessable_entity do
-        body_with_object do |s|
+        body do |s|
           s.string "error"
         end
       end
@@ -47,7 +47,7 @@ Long response schema may be defined in another file instead of inlined in the co
 
 ```ruby
 # in app/schemas/contacts/create.schema
-body_with_object do |s|
+body do |s|
   s.object "contact" do |s|
     s.integer "id"
     s.string "name"
@@ -99,7 +99,7 @@ and the response schema like that:
 
 ```ruby
 # in app/schemas/contacts/create.schema
-body_with_object do |s|
+body do |s|
   s.object "contact" do |s|
     s.integer "id"
     s.contact_attributes

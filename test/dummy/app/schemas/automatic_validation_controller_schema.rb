@@ -13,7 +13,7 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
     end
     response_for do |status|
       status.ok do |r|
-        r.body_with_object do |s|
+        r.body do |s|
           s.integer "id", equal_to: 42
         end
       end
@@ -31,7 +31,7 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
   def no_request_schema
     response_for do |status|
       status.ok do |r|
-        r.body_with_object do |s|
+        r.body do |s|
           s.integer "id", equal_to: 42
         end
       end
@@ -85,7 +85,7 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
   def response_contextual_error
     response_for do |status|
       status.ok do |r|
-        r.body_with_object do |s|
+        r.body do |s|
           s.object "o1" do |s|
             s.object "o2" do |s|
               s.integer "i", equal_to: 51
@@ -104,7 +104,7 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
     end
     response_for do |status|
       status.ok do |r|
-        r.body_with_object do |s|
+        r.body do |s|
           s.integer "id", equal_to: 42
         end
       end

@@ -1,4 +1,4 @@
-body_with_object do |s|
+body do |s|
   s.object "contact" do |s|
     s.integer "id"
     s.contact_attributes

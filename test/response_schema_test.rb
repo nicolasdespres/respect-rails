@@ -10,7 +10,7 @@ class ResponseSchemaTest < Test::Unit::TestCase
       s.integer "result"
     end
     block_def = Proc.new do |r|
-      r.body_with_object do |s|
+      r.body do |s|
         s.integer "result"
       end
     end
@@ -46,7 +46,7 @@ class ResponseSchemaTest < Test::Unit::TestCase
     # Prepare mock file name and contents
     filename = "/path/to/definition_file.rb"
     file_content = <<-EOS.strip_heredoc
-      body_with_object do |s|
+      body do |s|
         s.integer "result"
       end
       EOS
