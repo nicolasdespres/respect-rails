@@ -33,16 +33,14 @@ module Respect
         @path_parameters
       end
 
-      def body_parameters=(body_parameters)
-        @body_parameters = body_parameters
-        @body_parameters.options[:strict] = false
-        @body_parameters
-      end
-
-      def query_parameters=(query_parameters)
-        @query_parameters = query_parameters
-        @query_parameters.options[:strict] = false
-        @query_parameters
+      [ :body, :query ].each do |name|
+        eval <<-EOS
+          def #{name}_parameters=(#{name}_parameters)
+            @#{name}_parameters = #{name}_parameters
+            @#{name}_parameters.options[:strict] = false
+            @#{name}_parameters
+          end
+          EOS
       end
 
       # Validate the given +request+.
