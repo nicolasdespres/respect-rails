@@ -24,7 +24,7 @@ class RequestSchemaTest < Test::Unit::TestCase
   def test_validate_both_body_and_path_parameters
     doc = {}
     @rs.path_parameters.stubs(:validate).with(doc).once
-    @rs.body_parameters.stubs(:validate).with(doc).once
+    @rs.request_parameters.stubs(:validate).with(doc).once
     assert_equal true, @rs.validate(doc)
   end
 
@@ -54,7 +54,7 @@ class RequestSchemaTest < Test::Unit::TestCase
     doc = {}
     @rs.stubs(:validate?).with(doc).returns(true).once
     @rs.path_parameters.stubs(:sanitize_doc!).with(doc, @rs.path_parameters.sanitized_doc).once
-    @rs.body_parameters.stubs(:sanitize_doc!).with(doc, @rs.body_parameters.sanitized_doc).once
+    @rs.request_parameters.stubs(:sanitize_doc!).with(doc, @rs.request_parameters.sanitized_doc).once
     assert_equal true, @rs.validate!(doc)
   end
 

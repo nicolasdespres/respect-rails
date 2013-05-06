@@ -49,11 +49,11 @@
     <%= highlight_json_schema schema.request_schema.path_parameters.to_h %>
   <% end %>
 
-  <h5>Body parameters</h5>
-  <% if schema.request_schema.body_parameters.documented_properties.empty? %>
-    No body parameters schema.
+  <h5>Request parameters</h5>
+  <% if schema.request_schema.request_parameters.documented_properties.empty? %>
+    No request parameters schema.
   <% else %>
-    <%= highlight_json_schema schema.request_schema.body_parameters.to_h %>
+    <%= highlight_json_schema schema.request_schema.request_parameters.to_h %>
   <% end %>
 <% end %>
 
