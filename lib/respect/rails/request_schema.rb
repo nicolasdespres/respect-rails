@@ -75,12 +75,10 @@ module Respect
       def validate!(request)
         valid = validate?(request)
         if valid
-          path_parameters.sanitize_doc!(request.params)
-          path_parameters.sanitize_doc!(request.path_parameters)
-          query_parameters.sanitize_doc!(request.params)
-          query_parameters.sanitize_doc!(request.query_parameters)
-          body_parameters.sanitize_doc!(request.params)
-          body_parameters.sanitize_doc!(request.body_parameters)
+          [ :path, :query, :body ].each do |name|
+            send("#{name}_parameters").sanitize_doc!(request.params)
+            send("#{name}_parameters").sanitize_doc!(request.send("#{name}_parameters"))
+          end
         end
         valid
       end
