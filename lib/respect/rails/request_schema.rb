@@ -76,6 +76,7 @@ module Respect
         if valid
           path_parameters.sanitize_doc!(request.params)
           query_parameters.sanitize_doc!(request.params)
+          query_parameters.sanitize_doc!(request.query_parameters)
           body_parameters.sanitize_doc!(request.params)
         end
         valid

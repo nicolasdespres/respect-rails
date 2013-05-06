@@ -98,11 +98,14 @@ class RequestSchemaTest < Test::Unit::TestCase
 
   def test_validate_shebang_returns_true_on_success_and_sanitize
     request = mock()
-    params = {}
+    params = mock()
     request.stubs(:params).with().returns(params).at_least_once
+    query_params = mock()
+    request.stubs(:query_parameters).with().returns(query_params)
     @rs.stubs(:validate?).with(request).returns(true).once
     @rs.path_parameters.stubs(:sanitize_doc!).with(params).once
     @rs.query_parameters.stubs(:sanitize_doc!).with(params).once
+    @rs.query_parameters.stubs(:sanitize_doc!).with(query_params).once
     @rs.body_parameters.stubs(:sanitize_doc!).with(params).once
     assert_equal true, @rs.validate!(request)
   end
