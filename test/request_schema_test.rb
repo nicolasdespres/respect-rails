@@ -30,13 +30,35 @@ class RequestSchemaTest < Test::Unit::TestCase
     assert_equal true, @rs.validate(request)
   end
 
-  def test_validate_raise_request_validation_error_on_validation_error
+  def test_validate_raise_request_validation_error_on_path_params_validation_error
     request = mock()
     params = {}
     request.stubs(:params).with().returns(params).at_least_once
-    Respect::Schema.any_instance.stubs(:validate).with(params).raises(Respect::ValidationError)
-    assert_raises(Respect::Rails::RequestValidationError) do
+    @rs.path_parameters.stubs(:validate).with(params).raises(Respect::ValidationError.new("error message"))
+    @rs.request_parameters.stubs(:validate).with(params)
+    begin
       @rs.validate(request)
+      assert false, "nothing raised"
+    rescue Respect::Rails::RequestValidationError => e
+      assert e.error.is_a?(Respect::ValidationError)
+      assert_equal "error message", e.message
+      assert e.part.path?
+    end
+  end
+
+  def test_validate_raise_request_validation_error_on_request_params_validation_error
+    request = mock()
+    params = {}
+    request.stubs(:params).with().returns(params).at_least_once
+    @rs.path_parameters.stubs(:validate).with(params)
+    @rs.request_parameters.stubs(:validate).with(params).raises(Respect::ValidationError.new("error message"))
+    begin
+      @rs.validate(request)
+      assert false, "nothing raised"
+    rescue Respect::Rails::RequestValidationError => e
+      assert e.error.is_a?(Respect::ValidationError)
+      assert_equal "error message", e.message
+      assert e.part.request?
     end
   end
 

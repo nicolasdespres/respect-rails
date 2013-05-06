@@ -44,7 +44,7 @@ module Respect
           request_parameters.options[:strict] = false
           request_parameters.validate(request.params)
         rescue Respect::ValidationError => e
-          raise RequestValidationError.new(e, :body)
+          raise RequestValidationError.new(e, :request)
         end
         true
       end
