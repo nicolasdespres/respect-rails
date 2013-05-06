@@ -23,7 +23,7 @@ for its `create` action may look like this:
 class ContactsControllerSchema < ApplicationControllerSchema
   def create
     request do
-      body_params do |s|
+      body_parameters do |s|
         s.object "contact" do |s|
           s.string "name"
           s.integer "age"
@@ -34,7 +34,7 @@ class ContactsControllerSchema < ApplicationControllerSchema
     response_for do |status|
       status.ok # contacts/create.schema
       status.unprocessable_entity do
-        body do |s|
+        body_parameters do |s|
           s.string "error"
         end
       end
@@ -225,7 +225,7 @@ Many other great features are planned for the next releases. Here a short list o
 * A web service to programmatically inspect your API schemas
 * A web service to check a request is valid without actually performing the request.
 * Specify request and response header
-* Try to fetch URL parameters from route's constraints: this may be tricky so no promise.
+* Try to fetch path parameters from route's constraints: this may be tricky so no promise.
 * Try to fetch resource schema validator from model validator: again this may be tricky so no promise.
 * Partial response schema.
 * An helper to easily specify nested attributes.

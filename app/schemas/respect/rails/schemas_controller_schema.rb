@@ -3,7 +3,7 @@ module Respect
     class SchemasControllerSchema < Respect::Rails::ActionSchema
       def index
         request do |r|
-          r.url_params do |s|
+          r.path_parameters do |s|
             s.string "format", in: %w{html json}
           end
         end
@@ -11,7 +11,7 @@ module Respect
 
       def doc
         request do |r|
-          r.url_params do |s|
+          r.path_parameters do |s|
             s.string "format", in: %w{html json}
           end
         end

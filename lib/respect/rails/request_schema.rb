@@ -11,47 +11,55 @@ module Respect
       def initialize(controller, action)
         @controller = controller
         @action = action
-        @default_url_params = ObjectSchema.define do |s|
+        @default_path_parameters = ObjectSchema.define do |s|
           s.string "controller", equal_to: @controller.to_s, doc: false
           s.string "action", equal_to: @action.to_s, doc: false
         end
-        @url_params = @default_url_params.dup
-        @body_params = ObjectSchema.new
+        @path_parameters = @default_path_parameters.dup
+        @body_parameters = ObjectSchema.new
+        @query_parameters = ObjectSchema.new
       end
 
       attr_reader :controller, :action
 
-      attr_accessor :body_params
+      attr_reader :body_parameters, :query_parameters
 
-      attr_reader :url_params, :default_url_params
+      attr_reader :path_parameters, :default_path_parameters
 
-      # Merge +url_params+ with {#default_url_params} and store it.
-      def url_params=(url_params)
-        @url_params = @default_url_params.merge(url_params)
+      # Merge +path_parameters+ with {#default_path_parameters} and store it.
+      def path_parameters=(path_parameters)
+        @path_parameters = @default_path_parameters.merge(path_parameters)
+        @path_parameters.options[:strict] = false
+        @path_parameters
       end
 
-      # Validate +doc+ against {#body_params} and {#url_params}.
-      # Raise a {RequestValidationError} if an +doc+ is invalid.
+      [ :body, :query ].each do |name|
+        eval <<-EOS
+          def #{name}_parameters=(#{name}_parameters)
+            @#{name}_parameters = #{name}_parameters
+            @#{name}_parameters.options[:strict] = false
+            @#{name}_parameters
+          end
+          EOS
+      end
+
+      # Validate the given +request+.
+      # Raise a {RequestValidationError} if an error occur.
       # Returns +true+ on success.
-      def validate(doc)
-        begin
-          url_params.options[:strict] = false
-          url_params.validate(doc)
-        rescue Respect::ValidationError => e
-          raise RequestValidationError.new(e, :url)
-        end
-        begin
-          body_params.options[:strict] = false
-          body_params.validate(doc)
-        rescue Respect::ValidationError => e
-          raise RequestValidationError.new(e, :body)
+      def validate(request)
+        [ :path, :query, :body ].each do |name|
+          begin
+            send("#{name}_parameters").validate(request.params)
+          rescue Respect::ValidationError => e
+            raise RequestValidationError.new(e, name)
+          end
         end
         true
       end
 
-      def validate?(doc)
+      def validate?(request)
         begin
-          validate(doc)
+          validate(request)
           true
         rescue RequestValidationError => e
           @last_error = e
@@ -64,11 +72,13 @@ module Respect
       # Reset each time {#validate?} is called.
       attr_reader :last_error
 
-      def validate!(doc)
-        valid = validate?(doc)
+      def validate!(request)
+        valid = validate?(request)
         if valid
-          url_params.sanitize_doc!(doc, url_params.sanitized_doc)
-          body_params.sanitize_doc!(doc, body_params.sanitized_doc)
+          [ :path, :query, :body ].each do |name|
+            send("#{name}_parameters").sanitize_doc!(request.params)
+            send("#{name}_parameters").sanitize_doc!(request.send("#{name}_parameters"))
+          end
         end
         valid
       end

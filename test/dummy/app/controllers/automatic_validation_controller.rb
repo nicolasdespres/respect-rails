@@ -5,7 +5,10 @@ class AutomaticValidationController < ApplicationController
   # GET /automatic_validation/basic_get.json
   def basic_get
     unless params['param1'] == 42
-      raise "should never be rasised since the validator has raised one before."
+      raise "should never be rasised since the validator has raised one when checking parameters."
+    end
+    unless request.query_parameters[:param1] == 42
+      raise "should never be rasised since the validator has sanitized query_parameters"
     end
     respond_to do |format|
       format.json do
@@ -138,6 +141,28 @@ class AutomaticValidationController < ApplicationController
       format.html # request_format.html.erb
       format.pdf do
         render pdf: "foo", status: :ok
+      end
+    end
+  end
+
+  # POST /automatic_validation/basic_post.json
+  def basic_post
+    unless params['path_param'] == 42
+      raise "should never be raised since the validator has raised one before when checking path_param"
+    end
+    unless params['body_param'] == 42
+      raise "should never be raised since the validator has raised one before when checking body_param"
+    end
+    unless request.path_parameters['path_param'] == 42
+      raise "should never be raised since the validator has sanitized path_parameters"
+    end
+    unless request.body_parameters['body_param'] == 42
+      raise "should never be raised since the validator has sanitized body_parameters"
+    end
+    respond_to do |format|
+      format.json do
+        result = { id: request.request_parameters['response_param'] }
+        render json: result
       end
     end
   end

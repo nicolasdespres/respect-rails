@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root to: 'automatic_validation#basic_get', param1: 42, format: 'json'
   match 'request_format' => "automatic_validation#request_format", via: :get
+  match 'automatic_validation/basic_post/:path_param' => "automatic_validation#basic_post", via: :post
   scope format: true, constraints: { format: 'json' }, via: :get do
     scope controller: 'automatic_validation', path: '/automatic_validation', as: "automatic_validation" do
       match 'basic_get'

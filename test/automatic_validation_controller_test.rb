@@ -3,7 +3,7 @@ require 'test_helper'
 class AutomaticValidationControllerTest < ActionController::TestCase
 
   def test_basic_get_works
-    get :basic_get, format: 'json', param1: 42
+    get :basic_get, format: 'json', param1: "42"
     assert_response :success
     assert response.has_schema?
   end
@@ -135,6 +135,11 @@ class AutomaticValidationControllerTest < ActionController::TestCase
 
   def test_format_pdf_validate
     get :request_format, format: "pdf"
+    assert_response :success
+  end
+
+  def test_post_valid_request
+    post :basic_post, format: 'json', path_param: "42", body_param: "42", response_param: 42
     assert_response :success
   end
 

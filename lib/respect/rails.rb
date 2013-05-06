@@ -16,12 +16,12 @@ module Respect
     autoload :RouteInfo
 
     class ValidationError < StandardError
-      def initialize(validation_error)
-        @validation_error = validation_error
+      def initialize(error)
+        @error = error
       end
 
-      attr_reader :validation_error
-      delegate :context, :message, to: :@validation_error
+      attr_reader :error
+      delegate :context, :message, to: :@error
 
       def to_h
         {

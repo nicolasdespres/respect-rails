@@ -20,7 +20,7 @@ module Respect
           log_msg = "  Request validation: "
           valid = nil
           measure = Benchmark.realtime do
-            valid = request_schema.validate!(params) unless request_schema.nil?
+            valid = request_schema.validate!(self) unless request_schema.nil?
           end
           if valid.nil?
             log_msg += "none"
@@ -58,6 +58,10 @@ module Respect
 
         def last_validation_error
           request_schema.last_error
+        end
+
+        def body_parameters
+          request_parameters
         end
 
       end # module Request

@@ -17,12 +17,16 @@ module Respect
         @request_schema
       end
 
-      def url_params(&block)
-        @request_schema.url_params.eval(&block)
+      def path_parameters(&block)
+        @request_schema.path_parameters = ObjectSchema.define(&block)
       end
 
-      def body_params(&block)
-        @request_schema.body_params = ObjectSchema.define(&block)
+      def body_parameters(&block)
+        @request_schema.body_parameters = ObjectSchema.define(&block)
+      end
+
+      def query_parameters(&block)
+        @request_schema.query_parameters = ObjectSchema.define(&block)
       end
 
     end # class RequestDef

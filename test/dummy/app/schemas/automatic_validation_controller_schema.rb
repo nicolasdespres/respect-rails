@@ -1,7 +1,7 @@
 class AutomaticValidationControllerSchema < ApplicationControllerSchema
   def basic_get
     request do |r|
-      r.body_params do |s|
+      r.query_parameters do |s|
         s.doc <<-EOS.strip_heredoc
           A parameter
 
@@ -50,7 +50,7 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
 
   def route_constraints
     request do |r|
-      r.body_params do |s|
+      r.query_parameters do |s|
         s.string "param1", equal_to: "42"
       end
     end
@@ -58,7 +58,7 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
 
   def composite_custom_types
     request do |r|
-      r.body_params do |s|
+      r.query_parameters do |s|
         s.circle "circle"
         s.rgba "color"
       end
@@ -72,7 +72,7 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
 
   def request_contextual_error
     request do |r|
-      r.body_params do |s|
+      r.query_parameters do |s|
         s.object "o1" do |s|
           s.object "o2" do |s|
             s.integer "i", equal_to: 42
@@ -98,12 +98,30 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
 
   def request_format
     request do |r|
-      r.body_params do |s|
+      r.query_parameters do |s|
         s.integer "id", required: false
       end
     end
     response_for do |status|
       status.is :ok do |r|
+        r.body do |s|
+          s.integer "id", equal_to: 42
+        end
+      end
+    end
+  end
+
+  def basic_post
+    request do |r|
+      r.path_parameters do |s|
+        s.integer "path_param", equal_to: 42
+      end
+      r.body_parameters do |s|
+        s.integer "body_param", equal_to: 42
+      end
+    end
+    response_for do |status|
+      status.ok do |r|
         r.body do |s|
           s.integer "id", equal_to: 42
         end
