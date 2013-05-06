@@ -47,20 +47,12 @@ module Respect
       # Raise a {RequestValidationError} if an error occur.
       # Returns +true+ on success.
       def validate(request)
-        begin
-          path_parameters.validate(request.params)
-        rescue Respect::ValidationError => e
-          raise RequestValidationError.new(e, :path)
-        end
-        begin
-          query_parameters.validate(request.params)
-        rescue Respect::ValidationError => e
-          raise RequestValidationError.new(e, :query)
-        end
-        begin
-          body_parameters.validate(request.params)
-        rescue Respect::ValidationError => e
-          raise RequestValidationError.new(e, :body)
+        [ :path, :query, :body ].each do |name|
+          begin
+            send("#{name}_parameters").validate(request.params)
+          rescue Respect::ValidationError => e
+            raise RequestValidationError.new(e, name)
+          end
         end
         true
       end
