@@ -1,6 +1,6 @@
 require "test_helper"
 
-class HelperRequestTest < Test::Unit::TestCase
+class HelperTest < Test::Unit::TestCase
   def test_successful_request_validation
     request = Object.new
     request.extend(Respect::Rails::Helper::Request)
