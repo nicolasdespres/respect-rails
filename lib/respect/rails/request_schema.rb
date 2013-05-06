@@ -67,8 +67,8 @@ module Respect
       def validate!(doc)
         valid = validate?(doc)
         if valid
-          path_parameters.sanitize_doc!(doc, path_parameters.sanitized_doc)
-          request_parameters.sanitize_doc!(doc, request_parameters.sanitized_doc)
+          path_parameters.sanitize_doc!(doc)
+          request_parameters.sanitize_doc!(doc)
         end
         valid
       end
