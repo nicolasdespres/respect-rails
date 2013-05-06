@@ -22,13 +22,27 @@ module Respect
 
       attr_reader :controller, :action
 
-      attr_accessor :body_parameters, :query_parameters
+      attr_reader :body_parameters, :query_parameters
 
       attr_reader :path_parameters, :default_path_parameters
 
       # Merge +path_parameters+ with {#default_path_parameters} and store it.
       def path_parameters=(path_parameters)
         @path_parameters = @default_path_parameters.merge(path_parameters)
+        @path_parameters.options[:strict] = false
+        @path_parameters
+      end
+
+      def body_parameters=(body_parameters)
+        @body_parameters = body_parameters
+        @body_parameters.options[:strict] = false
+        @body_parameters
+      end
+
+      def query_parameters=(query_parameters)
+        @query_parameters = query_parameters
+        @query_parameters.options[:strict] = false
+        @query_parameters
       end
 
       # Validate the given +request+.
@@ -36,19 +50,16 @@ module Respect
       # Returns +true+ on success.
       def validate(request)
         begin
-          path_parameters.options[:strict] = false
           path_parameters.validate(request.params)
         rescue Respect::ValidationError => e
           raise RequestValidationError.new(e, :path)
         end
         begin
-          query_parameters.options[:strict] = false
           query_parameters.validate(request.params)
         rescue Respect::ValidationError => e
           raise RequestValidationError.new(e, :query)
         end
         begin
-          body_parameters.options[:strict] = false
           body_parameters.validate(request.params)
         rescue Respect::ValidationError => e
           raise RequestValidationError.new(e, :body)
