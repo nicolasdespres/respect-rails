@@ -60,6 +60,10 @@ module Respect
           request_schema.last_error
         end
 
+        def body_parameters
+          request_parameters
+        end
+
       end # module Request
 
       module Response

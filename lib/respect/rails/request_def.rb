@@ -21,8 +21,8 @@ module Respect
         @request_schema.path_parameters = ObjectSchema.define(&block)
       end
 
-      def request_parameters(&block)
-        @request_schema.request_parameters = ObjectSchema.define(&block)
+      def body_parameters(&block)
+        @request_schema.body_parameters = ObjectSchema.define(&block)
       end
 
     end # class RequestDef

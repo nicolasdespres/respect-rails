@@ -16,12 +16,12 @@ module Respect
           s.string "action", equal_to: @action.to_s, doc: false
         end
         @path_parameters = @default_path_parameters.dup
-        @request_parameters = ObjectSchema.new
+        @body_parameters = ObjectSchema.new
       end
 
       attr_reader :controller, :action
 
-      attr_accessor :request_parameters
+      attr_accessor :body_parameters
 
       attr_reader :path_parameters, :default_path_parameters
 
@@ -30,7 +30,7 @@ module Respect
         @path_parameters = @default_path_parameters.merge(path_parameters)
       end
 
-      # Validate +doc+ against {#request_parameters} and {#path_parameters}.
+      # Validate +doc+ against {#body_parameters} and {#path_parameters}.
       # Raise a {RequestValidationError} if an +doc+ is invalid.
       # Returns +true+ on success.
       def validate(request)
@@ -41,10 +41,10 @@ module Respect
           raise RequestValidationError.new(e, :path)
         end
         begin
-          request_parameters.options[:strict] = false
-          request_parameters.validate(request.params)
+          body_parameters.options[:strict] = false
+          body_parameters.validate(request.params)
         rescue Respect::ValidationError => e
-          raise RequestValidationError.new(e, :request)
+          raise RequestValidationError.new(e, :body)
         end
         true
       end
@@ -68,7 +68,7 @@ module Respect
         valid = validate?(request)
         if valid
           path_parameters.sanitize_doc!(request.params)
-          request_parameters.sanitize_doc!(request.params)
+          body_parameters.sanitize_doc!(request.params)
         end
         valid
       end

@@ -1,7 +1,7 @@
 class SkippedAutomaticValidationControllerSchema < Respect::Rails::ActionSchema
   def basic_get
     request do |r|
-      r.request_parameters do |s|
+      r.body_parameters do |s|
         s.integer "param1", equal_to: 42
       end
     end
