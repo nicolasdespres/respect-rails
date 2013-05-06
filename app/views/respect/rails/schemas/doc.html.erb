@@ -42,26 +42,15 @@
 <% if schema.request_schema %>
   <h4>Request schema</h4>
 
-  <h5>Path parameters</h5>
-  <% if schema.request_schema.path_parameters.documented_properties.empty? %>
-    No path parameters schema.
-  <% else %>
-    <%= highlight_json_schema schema.request_schema.path_parameters.to_h %>
+  <% [ :path, :query, :body ].each do |name| %>
+    <h5><%= name.capitalize %> parameters</h5>
+    <% if schema.request_schema.send("#{name}_parameters").documented_properties.empty? %>
+      No <%= name %> parameters schema.
+    <% else %>
+      <%= highlight_json_schema schema.request_schema.send("#{name}_parameters").to_h %>
+    <% end %>
   <% end %>
 
-  <h5>Query parameters</h5>
-  <% if schema.request_schema.query_parameters.documented_properties.empty? %>
-    No query parameters schema.
-  <% else %>
-    <%= highlight_json_schema schema.request_schema.query_parameters.to_h %>
-  <% end %>
-
-  <h5>Body parameters</h5>
-  <% if schema.request_schema.body_parameters.documented_properties.empty? %>
-    No request parameters schema.
-  <% else %>
-    <%= highlight_json_schema schema.request_schema.body_parameters.to_h %>
-  <% end %>
 <% end %>
 
 <% unless schema.response_schemas.empty? %>
