@@ -22,24 +22,28 @@ class RequestSchemaTest < Test::Unit::TestCase
   end
 
   def test_validate_both_body_and_path_parameters
-    doc = {}
-    @rs.path_parameters.stubs(:validate).with(doc).once
-    @rs.request_parameters.stubs(:validate).with(doc).once
-    assert_equal true, @rs.validate(doc)
+    request = mock()
+    params = {}
+    request.stubs(:params).with().returns(params).at_least_once
+    @rs.path_parameters.stubs(:validate).with(params).once
+    @rs.request_parameters.stubs(:validate).with(params).once
+    assert_equal true, @rs.validate(request)
   end
 
   def test_validate_raise_request_validation_error_on_validation_error
-    doc = {}
-    Respect::Schema.any_instance.stubs(:validate).with(doc).raises(Respect::ValidationError)
+    request = mock()
+    params = {}
+    request.stubs(:params).with().returns(params).at_least_once
+    Respect::Schema.any_instance.stubs(:validate).with(params).raises(Respect::ValidationError)
     assert_raises(Respect::Rails::RequestValidationError) do
-      @rs.validate(doc)
+      @rs.validate(request)
     end
   end
 
   def test_validate_query_returns_true_when_no_error
-    doc = {}
-    @rs.stubs(:validate).with(doc).returns(nil)
-    assert_equal true, @rs.validate?(doc)
+    request = mock()
+    @rs.stubs(:validate).with(request).returns(nil)
+    assert_equal true, @rs.validate?(request)
   end
 
   def test_validate_query_returns_false_on_error_and_store_last_error
@@ -51,17 +55,19 @@ class RequestSchemaTest < Test::Unit::TestCase
   end
 
   def test_validate_shebang_returns_true_on_success_and_sanitize
-    doc = {}
-    @rs.stubs(:validate?).with(doc).returns(true).once
-    @rs.path_parameters.stubs(:sanitize_doc!).with(doc, @rs.path_parameters.sanitized_doc).once
-    @rs.request_parameters.stubs(:sanitize_doc!).with(doc, @rs.request_parameters.sanitized_doc).once
-    assert_equal true, @rs.validate!(doc)
+    request = mock()
+    params = {}
+    request.stubs(:params).with().returns(params).at_least_once
+    @rs.stubs(:validate?).with(request).returns(true).once
+    @rs.path_parameters.stubs(:sanitize_doc!).with(params, @rs.path_parameters.sanitized_doc).once
+    @rs.request_parameters.stubs(:sanitize_doc!).with(params, @rs.request_parameters.sanitized_doc).once
+    assert_equal true, @rs.validate!(request)
   end
 
   def test_validate_shebang_returns_false_on_failure
-    doc = {}
-    @rs.stubs(:validate?).with(doc).returns(false).once
-    assert_equal false, @rs.validate!(doc)
+    request = mock()
+    @rs.stubs(:validate?).with(request).returns(false).once
+    assert_equal false, @rs.validate!(request)
   end
 
 end

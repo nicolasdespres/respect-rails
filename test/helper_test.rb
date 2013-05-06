@@ -4,10 +4,8 @@ class HelperTest < Test::Unit::TestCase
   def test_successful_request_validation
     request = Object.new
     request.extend(Respect::Rails::Helper::Request)
-    params = {}
-    request.stubs(:params).with().returns(params)
     schema = mock()
-    schema.stubs(:validate!).with(params).returns(true).once
+    schema.stubs(:validate!).with(request).returns(true).once
     request.stubs(:request_schema).with().returns(schema)
     Benchmark.stubs(:realtime).with().yields().returns(1.2345) # 1234.5 seconds.
     ::Rails.logger.stubs(:info).with("  Request validation: success (1234.5ms)").once
@@ -19,10 +17,8 @@ class HelperTest < Test::Unit::TestCase
   def test_failed_request_validation
     request = Object.new
     request.extend(Respect::Rails::Helper::Request)
-    params = {}
-    request.stubs(:params).with().returns(params)
     schema = mock()
-    schema.stubs(:validate!).with(params).returns(false).once
+    schema.stubs(:validate!).with(request).returns(false).once
     error = RuntimeError.new("test error")
     error.stubs(:context).with().returns(["foo", "bar"])
     schema.stubs(:last_error).with().returns(error)

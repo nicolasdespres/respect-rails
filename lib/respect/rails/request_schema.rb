@@ -33,25 +33,25 @@ module Respect
       # Validate +doc+ against {#request_parameters} and {#path_parameters}.
       # Raise a {RequestValidationError} if an +doc+ is invalid.
       # Returns +true+ on success.
-      def validate(doc)
+      def validate(request)
         begin
           path_parameters.options[:strict] = false
-          path_parameters.validate(doc)
+          path_parameters.validate(request.params)
         rescue Respect::ValidationError => e
           raise RequestValidationError.new(e, :path)
         end
         begin
           request_parameters.options[:strict] = false
-          request_parameters.validate(doc)
+          request_parameters.validate(request.params)
         rescue Respect::ValidationError => e
           raise RequestValidationError.new(e, :body)
         end
         true
       end
 
-      def validate?(doc)
+      def validate?(request)
         begin
-          validate(doc)
+          validate(request)
           true
         rescue RequestValidationError => e
           @last_error = e
@@ -64,11 +64,11 @@ module Respect
       # Reset each time {#validate?} is called.
       attr_reader :last_error
 
-      def validate!(doc)
-        valid = validate?(doc)
+      def validate!(request)
+        valid = validate?(request)
         if valid
-          path_parameters.sanitize_doc!(doc)
-          request_parameters.sanitize_doc!(doc)
+          path_parameters.sanitize_doc!(request.params)
+          request_parameters.sanitize_doc!(request.params)
         end
         valid
       end
