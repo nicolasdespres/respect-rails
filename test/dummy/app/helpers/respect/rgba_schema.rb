@@ -1,6 +1,6 @@
 module Respect
   class RgbaSchema < CompositeSchema
-    def schema
+    def schema_definition
       ArraySchema.define do |s|
         s.items do |s|
           s.color_channel # red

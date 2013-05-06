@@ -50,7 +50,7 @@ We can get _Respect for Rails_ do this work for you by adding a helper method wh
 ```ruby
 module Respect
   class PointSchema < CompositeSchema
-    def schema
+    def schema_definition
       ObjectSchema.define do |s|
         s.numeric "x"
         s.numeric "y"
