@@ -30,6 +30,9 @@
     <% if @error.part.path? %>
       Invalid path parameters:
       <pre><%= @error.context.join("\n") %></pre>
+    <% elsif @error.part.query? %>
+      Invalid query parameters:
+      <pre><%= @error.context.join("\n") %></pre>
     <% elsif @error.part.body? %>
       Invalid body parameters:
       <pre><%= @error.context.join("\n") %></pre>

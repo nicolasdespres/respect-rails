@@ -26,6 +26,7 @@ class RequestSchemaTest < Test::Unit::TestCase
     params = {}
     request.stubs(:params).with().returns(params).at_least_once
     @rs.path_parameters.stubs(:validate).with(params).once
+    @rs.query_parameters.stubs(:validate).with(params).once
     @rs.body_parameters.stubs(:validate).with(params).once
     assert_equal true, @rs.validate(request)
   end
@@ -34,7 +35,8 @@ class RequestSchemaTest < Test::Unit::TestCase
     request = mock()
     params = {}
     request.stubs(:params).with().returns(params).at_least_once
-    @rs.path_parameters.stubs(:validate).with(params).raises(Respect::ValidationError.new("error message"))
+    @rs.path_parameters.stubs(:validate).with(params).raises(Respect::ValidationError.new("error message")).once
+    @rs.query_parameters.stubs(:validate).with(params)
     @rs.body_parameters.stubs(:validate).with(params)
     begin
       @rs.validate(request)
@@ -46,12 +48,30 @@ class RequestSchemaTest < Test::Unit::TestCase
     end
   end
 
+  def test_validate_raise_request_validation_error_on_query_params_validation_error
+    request = mock()
+    params = {}
+    request.stubs(:params).with().returns(params).at_least_once
+    @rs.path_parameters.stubs(:validate).with(params)
+    @rs.query_parameters.stubs(:validate).with(params).raises(Respect::ValidationError.new("error message")).once
+    @rs.body_parameters.stubs(:validate).with(params)
+    begin
+      @rs.validate(request)
+      assert false, "nothing raised"
+    rescue Respect::Rails::RequestValidationError => e
+      assert e.error.is_a?(Respect::ValidationError)
+      assert_equal "error message", e.message
+      assert e.part.query?
+    end
+  end
+
   def test_validate_raise_request_validation_error_on_body_params_validation_error
     request = mock()
     params = {}
     request.stubs(:params).with().returns(params).at_least_once
     @rs.path_parameters.stubs(:validate).with(params)
-    @rs.body_parameters.stubs(:validate).with(params).raises(Respect::ValidationError.new("error message"))
+    @rs.query_parameters.stubs(:validate).with(params)
+    @rs.body_parameters.stubs(:validate).with(params).raises(Respect::ValidationError.new("error message")).once
     begin
       @rs.validate(request)
       assert false, "nothing raised"
@@ -81,8 +101,9 @@ class RequestSchemaTest < Test::Unit::TestCase
     params = {}
     request.stubs(:params).with().returns(params).at_least_once
     @rs.stubs(:validate?).with(request).returns(true).once
-    @rs.path_parameters.stubs(:sanitize_doc!).with(params, @rs.path_parameters.sanitized_doc).once
-    @rs.body_parameters.stubs(:sanitize_doc!).with(params, @rs.body_parameters.sanitized_doc).once
+    @rs.path_parameters.stubs(:sanitize_doc!).with(params).once
+    @rs.query_parameters.stubs(:sanitize_doc!).with(params).once
+    @rs.body_parameters.stubs(:sanitize_doc!).with(params).once
     assert_equal true, @rs.validate!(request)
   end
 

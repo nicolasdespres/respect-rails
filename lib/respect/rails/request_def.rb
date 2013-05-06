@@ -25,6 +25,10 @@ module Respect
         @request_schema.body_parameters = ObjectSchema.define(&block)
       end
 
+      def query_parameters(&block)
+        @request_schema.query_parameters = ObjectSchema.define(&block)
+      end
+
     end # class RequestDef
   end
 end # module Respect
