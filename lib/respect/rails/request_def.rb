@@ -18,7 +18,7 @@ module Respect
       end
 
       def path_parameters(&block)
-        @request_schema.path_parameters.eval(&block)
+        @request_schema.path_parameters = ObjectSchema.define(&block)
       end
 
       def request_parameters(&block)
