@@ -145,6 +145,28 @@ class AutomaticValidationController < ApplicationController
     end
   end
 
+  # POST /automatic_validation/basic_post.json
+  def basic_post
+    unless params['path_param'] == 42
+      raise "should never be raised since the validator has raised one before when checking path_param"
+    end
+    unless params['body_param'] == 42
+      raise "should never be raised since the validator has raised one before when checking body_param"
+    end
+    unless request.path_parameters['path_param'] == 42
+      raise "should never be raised since the validator has sanitized path_parameters"
+    end
+    unless request.body_parameters['body_param'] == 42
+      raise "should never be raised since the validator has sanitized body_parameters"
+    end
+    respond_to do |format|
+      format.json do
+        result = { id: request.request_parameters['response_param'] }
+        render json: result
+      end
+    end
+  end
+
   # It is mandatory to prepend the after filter so that it is
   # executed before load_response_schema. Or you have to call it
   # yourself.

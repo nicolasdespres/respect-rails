@@ -75,9 +75,11 @@ module Respect
         valid = validate?(request)
         if valid
           path_parameters.sanitize_doc!(request.params)
+          path_parameters.sanitize_doc!(request.path_parameters)
           query_parameters.sanitize_doc!(request.params)
           query_parameters.sanitize_doc!(request.query_parameters)
           body_parameters.sanitize_doc!(request.params)
+          body_parameters.sanitize_doc!(request.body_parameters)
         end
         valid
       end

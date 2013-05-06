@@ -138,4 +138,9 @@ class AutomaticValidationControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_post_valid_request
+    post :basic_post, format: 'json', path_param: "42", body_param: "42", response_param: 42
+    assert_response :success
+  end
+
 end
