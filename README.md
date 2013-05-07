@@ -24,7 +24,7 @@ class ContactsControllerSchema < ApplicationControllerSchema
   def create
     request do
       body_parameters do |s|
-        s.object "contact" do |s|
+        s.hash "contact" do |s|
           s.string "name"
           s.integer "age"
           s.uri "homepage"
@@ -48,7 +48,7 @@ Long response schema may be defined in another file instead of inlined in the co
 ```ruby
 # in app/schemas/contacts/create.schema
 body do |s|
-  s.object "contact" do |s|
+  s.hash "contact" do |s|
     s.integer "id"
     s.string "name"
     s.integer "age"
@@ -88,7 +88,7 @@ Now the request schema can be rewritten like this:
 # in ContactsControllerSchema#create
 request do
   body_parameters do |s|
-    s.object "contact" do |s|
+    s.hash "contact" do |s|
       s.contact_attributes
     end
   end
@@ -100,7 +100,7 @@ and the response schema like that:
 ```ruby
 # in app/schemas/contacts/create.schema
 body do |s|
-  s.object "contact" do |s|
+  s.hash "contact" do |s|
     s.integer "id"
     s.contact_attributes
   end

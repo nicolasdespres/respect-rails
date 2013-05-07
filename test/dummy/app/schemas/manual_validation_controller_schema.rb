@@ -8,7 +8,7 @@ class ManualValidationControllerSchema < Respect::Rails::ActionSchema
     response_for do |status|
       status.ok do |r|
         r.body root: false do |s|
-          s.object do |s|
+          s.hash do |s|
             s.integer "id", equal_to: 53
           end
         end

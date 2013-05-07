@@ -51,7 +51,7 @@ We can get _Respect for Rails_ do this work for you by adding a helper method wh
 module Respect
   class PointSchema < CompositeSchema
     def schema_definition
-      ObjectSchema.define do |s|
+      HashSchema.define do |s|
         s.numeric "x"
         s.numeric "y"
       end
@@ -64,7 +64,7 @@ module Respect
 
   class CircleSchema < CompositeSchema
     def schema
-      ObjectSchema.define do |s|
+      HashSchema.define do |s|
         s.point "center"
         s.numeric "radius", greater_than: 0
       end

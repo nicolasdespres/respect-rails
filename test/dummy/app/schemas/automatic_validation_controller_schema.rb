@@ -73,8 +73,8 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
   def request_contextual_error
     request do |r|
       r.query_parameters do |s|
-        s.object "o1" do |s|
-          s.object "o2" do |s|
+        s.hash "o1" do |s|
+          s.hash "o2" do |s|
             s.integer "i", equal_to: 42
           end
         end
@@ -86,8 +86,8 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
     response_for do |status|
       status.is 200 do |r|
         r.body do |s|
-          s.object "o1" do |s|
-            s.object "o2" do |s|
+          s.hash "o1" do |s|
+            s.hash "o2" do |s|
               s.integer "i", equal_to: 51
             end
           end

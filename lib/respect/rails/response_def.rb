@@ -18,11 +18,11 @@ module Respect
       end
 
       # Define the schema of the response body.
-      # @option options [Boolean] root (true) whether to wrap the schema in an object.
+      # @option options [Boolean] root (true) whether to wrap the schema in a hash.
       def body(options = {}, &block)
         @response_schema.body = (
           if options.fetch(:root, true)
-            ObjectSchema.define(&block)
+            HashSchema.define(&block)
           else
             Schema.define(&block)
           end

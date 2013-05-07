@@ -1,5 +1,5 @@
 body do |s|
-  s.object "contact" do |s|
+  s.hash "contact" do |s|
     s.integer "id"
     s.contact_attributes
   end

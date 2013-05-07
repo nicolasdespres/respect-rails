@@ -18,15 +18,15 @@ module Respect
       end
 
       def path_parameters(&block)
-        @request_schema.path_parameters = ObjectSchema.define(&block)
+        @request_schema.path_parameters = HashSchema.define(&block)
       end
 
       def body_parameters(&block)
-        @request_schema.body_parameters = ObjectSchema.define(&block)
+        @request_schema.body_parameters = HashSchema.define(&block)
       end
 
       def query_parameters(&block)
-        @request_schema.query_parameters = ObjectSchema.define(&block)
+        @request_schema.query_parameters = HashSchema.define(&block)
       end
 
     end # class RequestDef

@@ -13,8 +13,8 @@ class RequestSchemaTest < Test::Unit::TestCase
   end
 
   def test_path_parameters_are_merged_with_default
-    params = Respect::ObjectSchema.new
-    result = Respect::ObjectSchema.new
+    params = Respect::HashSchema.new
+    result = Respect::HashSchema.new
     @rs.default_path_parameters.stubs(:merge).with(params).returns(result).once
     assert_not_equal result.object_id, @rs.path_parameters.object_id
     assert_equal result.object_id, @rs.public_send(:path_parameters=, params).object_id

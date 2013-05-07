@@ -6,7 +6,7 @@ class ResponseSchemaTest < Test::Unit::TestCase
   end
 
   def test_define_with_block
-    s = Respect::ObjectSchema.define do |s|
+    s = Respect::HashSchema.define do |s|
       s.integer "result"
     end
     block_def = Proc.new do |r|
@@ -53,7 +53,7 @@ class ResponseSchemaTest < Test::Unit::TestCase
     File.stubs(:read).with(filename).returns(file_content)
     # Compute the expected response schema.
     expected_response_schema = Respect::Rails::ResponseSchema.new
-    expected_response_schema.body = Respect::ObjectSchema.define do |s|
+    expected_response_schema.body = Respect::HashSchema.define do |s|
       s.integer "result"
     end
     # Do the test.
@@ -63,7 +63,7 @@ class ResponseSchemaTest < Test::Unit::TestCase
 
   def test_validate_raise_response_validation_error_on_validation_error
     doc = {}
-    schema = Respect::ObjectSchema.new
+    schema = Respect::HashSchema.new
     @rs.stubs(:body).returns(schema)
     schema.stubs(:validate).with(doc).raises(Respect::ValidationError.new("message"))
     assert_raises(Respect::Rails::ResponseValidationError) do
@@ -73,7 +73,7 @@ class ResponseSchemaTest < Test::Unit::TestCase
 
   def test_validate_returns_schema_validation_on_success
     doc = {}
-    schema = Respect::ObjectSchema.new
+    schema = Respect::HashSchema.new
     @rs.stubs(:body).returns(schema)
     result = Object.new
     schema.stubs(:validate).with(doc).returns(result)

@@ -11,13 +11,13 @@ module Respect
       def initialize(controller, action)
         @controller = controller
         @action = action
-        @default_path_parameters = ObjectSchema.define do |s|
+        @default_path_parameters = HashSchema.define do |s|
           s.string "controller", equal_to: @controller.to_s, doc: false
           s.string "action", equal_to: @action.to_s, doc: false
         end
         @path_parameters = @default_path_parameters.dup
-        @body_parameters = ObjectSchema.new
-        @query_parameters = ObjectSchema.new
+        @body_parameters = HashSchema.new
+        @query_parameters = HashSchema.new
       end
 
       attr_reader :controller, :action

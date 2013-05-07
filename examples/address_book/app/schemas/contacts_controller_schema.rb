@@ -2,7 +2,7 @@ class ContactsControllerSchema < ApplicationControllerSchema
   def create
     request do
       body_parameters do |s|
-        s.object "contact" do |s|
+        s.hash "contact" do |s|
           s.contact_attributes
         end
       end
