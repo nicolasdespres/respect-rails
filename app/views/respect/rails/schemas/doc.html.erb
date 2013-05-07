@@ -42,6 +42,13 @@
 <% if schema.request_schema %>
   <h4>Request schema</h4>
 
+  <% if schema.request_schema.headers %>
+    <h5>Headers schema</h4>
+    <%= highlight_json_schema schema.request_schema.headers.to_h %>
+  <% else %>
+    No headers schema.
+  <% end %>
+
   <% [ :path, :query, :body ].each do |name| %>
     <h5><%= name.capitalize %> parameters</h5>
     <% if schema.request_schema.send("#{name}_parameters").documented_properties.empty? %>
