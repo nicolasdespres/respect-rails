@@ -43,17 +43,17 @@ module Respect
         @status == other.status && @body == other.body
       end
 
-      def validate(doc)
+      def validate(response)
         begin
-          body.validate(doc)
+          body.validate(ActiveSupport::JSON.decode(response.body))
         rescue Respect::ValidationError => e
           raise Respect::Rails::ResponseValidationError.new(e)
         end
       end
 
-      def validate?(doc)
+      def validate?(response)
         begin
-          validate(doc)
+          validate(response)
           true
         rescue Respect::Rails::ResponseValidationError => e
           @last_error = e

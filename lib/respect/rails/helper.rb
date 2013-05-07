@@ -92,7 +92,7 @@ module Respect
           valid = nil
           measure = Benchmark.realtime do
             if schema && content_type == Mime::JSON
-              valid = schema.validate?(ActiveSupport::JSON.decode(body))
+              valid = schema.validate?(self)
             end
           end
           if valid.nil?

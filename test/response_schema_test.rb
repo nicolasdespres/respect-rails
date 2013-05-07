@@ -62,22 +62,30 @@ class ResponseSchemaTest < Test::Unit::TestCase
   end
 
   def test_validate_raise_response_validation_error_on_validation_error
-    doc = {}
+    body = {}
+    response = mock()
+    response.stubs(:body).returns(body)
     schema = Respect::HashSchema.new
     @rs.stubs(:body).returns(schema)
-    schema.stubs(:validate).with(doc).raises(Respect::ValidationError.new("message"))
+    decoded_body = {}
+    ActiveSupport::JSON.stubs(:decode).with(body).returns(decoded_body).once
+    schema.stubs(:validate).with(decoded_body).raises(Respect::ValidationError.new("message"))
     assert_raises(Respect::Rails::ResponseValidationError) do
-      @rs.validate(doc)
+      @rs.validate(response)
     end
   end
 
   def test_validate_returns_schema_validation_on_success
-    doc = {}
+    body = {}
+    response = mock()
+    response.stubs(:body).returns(body)
     schema = Respect::HashSchema.new
     @rs.stubs(:body).returns(schema)
     result = Object.new
-    schema.stubs(:validate).with(doc).returns(result)
-    assert_equal result.object_id, @rs.validate(doc).object_id
+    decoded_body = {}
+    ActiveSupport::JSON.stubs(:decode).with(body).returns(decoded_body).once
+    schema.stubs(:validate).with(decoded_body).returns(result)
+    assert_equal result.object_id, @rs.validate(response).object_id
   end
 
   def test_validate_query_returns_true_when_no_error
