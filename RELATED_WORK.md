@@ -4,7 +4,7 @@ This section describes some projects sharing more or less the same purpose as
 _Respect for Rails_. The goal is to have an overview of the eco-system around this
 topic to borrow ideas and to drive implementation.
 
-This section is not meant to be accurate event if we try to stay objective here.
+This section is not meant to be accurate even if we try to stay objective here.
 
 ## [apipie-rails](https://github.com/Pajk/apipie-rails)
 
