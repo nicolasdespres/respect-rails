@@ -156,6 +156,17 @@ class AutomaticValidationControllerTest < ActionController::TestCase
     end
   end
 
+  def test_successful_response_headers_check
+    get :check_response_headers, format: 'json', response_header: "good"
+    assert_response :success
+  end
+
+  def test_failed_response_headers_check
+    assert_raises(Respect::Rails::ResponseValidationError) do
+      get :check_response_headers, format: 'json', response_header: "wrong"
+    end
+  end
+
   private
 
   def set_request_header(key, value)

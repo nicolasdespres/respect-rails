@@ -29,6 +29,10 @@ module Respect
           )
       end
 
+      def headers(options = {}, &block)
+        @response_schema.headers = HashSchema.define(options, &block)
+      end
+
     end # class ResponseDef
   end # module Rails
 end # module Respect

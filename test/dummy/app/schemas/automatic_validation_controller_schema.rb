@@ -137,4 +137,14 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
     end
   end
 
+  def check_response_headers
+    response_for do |status|
+      status.ok do |r|
+        r.headers do |h|
+          h["response_header"] = "good"
+        end
+      end
+    end
+  end
+
 end

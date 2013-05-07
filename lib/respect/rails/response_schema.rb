@@ -44,10 +44,19 @@ module Respect
       end
 
       def validate(response)
-        begin
-          body.validate(ActiveSupport::JSON.decode(response.body))
-        rescue Respect::ValidationError => e
-          raise Respect::Rails::ResponseValidationError.new(e, :body)
+        if headers
+          begin
+            headers.validate(response.headers)
+          rescue Respect::ValidationError => e
+            raise Respect::Rails::ResponseValidationError.new(e, :headers)
+          end
+        end
+        if body
+          begin
+            body.validate(ActiveSupport::JSON.decode(response.body))
+          rescue Respect::ValidationError => e
+            raise Respect::Rails::ResponseValidationError.new(e, :body)
+          end
         end
       end
 
@@ -62,6 +71,8 @@ module Respect
       end
 
       attr_reader :last_error
+
+      attr_accessor :headers
     end
   end
 end

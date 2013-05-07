@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       match 'request_contextual_error'
       match 'response_contextual_error'
       match 'check_request_headers'
+      match 'check_response_headers'
     end
     scope controller: 'manual_validation', path: 'manual_validation', as: "manual_validation" do
       match 'raise_custom_error'
