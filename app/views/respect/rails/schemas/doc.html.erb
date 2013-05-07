@@ -57,6 +57,12 @@
 <h4>Response schema</h4>
   <% schema.response_schemas.each do |status, response_schema| %>
     <h5><%= response_schema.status %> [<%= response_schema.http_status %>]</h5>
+    <% if response_schema.headers %>
+      <h4>Headers schema</h4>
+      <%= highlight_json_schema response_schema.headers.to_h %>
+    <% else %>
+      No headers schema.
+    <% end %>
     <% if response_schema.body %>
       <h4>Body schema</h4>
       <%= highlight_json_schema response_schema.body.to_h %>
