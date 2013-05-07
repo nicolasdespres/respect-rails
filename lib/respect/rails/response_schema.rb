@@ -47,7 +47,7 @@ module Respect
         begin
           body.validate(ActiveSupport::JSON.decode(response.body))
         rescue Respect::ValidationError => e
-          raise Respect::Rails::ResponseValidationError.new(e)
+          raise Respect::Rails::ResponseValidationError.new(e, :body)
         end
       end
 

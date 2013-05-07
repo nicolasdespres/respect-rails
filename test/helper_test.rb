@@ -127,7 +127,7 @@ class HelperTest < Test::Unit::TestCase
   def test_response_validation_schema_query_on_failure
     response = Object.new
     response.extend(Respect::Rails::Helper::Response)
-    response.stubs(:validate_schema).raises(Respect::Rails::ResponseValidationError.new(mock()))
+    response.stubs(:validate_schema).raises(Respect::Rails::ResponseValidationError.new(mock(), :body))
     assert_equal(false, response.validate_schema?)
   end
 end

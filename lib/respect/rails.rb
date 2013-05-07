@@ -16,11 +16,13 @@ module Respect
     autoload :RouteInfo
 
     class ValidationError < StandardError
-      def initialize(error)
+      def initialize(error, part)
         @error = error
+        @part = ActiveSupport::StringInquirer.new(part.to_s)
       end
 
       attr_reader :error
+      attr_reader :part
       delegate :context, :message, to: :@error
 
       def to_h
@@ -29,6 +31,7 @@ module Respect
             class: self.class.name,
             message: message,
             context: context,
+            part: @part,
           }
         }
       end
@@ -40,18 +43,6 @@ module Respect
 
     # Raised when we fail to validate an incoming request.
     class RequestValidationError < ValidationError
-      def initialize(error, part)
-        super(error)
-        @part = ActiveSupport::StringInquirer.new(part.to_s)
-      end
-
-      attr_reader :part
-
-      def to_h
-        h = super
-        h[:error][:part] = @part
-        h
-      end
     end
 
     # Raised when we fail to validate an outgoing response.
