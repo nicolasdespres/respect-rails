@@ -6,6 +6,21 @@ topic to borrow ideas and to drive implementation.
 
 This section is not meant to be accurate event if we try to stay objective here.
 
+## [apipie-rails](https://github.com/Pajk/apipie-rails)
+
+* Documentation generation using an engine.
+* Ruby DSL to describe documentation.
+* Support validators.
+* Resource and controllers description API.
+* Good looking generated doc.
+* Allow to statically deployed the documentation apart of the Rails app.
+* TODO: Is there sanitizers?
+* TODO: Is there headers checker?
+* TODO: Is there url and query parameters ?
+* TODO: Support for json-schema.org standard ?
+
+TODO: Study to be continued...
+
 ## [Doctorj](https://github.com/coopernurse/doctorj)
 
 * No Ruby DSL but uses a Markdown file as input.
