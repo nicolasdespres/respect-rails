@@ -12,6 +12,7 @@ YARD::Rake::YardocTask.new do |t|
     '-',
     'README.md',
     'FAQ.md',
+    'RELATED_WORK.md',
   ]
 end
 
