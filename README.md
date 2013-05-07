@@ -10,7 +10,7 @@
   * Your documentation will always be up to date with your application.
   * Access the full API documentation.
   * Deployed transparently with your application so you don't have to worry about it.
-* A DSL to group your requests and responses schema by controllers.
+* A DSL to specify your controllers' actions schema (URL, body, headers).
 
 # Take a tour
 
@@ -194,6 +194,21 @@ This helper can render the error in both HTML and JSON.
 A response validation error handler is also available but only in development. In test mode the exception
 would be raised as usual.
 
+# Headers specification
+
+_Respect for Rails_ also allows you to specify headers that must be part of the request/response. Here a simple headers specification for a request:
+
+```ruby
+request do |r|
+  r.headers do |h|
+    h["HTTP_VERSION"] = "HTTP/1.1"
+  end
+end
+```
+
+See the documentation of the `Respect::HashDef#[]=` method in `Respect` for more example of
+how you can specify headers.
+
 # Getting started
 
 The easiest way to install _Respect for Rails_ is to add it to your `Gemfile`:
@@ -224,7 +239,6 @@ Many other great features are planned for the next releases. Here a short list o
 * Rake tasks to quickly access a controller action schema from the terminal.
 * A web service to programmatically inspect your API schemas
 * A web service to check a request is valid without actually performing the request.
-* Specify request and response header
 * Try to fetch path parameters from route's constraints: this may be tricky so no promise.
 * Try to fetch resource schema validator from model validator: again this may be tricky so no promise.
 * Partial response schema.
