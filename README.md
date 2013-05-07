@@ -34,7 +34,7 @@ class ContactsControllerSchema < ApplicationControllerSchema
     response_for do |status|
       status.ok # contacts/create.schema
       status.unprocessable_entity do
-        body_parameters do |s|
+        body do |s|
           s.string "error"
         end
       end
@@ -87,7 +87,7 @@ Now the request schema can be rewritten like this:
 ```ruby
 # in ContactsControllerSchema#create
 request do
-  body_params do |s|
+  body_parameters do |s|
     s.object "contact" do |s|
       s.contact_attributes
     end
