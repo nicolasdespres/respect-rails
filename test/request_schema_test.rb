@@ -23,6 +23,8 @@ class RequestSchemaTest < Test::Unit::TestCase
 
   def test_validate_both_body_and_path_parameters
     request = mock()
+    headers = {}
+    request.stubs(:headers).with().returns(headers).at_least_once
     params = {}
     request.stubs(:params).with().returns(params).at_least_once
     @rs.path_parameters.stubs(:validate).with(params).once
@@ -33,6 +35,8 @@ class RequestSchemaTest < Test::Unit::TestCase
 
   def test_validate_raise_request_validation_error_on_path_params_validation_error
     request = mock()
+    headers = {}
+    request.stubs(:headers).with().returns(headers).at_least_once
     params = {}
     request.stubs(:params).with().returns(params).at_least_once
     @rs.path_parameters.stubs(:validate).with(params).raises(Respect::ValidationError.new("error message")).once
@@ -50,6 +54,8 @@ class RequestSchemaTest < Test::Unit::TestCase
 
   def test_validate_raise_request_validation_error_on_query_params_validation_error
     request = mock()
+    headers = {}
+    request.stubs(:headers).with().returns(headers).at_least_once
     params = {}
     request.stubs(:params).with().returns(params).at_least_once
     @rs.path_parameters.stubs(:validate).with(params)
@@ -67,6 +73,8 @@ class RequestSchemaTest < Test::Unit::TestCase
 
   def test_validate_raise_request_validation_error_on_body_params_validation_error
     request = mock()
+    headers = {}
+    request.stubs(:headers).with().returns(headers).at_least_once
     params = {}
     request.stubs(:params).with().returns(params).at_least_once
     @rs.path_parameters.stubs(:validate).with(params)
@@ -79,6 +87,26 @@ class RequestSchemaTest < Test::Unit::TestCase
       assert e.error.is_a?(Respect::ValidationError)
       assert_equal "error message", e.message
       assert e.part.body?
+    end
+  end
+
+  def test_validate_raise_request_validation_error_on_headers_validation_error
+    request = mock()
+    headers = {}
+    request.stubs(:headers).with().returns(headers).at_least_once
+    @rs.headers.stubs(:validate).with(headers).raises(Respect::ValidationError.new("error message")).once
+    params = {}
+    request.stubs(:params).with().returns(params)
+    @rs.path_parameters.stubs(:validate).with(params)
+    @rs.query_parameters.stubs(:validate).with(params)
+    @rs.body_parameters.stubs(:validate).with(params)
+    begin
+      @rs.validate(request)
+      assert false, "nothing raised"
+    rescue Respect::Rails::RequestValidationError => e
+      assert e.error.is_a?(Respect::ValidationError)
+      assert_equal "error message", e.message
+      assert e.part.headers?
     end
   end
 

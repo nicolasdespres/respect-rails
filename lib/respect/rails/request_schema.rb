@@ -18,9 +18,12 @@ module Respect
         @path_parameters = @default_path_parameters.dup
         @body_parameters = HashSchema.new
         @query_parameters = HashSchema.new
+        @headers = HashSchema.new
       end
 
       attr_reader :controller, :action
+
+      attr_accessor :headers
 
       attr_reader :body_parameters, :query_parameters
 
@@ -47,6 +50,11 @@ module Respect
       # Raise a {RequestValidationError} if an error occur.
       # Returns +true+ on success.
       def validate(request)
+        begin
+          headers.validate(request.headers)
+        rescue Respect::ValidationError => e
+          raise RequestValidationError.new(e, :headers)
+        end
         [ :path, :query, :body ].each do |name|
           begin
             send("#{name}_parameters").validate(request.params)

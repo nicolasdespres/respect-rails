@@ -143,4 +143,23 @@ class AutomaticValidationControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_successful_request_headers_check
+    set_request_header("test_header", "value")
+    get :check_request_headers, format: 'json'
+    assert_response :success
+  end
+
+  def test_failed_request_headers_check
+    set_request_header("test_header", "erroneous_value")
+    assert_raises(Respect::Rails::RequestValidationError) do
+      get :check_request_headers, format: 'json'
+    end
+  end
+
+  private
+
+  def set_request_header(key, value)
+    # FIXME(Nicolas Despres): Find a less hacky way to do it.
+    @request.instance_variable_get(:@env)[key] = value
+  end
 end

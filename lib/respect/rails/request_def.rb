@@ -29,6 +29,10 @@ module Respect
         @request_schema.query_parameters = HashSchema.define(&block)
       end
 
+      def headers(&block)
+        @request_schema.headers = HashSchema.define(&block)
+      end
+
     end # class RequestDef
   end
 end # module Respect

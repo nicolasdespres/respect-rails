@@ -167,6 +167,17 @@ class AutomaticValidationController < ApplicationController
     end
   end
 
+  def check_request_headers
+    unless request.headers["test_header"] == "value"
+      raise "should never be raised since the validator has raised one before when checking headers"
+    end
+    respond_to do |format|
+      format.json do
+        render json: {}
+      end
+    end
+  end
+
   # It is mandatory to prepend the after filter so that it is
   # executed before load_response_schema. Or you have to call it
   # yourself.

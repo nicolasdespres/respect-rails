@@ -129,4 +129,12 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
     end
   end
 
+  def check_request_headers
+    request do |r|
+      r.headers do |h|
+        h["test_header"] = "value"
+      end
+    end
+  end
+
 end
