@@ -26,9 +26,17 @@ controller.
 
 Coming soon:
 
-* Describe your resource schema.
+* Describe the schema of your resources.
 * Use routes' constraints as default request's path parameters validation rules.
 * Use models' validators as default request's body parameters validation rules.
+* Generator tasks: template for controller schema, helpers, etc...
+* Statistic about how much routes you have documented.
+* Rake tasks to quickly access a controller action schema from the terminal.
+* A web service to programmatically inspect your API schemas
+* A web service to check a request is valid without actually performing the request.
+* Partial response schema.
+* An helper to easily specify nested attributes.
+* More appealing documentation rendering.
 
 # Take a tour
 
@@ -246,24 +254,6 @@ Then, you can start your application web server as usual at point your web brows
 `http://localhost:3000/rest_spec/doc`.
 
 FIXME: speak about generators ?
-
-# Coming soon
-
-Many other great features are planned for the next releases. Here a short list of what is coming soon:
-
-* Resource schema: organize your schema as you organize your application resources.
-* Generator tasks: template for controller schema, helpers, etc...
-* Statistic about how much routes you have documented.
-* Rake tasks to quickly access a controller action schema from the terminal.
-* A web service to programmatically inspect your API schemas
-* A web service to check a request is valid without actually performing the request.
-* Try to fetch path parameters from route's constraints: this may be tricky so no promise.
-* Try to fetch resource schema validator from model validator: again this may be tricky so no promise.
-* Partial response schema.
-* An helper to easily specify nested attributes.
-* More appealing documentation rendering.
-
-And many more... see the issue tracker with tag FIXME for more information.
 
 # Getting help
 
