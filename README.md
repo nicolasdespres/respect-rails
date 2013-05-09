@@ -1,16 +1,34 @@
 # Respect plugin for Rails
 
-[Respect](https://github.com/nicolasdespres/respect) integration for Rails 3.x.
+_Respect for Rails_ let's you write the documentation of your REST API using Ruby code. Your app's
+API is published using a Rails engine so it is always deployed along with your application and stay
+synchronized. A filter is available so you can also easily validate requests and responses. Thanks
+to that your incoming parameters will also be sanitized so if you expect a URI in a parameter value you will get a URI object instead of a string object containing a URI.
+It follows Rails DRY principle and save you a lot of typing since it
+fetches most of the information automatically by inspecting your routes, their constraints and your
+model validators. You can always adjust the default by defining the schema per resource and/or
+controller.
 
 # Features
 
-* Based on [Respect](https://github.com/nicolasdespres/respect) to compactly specify your REST API.
+* Based on [Respect](https://github.com/nicolasdespres/respect) to compactly specify the content
+  of the headers and parameters of your requests and the headers and the body of your responses.
 * Controllers' helpers to automatically validates and sanitize incoming parameters.
 * A Rails engine to mount in your application to publish your public REST API documentation.
   * Your documentation will always be up to date with your application.
   * Access the full API documentation.
   * Deployed transparently with your application so you don't have to worry about it.
 * A DSL to specify your controllers' actions schema (URL, body, headers).
+* Generated documentation follows [JSON schema standard](http://json-schema.org/) as much as
+  possible. It currently follows the
+  [draft v3](http://tools.ietf.org/id/draft-zyp-json-schema-03.html) standard version.
+* Routes are automatically collected.
+
+Coming soon:
+
+* Describe your resource schema.
+* Use routes' constraints as default request's path parameters validation rules.
+* Use models' validators as default request's body parameters validation rules.
 
 # Take a tour
 
