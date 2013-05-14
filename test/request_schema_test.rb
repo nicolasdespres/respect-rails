@@ -135,12 +135,12 @@ class RequestSchemaTest < Test::Unit::TestCase
     body_params = mock()
     request.stubs(:body_parameters).with().returns(body_params)
     @rs.stubs(:validate?).with(request).returns(true).once
-    @rs.path_parameters.stubs(:sanitize_doc!).with(params).once
-    @rs.path_parameters.stubs(:sanitize_doc!).with(path_params).once
-    @rs.query_parameters.stubs(:sanitize_doc!).with(params).once
-    @rs.query_parameters.stubs(:sanitize_doc!).with(query_params).once
-    @rs.body_parameters.stubs(:sanitize_doc!).with(params).once
-    @rs.body_parameters.stubs(:sanitize_doc!).with(body_params).once
+    @rs.path_parameters.stubs(:sanitize_object!).with(params).once
+    @rs.path_parameters.stubs(:sanitize_object!).with(path_params).once
+    @rs.query_parameters.stubs(:sanitize_object!).with(params).once
+    @rs.query_parameters.stubs(:sanitize_object!).with(query_params).once
+    @rs.body_parameters.stubs(:sanitize_object!).with(params).once
+    @rs.body_parameters.stubs(:sanitize_object!).with(body_params).once
     assert_equal true, @rs.validate!(request)
   end
 
