@@ -43,18 +43,18 @@ module Respect
         end
 
         def response_schema(http_status)
-          unless endpoint_schema.nil? || endpoint_schema.response_schemas.nil?
-            endpoint_schema.response_schemas[http_status]
+          unless action_schema.nil? || action_schema.response_schemas.nil?
+            action_schema.response_schemas[http_status]
           end
         end
 
         def request_schema
-          endpoint_schema.request_schema if endpoint_schema
+          action_schema.request_schema if action_schema
         end
 
-        attr_reader :endpoint_schema
-        attr_writer :endpoint_schema
-        private :endpoint_schema=
+        attr_reader :action_schema
+        attr_writer :action_schema
+        private :action_schema=
 
         def last_validation_error
           request_schema.last_error
@@ -184,7 +184,7 @@ module Respect
       # and load the associated schema.
       def load_request_schema
         request.extend(Request)
-        request.send(:endpoint_schema=, Respect::Rails.load_schema(controller_name, action_name))
+        request.send(:action_schema=, Respect::Rails.load_schema(controller_name, action_name))
       end
 
       # This "after" filter extends the response object with validation methods
