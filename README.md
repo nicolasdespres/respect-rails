@@ -48,8 +48,11 @@ for its `create` action may look like this:
 # in app/schemas/contacts_controller_schema.rb
 class ContactsControllerSchema < ApplicationControllerSchema
   def create
-    request do
-      body_parameters do |s|
+    request do |r|
+      r.headers do |h|
+        h["HTTP_VERSION"] = "HTTP/1.1"
+      end
+      r.body_parameters do |s|
         s.hash "contact" do |s|
           s.string "name"
           s.integer "age"
@@ -59,8 +62,8 @@ class ContactsControllerSchema < ApplicationControllerSchema
     end
     response_for do |status|
       status.ok # contacts/create.schema
-      status.unprocessable_entity do
-        body do |s|
+      status.unprocessable_entity do |s|
+        s.body do |s|
           s.string "error"
         end
       end
@@ -112,8 +115,11 @@ Now the request schema can be rewritten like this:
 
 ```ruby
 # in ContactsControllerSchema#create
-request do
-  body_parameters do |s|
+request do |r|
+  r.headers do |h|
+    h["HTTP_VERSION"] = "HTTP/1.1"
+  end
+  r.body_parameters do |s|
     s.hash "contact" do |s|
       s.contact_attributes
     end
@@ -147,7 +153,7 @@ mount Respect::Rails::Engine => "/rest_spec"
 ```
 
 This will add a new `/rest_spec` path under which you have access to your REST API documentation.
-In particular `/rest_spec/doc` should render something like that for the "create" request schema:
+In particular `/rest_spec/doc` should render something like that for the `create` request schema:
 
 ```json
 {
@@ -190,8 +196,9 @@ end
 The filter searches for a schema associated to a controller's action. If it can find one it validates
 and sanitizes the parameters incoming parameters.
 
-If the request's parameters do not validate the schema a `Respect::Rails::RequestValidationError`
-exception will be raised before your controller's action is called. If they are valid, they will be
+If the request's parameters/headers do not validate the schema a
+`Respect::Rails::RequestValidationError` exception will be raised before your controller's action
+is called. If they are valid, they will be
 sanitized in place. Thus, the `homepage` parameter will be a `URI` object instead of a simple string:
 
 ```ruby
@@ -219,21 +226,6 @@ This helper can render the error in both HTML and JSON.
 
 A response validation error handler is also available but only in development. In test mode the exception
 would be raised as usual.
-
-# Headers specification
-
-_Respect for Rails_ also allows you to specify headers that must be part of the request/response. Here a simple headers specification for a request:
-
-```ruby
-request do |r|
-  r.headers do |h|
-    h["HTTP_VERSION"] = "HTTP/1.1"
-  end
-end
-```
-
-See the documentation of the `Respect::HashDef#[]=` method in `Respect` for more example of
-how you can specify headers.
 
 # Getting started
 
