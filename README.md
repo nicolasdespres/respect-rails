@@ -292,9 +292,5 @@ send me a pull request.
 
 # License
 
-_Respect_ is released under the term of the [MIT License](http://opensource.org/licenses/MIT).
+_Respect for Rails_ is released under the term of the [MIT License](http://opensource.org/licenses/MIT).
 Copyright (c) 2013 Nicolas Despres.
-
-# License
-
-_Respect for Rails_ is released under the term of the [MIT License](http://opensource.org/licenses/MIT)
