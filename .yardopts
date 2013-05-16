@@ -2,5 +2,5 @@ lib/**/*.rb
 -
 README.md
 FAQ.md
+RELEASE_NOTES.md
 RELATED_WORK.md
-NEWS.md
