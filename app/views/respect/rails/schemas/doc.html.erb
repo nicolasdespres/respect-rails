@@ -39,14 +39,13 @@
     <h4>Route</h4>
     <%= route.spec %>
 
+    <h4>Request schema</h4>
     <% if schema.request_schema %>
-      <h4>Request schema</h4>
-
       <% if schema.request_schema.headers %>
         <h5>Headers schema</h4>
         <%= highlight_json_schema schema.request_schema.headers.to_h %>
       <% else %>
-        No headers schema.
+        No headers schema specification.
       <% end %>
 
       <% [ :path, :query, :body ].each do |name| %>
@@ -57,26 +56,29 @@
           <%= highlight_json_schema schema.request_schema.send("#{name}_parameters").to_h %>
         <% end %>
       <% end %>
-
+    <% else %>
+      No request schema specification.
     <% end %>
 
+    <h4>Response schema</h4>
     <% unless schema.response_schemas.empty? %>
-      <h4>Response schema</h4>
       <% schema.response_schemas.each do |status, response_schema| %>
         <h5><%= response_schema.status %> [<%= response_schema.http_status %>]</h5>
         <% if response_schema.headers %>
           <h4>Headers schema</h4>
           <%= highlight_json_schema response_schema.headers.to_h %>
         <% else %>
-          No headers schema.
+          No headers schema specification.
         <% end %>
         <% if response_schema.body %>
           <h4>Body schema</h4>
           <%= highlight_json_schema response_schema.body.to_h %>
         <% else %>
-          No body schema.
+          No body schema specification.
         <% end %>
       <% end %>
+    <% else %>
+      No response schema specification.
     <% end %>
 
   <% end %>
