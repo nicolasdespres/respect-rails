@@ -1,4 +1,4 @@
-Respect::Rails::Engine.setup do |config|
+Respect::Rails.setup do |config|
   config.app_documentation <<-EOS
     A great dummy app.
 

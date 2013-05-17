@@ -58,6 +58,11 @@ module Respect
       def application_name
         ::Rails.application.class.parent_name
       end
+
+      # Shortcut for {Respect::Rails::Engine.setup}.
+      def setup(&block)
+        Engine.setup(&block)
+      end
     end # class << self
   end # module Rails
 end # module Respect
