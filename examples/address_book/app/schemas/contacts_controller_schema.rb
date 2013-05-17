@@ -120,4 +120,23 @@ class ContactsControllerSchema < ApplicationControllerSchema
       end
     end
   end
+
+  def destroy
+    documentation <<-EOS.strip_heredoc
+      Destroy an existing contact in the address book.
+
+      This request destroy an existing contact identified by the given 'id'
+      in the database. No content is responded.
+    EOS
+    request do |r|
+      r.path_parameters do |s|
+        s.id
+      end
+    end
+    response_for do |status|
+      status.no_content do |s|
+        # Empty schema
+      end
+    end
+  end
 end
