@@ -2,7 +2,7 @@ module Respect
   module Rails
     # Controller to get all the information relative to the
     # REST API of this application.
-    class SchemasController < ApplicationController
+    class SchemasController < ActionController::Base
       def index
         respond_to do |format|
           format.html # index.html.erb
