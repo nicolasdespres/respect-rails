@@ -9,5 +9,10 @@ module Respect
       integer "age"
       uri "homepage"
     end
+
+    def record_timestamps
+      datetime "created_at"
+      datetime "updated_at"
+    end
   end
 end

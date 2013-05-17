@@ -13,8 +13,7 @@ class ContactsControllerSchema < ApplicationControllerSchema
             s.hash do |s|
               s.id
               s.contact_attributes
-              s.datetime "created_at"
-              s.datetime "updated_at"
+              s.record_timestamps
             end
           end
         end
@@ -39,8 +38,7 @@ class ContactsControllerSchema < ApplicationControllerSchema
         s.body do |s|
           s.id
           s.contact_attributes
-          s.datetime "created_at"
-          s.datetime "updated_at"
+          s.record_timestamps
         end
       end
     end
@@ -59,8 +57,7 @@ class ContactsControllerSchema < ApplicationControllerSchema
         s.body do |s|
           s.id
           s.contact_attributes
-          s.datetime "created_at"
-          s.datetime "updated_at"
+          s.record_timestamps
         end
       end
     end
