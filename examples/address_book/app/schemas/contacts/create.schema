@@ -1,6 +1,0 @@
-body do |s|
-  s.hash "contact" do |s|
-    s.integer "id"
-    s.contact_attributes
-  end
-end

@@ -1,0 +1,4 @@
+body do |s|
+  s.integer "id"
+  s.contact_attributes
+end
