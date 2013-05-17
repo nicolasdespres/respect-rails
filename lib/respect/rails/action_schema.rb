@@ -72,7 +72,7 @@ module Respect
 
       # Returns the documentation of this action schema if +text+ is +nil+.
       # Set the documentation to +text+ if not +nil+.
-      def doc(text = nil)
+      def documentation(text = nil)
         if text
           @doc = text
         else

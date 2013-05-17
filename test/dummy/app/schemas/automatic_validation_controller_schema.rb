@@ -1,6 +1,6 @@
 class AutomaticValidationControllerSchema < ApplicationControllerSchema
   def basic_get
-    doc <<-EOS
+    documentation <<-EOS
       A title.
 
       A description.

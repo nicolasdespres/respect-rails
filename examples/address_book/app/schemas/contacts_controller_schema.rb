@@ -1,6 +1,6 @@
 class ContactsControllerSchema < ApplicationControllerSchema
   def create
-    doc <<-EOS.strip_heredoc
+    documentation <<-EOS.strip_heredoc
       Create a new contact in the address book.
 
       This request create a new contact in the database with all the
