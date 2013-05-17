@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
     "RELEASE_NOTES.md",
     "RELATED_WORK.md",
   ]
-  s.test_files = Dir["test/**/*"]
+  s.test_files = Dir["test/**/*"] - Dir["test/dummy/tmp/**/*"]
 
   s.add_dependency "rails", "~> 3.2.13"
   s.add_dependency "respect", "~> 0.1.0"
