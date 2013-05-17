@@ -131,6 +131,13 @@ module Respect
       end
 
       module ClassMethods
+        # Install a handler for {Respect::Rails::RequestValidationError}. It provides a more specific
+        # error report than the default exception handler in development. For instance you get the
+        # context of where the error happened in the JSON document.
+        #
+        # Example:
+        #   # In your ApplicationController class.
+        #   rescue_from_request_valiation_error if Rails.env.development?
         def rescue_from_request_validation_error
           rescue_from Respect::Rails::RequestValidationError do |exception|
             respond_to do |format|

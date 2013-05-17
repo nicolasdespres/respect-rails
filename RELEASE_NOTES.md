@@ -14,3 +14,4 @@ with all sufficient information, see the git(1) log.
 * Feature: Sanitizer to promote validated parameter value to a more precise type.
 * Feature: Schema are organize like controllers and views.
 * Feature: Follow [JSON schema draft v3 standard](http://tools.ietf.org/id/draft-zyp-json-schema-03.html) to represents schema.
+* Feature: A RequestValidationError exception handler.
