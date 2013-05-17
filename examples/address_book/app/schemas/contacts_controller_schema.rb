@@ -3,7 +3,7 @@ class ContactsControllerSchema < ApplicationControllerSchema
     documentation <<-EOS.strip_heredoc
       Create a new contact in the address book.
 
-      This request create a new contact in the database with all the
+      This request creates a new contact in the database with all the
       attributes provided and respond its full description including
       some more attributes.
     EOS
