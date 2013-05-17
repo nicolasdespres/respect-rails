@@ -214,12 +214,12 @@ Actually, the validation takes place only if the response content type is `appli
 `Respect::Rails::ResponseValidationError` will be raised in case of error. This validation is executed
 only in development and test mode, so it won't bother you in production.
 
-Instead of the regular exception reporting view, you can get a dedicated one for
+Instead of the usual exception reporting view, you can get a dedicated one for
 `Respect::Rails::RequestValidationError` in development mode. You just have to add something like that
 to your `ApplicationController`:
 
 ```ruby
-rescue_from_request_valiation_error if Rails.env.development?
+rescue_from_request_validation_error if Rails.env.development?
 ```
 
 This helper can render the error in both HTML and JSON.
