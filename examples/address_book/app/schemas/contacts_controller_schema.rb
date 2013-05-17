@@ -1,4 +1,25 @@
 class ContactsControllerSchema < ApplicationControllerSchema
+  def index
+    documentation <<-EOS.strip_heredoc
+      List all the contacts in the address book.
+
+      This request lists all the contacts recorded in the database with
+      all their attributes.
+    EOS
+    response_for do |status|
+      status.ok do |s|
+        s.body root: false do |s|
+          s.array do |s|
+            s.hash do |s|
+              s.integer "id"
+              s.contact_attributes
+            end
+          end
+        end
+      end
+    end
+  end
+
   def create
     documentation <<-EOS.strip_heredoc
       Create a new contact in the address book.
