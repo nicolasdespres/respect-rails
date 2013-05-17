@@ -22,6 +22,30 @@ class ContactsControllerSchema < ApplicationControllerSchema
     end
   end
 
+  def show
+    documentation <<-EOS.strip_heredoc
+      Show a contacts in the address book.
+
+      This request show the contacts identified by the given 'id'
+      recorded in the database with all its attributes.
+    EOS
+    request do |r|
+      r.path_parameters do |s|
+        s.integer "id", greater_than: 0
+      end
+    end
+    response_for do |status|
+      status.ok do |s|
+        s.body do |s|
+          s.integer "id"
+          s.contact_attributes
+          s.datetime "created_at"
+          s.datetime "updated_at"
+        end
+      end
+    end
+  end
+
   def create
     documentation <<-EOS.strip_heredoc
       Create a new contact in the address book.
