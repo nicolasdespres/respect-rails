@@ -1,6 +1,6 @@
 require 'respect'
 
-require 'respect/rails/helper'
+require 'respect/rails/controller_helper'
 
 module Respect
   module Rails

@@ -3,7 +3,7 @@ require 'respect/rails/response_helper'
 
 module Respect
   module Rails
-    module Helper
+    module ControllerHelper
       extend ActiveSupport::Concern
 
       included do |base|
@@ -92,8 +92,8 @@ module Respect
       def sanitize_params
         request.sanitize_params!
       end
-    end # module Helper
+    end # module ControllerHelper
   end # module Rails
 end # module Respect
 
-ActionController::Base.send :include, Respect::Rails::Helper
+ActionController::Base.send :include, Respect::Rails::ControllerHelper
