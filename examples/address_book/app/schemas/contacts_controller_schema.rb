@@ -10,11 +10,7 @@ class ContactsControllerSchema < ApplicationControllerSchema
       status.ok do |s|
         s.body hash: false do |s|
           s.array do |s|
-            s.hash do |s|
-              s.id
-              s.contact_attributes
-              s.record_timestamps
-            end
+            s.contact
           end
         end
       end
@@ -35,10 +31,8 @@ class ContactsControllerSchema < ApplicationControllerSchema
     end
     response_for do |status|
       status.ok do |s|
-        s.body do |s|
-          s.id
-          s.contact_attributes
-          s.record_timestamps
+        s.body hash: false do |s|
+          s.contact
         end
       end
     end
@@ -54,10 +48,8 @@ class ContactsControllerSchema < ApplicationControllerSchema
     EOS
     response_for do |status|
       status.ok do |s|
-        s.body do |s|
-          s.id
-          s.contact_attributes
-          s.record_timestamps
+        s.body hash: false do |s|
+          s.contact
         end
       end
     end

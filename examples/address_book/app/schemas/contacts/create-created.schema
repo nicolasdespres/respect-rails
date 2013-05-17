@@ -1,6 +1,3 @@
 body do |s|
-  s.id
-  s.contact_attributes
-  s.datetime "created_at"
-  s.datetime "updated_at"
+  s.contact
 end

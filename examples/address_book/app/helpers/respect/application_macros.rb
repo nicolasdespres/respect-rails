@@ -14,5 +14,13 @@ module Respect
       datetime "created_at"
       datetime "updated_at"
     end
+
+    def contact(name = "contact")
+      hash name do |s|
+        s.id
+        s.contact_attributes
+        s.record_timestamps
+      end
+    end
   end
 end
