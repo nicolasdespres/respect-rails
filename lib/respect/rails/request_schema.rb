@@ -53,13 +53,13 @@ module Respect
         begin
           headers.validate(request.headers)
         rescue Respect::ValidationError => e
-          raise RequestValidationError.new(e, :headers)
+          raise RequestValidationError.new(e, :headers, request.headers)
         end
         [ :path, :query, :body ].each do |name|
           begin
             send("#{name}_parameters").validate(request.params)
           rescue Respect::ValidationError => e
-            raise RequestValidationError.new(e, name)
+            raise RequestValidationError.new(e, name, request.params)
           end
         end
         true

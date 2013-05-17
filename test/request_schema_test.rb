@@ -49,6 +49,7 @@ class RequestSchemaTest < Test::Unit::TestCase
       assert e.error.is_a?(Respect::ValidationError)
       assert_equal "error message", e.message
       assert e.part.path?
+      assert_equal params, e.object
     end
   end
 
@@ -68,6 +69,7 @@ class RequestSchemaTest < Test::Unit::TestCase
       assert e.error.is_a?(Respect::ValidationError)
       assert_equal "error message", e.message
       assert e.part.query?
+      assert_equal params, e.object
     end
   end
 
@@ -87,6 +89,7 @@ class RequestSchemaTest < Test::Unit::TestCase
       assert e.error.is_a?(Respect::ValidationError)
       assert_equal "error message", e.message
       assert e.part.body?
+      assert_equal params, e.object
     end
   end
 
@@ -107,6 +110,7 @@ class RequestSchemaTest < Test::Unit::TestCase
       assert e.error.is_a?(Respect::ValidationError)
       assert_equal "error message", e.message
       assert e.part.headers?
+      assert_equal headers, e.object
     end
   end
 
@@ -118,7 +122,7 @@ class RequestSchemaTest < Test::Unit::TestCase
 
   def test_validate_query_returns_false_on_error_and_store_last_error
     doc = {}
-    error = Respect::Rails::RequestValidationError.new(Respect::ValidationError.new("message"), :path)
+    error = Respect::Rails::RequestValidationError.new(Respect::ValidationError.new("message"), :path, {})
     @rs.stubs(:validate).with(doc).raises(error).once
     assert_equal false, @rs.validate?(doc)
     assert_equal error, @rs.last_error

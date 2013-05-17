@@ -49,14 +49,15 @@ module Respect
           begin
             headers.validate(response.headers)
           rescue Respect::ValidationError => e
-            raise Respect::Rails::ResponseValidationError.new(e, :headers)
+            raise Respect::Rails::ResponseValidationError.new(e, :headers, response.headers)
           end
         end
         if body
+          decoded_body = ActiveSupport::JSON.decode(response.body)
           begin
-            body.validate(ActiveSupport::JSON.decode(response.body))
+            body.validate(decoded_body)
           rescue Respect::ValidationError => e
-            raise Respect::Rails::ResponseValidationError.new(e, :body)
+            raise Respect::Rails::ResponseValidationError.new(e, :body, decoded_body)
           end
         end
         true

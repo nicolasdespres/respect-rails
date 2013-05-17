@@ -16,14 +16,16 @@ module Respect
     autoload :RouteInfo
 
     class ValidationError < StandardError
-      def initialize(error, part)
+      def initialize(error, part, object)
         @error = error
         @part = ActiveSupport::StringInquirer.new(part.to_s)
+        @object = object
       end
 
       attr_reader :error
       attr_reader :part
       delegate :context, :message, to: :@error
+      attr_reader :object
 
       def to_h
         {
@@ -32,6 +34,7 @@ module Respect
             message: message,
             context: context,
             part: @part,
+            object: @object,
           }
         }
       end

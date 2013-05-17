@@ -106,7 +106,7 @@ class ResponseSchemaTest < Test::Unit::TestCase
 
   def test_validate_query_returns_false_on_error_and_store_last_error
     doc = {}
-    error = Respect::Rails::ResponseValidationError.new(Respect::ValidationError.new("message"), :body)
+    error = Respect::Rails::ResponseValidationError.new(Respect::ValidationError.new("message"), :body, {})
     @rs.stubs(:validate).with(doc).raises(error).once
     assert_equal false, @rs.validate?(doc)
     assert_equal error, @rs.last_error

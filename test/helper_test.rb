@@ -59,7 +59,7 @@ class HelperTest < Test::Unit::TestCase
   def test_request_validation_schema_query_on_failure
     request = Object.new
     request.extend(Respect::Rails::Helper::Request)
-    request.stubs(:validate_schema).raises(Respect::Rails::RequestValidationError.new(mock(), :path))
+    request.stubs(:validate_schema).raises(Respect::Rails::RequestValidationError.new(mock(), :path, {}))
     assert_equal(false, request.validate_schema?)
   end
 
@@ -127,7 +127,7 @@ class HelperTest < Test::Unit::TestCase
   def test_response_validation_schema_query_on_failure
     response = Object.new
     response.extend(Respect::Rails::Helper::Response)
-    response.stubs(:validate_schema).raises(Respect::Rails::ResponseValidationError.new(mock(), :body))
+    response.stubs(:validate_schema).raises(Respect::Rails::ResponseValidationError.new(mock(), :body, {}))
     assert_equal(false, response.validate_schema?)
   end
 end
