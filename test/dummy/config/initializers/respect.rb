@@ -1,0 +1,7 @@
+Respect::Rails::Engine.setup do |config|
+  config.app_documentation <<-EOS
+    A great dummy app.
+
+    This is a great dummy app we love to torture.
+  EOS
+end

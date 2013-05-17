@@ -1,5 +1,11 @@
 <h1><%= @info.app.name.titleize %> REST API Reference documentation</h1>
 
+<h2>Title</h2>
+<%= @info.app.title ? @info.app.title : "No title" %>
+
+<h2>Description</h2>
+<%= @info.app.description ? @info.app.description : "No description" %>
+
 <h2>Routes index</h2>
 
 <ul>

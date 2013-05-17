@@ -1,6 +1,7 @@
 module Respect
   module Rails
     class ApplicationInfo < EngineInfo
+      include Respect::DocHelper
 
       def initialize(app_class = ::Rails.application.class)
         super(app_class)
@@ -14,6 +15,10 @@ module Respect
 
       def name
         @app_class.parent_name.underscore
+      end
+
+      def documentation
+        Respect::Rails::Engine.app_documentation
       end
 
     end # class ApplicationInfo

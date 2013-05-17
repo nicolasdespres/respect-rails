@@ -28,7 +28,22 @@ module Respect
       # Whether to sanitize request parameters (+true+ by default).
       mattr_accessor :sanitize_request_parameters
       self.sanitize_request_parameters = true
-    end # class Engine
 
+      # Default way to setup Respect for Rails.
+      def self.setup(&block)
+        block.call(self)
+      end
+
+      # Set the documentation of your application. The title would be the first line
+      # if followed by an empty line and the description would be the rest.
+      # If +text+ is +nil+ the current documentation is returned.
+      def self.app_documentation(text = nil)
+        if text
+          @@app_documentation = text
+        else
+          @@app_documentation
+        end
+      end
+    end # class Engine
   end # module Rails
 end # module Respect
