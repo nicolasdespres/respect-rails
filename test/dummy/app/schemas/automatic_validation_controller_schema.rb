@@ -1,5 +1,10 @@
 class AutomaticValidationControllerSchema < ApplicationControllerSchema
   def basic_get
+    doc <<-EOS
+      A title.
+
+      A description.
+    EOS
     request do |r|
       r.query_parameters do |s|
         s.doc <<-EOS.strip_heredoc

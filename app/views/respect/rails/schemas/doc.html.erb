@@ -39,6 +39,12 @@
     <h4>Route</h4>
     <%= route.spec %>
 
+    <h4>Title</h4>
+    <%= schema.title ? schema.title : "No title" %>
+
+    <h4>Description</h4>
+    <%= schema.description ? schema.description : "No description" %>
+
     <h4>Request schema</h4>
     <% if schema.request_schema %>
       <h5>Headers schema</h4>
