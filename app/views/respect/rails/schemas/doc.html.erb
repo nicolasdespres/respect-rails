@@ -76,13 +76,13 @@
     <% unless schema.response_schemas.empty? %>
       <% schema.response_schemas.each do |status, response_schema| %>
         <h5><%= response_schema.status %> [<%= response_schema.http_status %>]</h5>
-        <h4>Headers schema</h4>
+        <h6>Headers schema</h4>
         <% unless response_schema.headers.documented_properties.empty? %>
           <%= highlight_json_schema response_schema.headers.to_h %>
         <% else %>
           No headers schema specification.
         <% end %>
-        <h4>Body schema</h4>
+        <h6>Body schema</h4>
         <% if response_schema.body %>
           <%= highlight_json_schema response_schema.body.to_h %>
         <% else %>
