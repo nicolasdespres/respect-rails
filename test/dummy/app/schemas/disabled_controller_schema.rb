@@ -7,7 +7,7 @@ class DisabledControllerSchema < Respect::Rails::ActionSchema
     end
     response_for do |status|
       status.ok do |r|
-        r.body root: false do |s|
+        r.body hash: false do |s|
           s.hash do |s|
             s.integer "id", equal_to: 42
           end

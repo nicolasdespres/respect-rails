@@ -8,7 +8,7 @@ class ContactsControllerSchema < ApplicationControllerSchema
     EOS
     response_for do |status|
       status.ok do |s|
-        s.body root: false do |s|
+        s.body hash: false do |s|
           s.array do |s|
             s.hash do |s|
               s.id
