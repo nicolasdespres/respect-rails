@@ -152,4 +152,12 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
     end
   end
 
+  def only_documentation
+    documentation <<-EOS
+      Request with no schema but a documentation.
+
+      It should be documented even if it does not have any schema defined.
+    EOS
+  end
+
 end

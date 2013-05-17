@@ -35,4 +35,8 @@ class InfoTest < ActiveSupport::TestCase
     assert(!@info.toc["manual_validation"].key?("no_schema"))
     assert(!@info.toc.key?("no_schema"))
   end
+
+  def test_action_with_only_documentation_are_in_toc
+    assert(@info.toc["automatic_validation"].key?("only_documentation"))
+  end
 end

@@ -67,7 +67,7 @@ module Respect
 
       # Whether there is at least a request schema or one response schema for this action.
       def has_schema?
-        request_schema || !response_schemas.empty?
+        request_schema || !response_schemas.empty? || documentation
       end
 
       # Returns the documentation of this action schema if +text+ is +nil+.
