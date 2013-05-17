@@ -37,7 +37,7 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'debugger'
 
-if File.exists?("EdgeGemfile")
+if ENV["EDGE_GEM_FILE"] != "no" && File.exists?("EdgeGemfile")
   eval(File.read("EdgeGemfile"))
 else
   gem 'respect-rails', require: "respect/rails"

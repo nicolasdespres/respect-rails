@@ -16,11 +16,13 @@ gem "jquery-rails"
 # To use debugger
 gem 'debugger'
 
-[
-  "EdgeGemfile",
-  "../../EdgeGemfile", # For test/dummy app
-].each do |filename|
-  if File.exists?(filename)
-    eval(File.read(filename))
+if ENV["EDGE_GEM_FILE"] != "no"
+  [
+    "EdgeGemfile",
+    "../../EdgeGemfile", # For test/dummy app
+  ].each do |filename|
+    if File.exists?(filename)
+      eval(File.read(filename))
+    end
   end
 end
