@@ -150,4 +150,13 @@ class RequestSchemaTest < Test::Unit::TestCase
     assert_equal false, @rs.validate!(request)
   end
 
+  def test_no_sanitization_when_disabled
+    Respect::Rails::Engine.stubs(:sanitize_request_parameters).returns(false)
+    request = mock()
+    @rs.stubs(:validate?).with(request).returns(true).once
+    @rs.path_parameters.stubs(:sanitize_object!).never
+    @rs.query_parameters.stubs(:sanitize_object!).never
+    @rs.body_parameters.stubs(:sanitize_object!).never
+    assert_equal true, @rs.validate!(request)
+  end
 end

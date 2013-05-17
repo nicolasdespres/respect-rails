@@ -80,9 +80,12 @@ module Respect
       # Reset each time {#validate?} is called.
       attr_reader :last_error
 
+      # Validate the request and sanitize its parameters if the validation succeed.
+      # You can disable the sanitization with
+      # {Respect::Rails::Engine.sanitize_request_parameters}.
       def validate!(request)
         valid = validate?(request)
-        if valid
+        if valid && Respect::Rails::Engine.sanitize_request_parameters
           [ :path, :query, :body ].each do |name|
             send("#{name}_parameters").sanitize_object!(request.params)
             send("#{name}_parameters").sanitize_object!(request.send("#{name}_parameters"))
