@@ -90,4 +90,34 @@ class ContactsControllerSchema < ApplicationControllerSchema
       end
     end
   end
+
+  def update
+    documentation <<-EOS.strip_heredoc
+      Update an existing contact in the address book.
+
+      This request updates an existing contact identified by the given 'id'
+      in the database with all the attributes provided and respond no content
+      if it succeed.
+    EOS
+    request do |r|
+      r.path_parameters do |s|
+        s.id
+      end
+      r.body_parameters do |s|
+        s.hash "contact" do |s|
+          s.contact_attributes
+        end
+      end
+    end
+    response_for do |status|
+      status.no_content do |s|
+        # Empty schema
+      end
+      status.unprocessable_entity do |s|
+        s.body do |s|
+          s.string "error"
+        end
+      end
+    end
+  end
 end
