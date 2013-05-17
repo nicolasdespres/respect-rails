@@ -27,57 +27,57 @@
 <h2>Schema</h2>
 
 <% @info.toc.keys.sort.each do |controller_name| %>
-<% @info.toc[controller_name].keys.sort.each do |action_name| %>
+  <% @info.toc[controller_name].keys.sort.each do |action_name| %>
 
-<% route = @info.toc[controller_name][action_name] %>
-<% schema = route.schema %>
+    <% route = @info.toc[controller_name][action_name] %>
+    <% schema = route.schema %>
 
-<h3>
-<%= content_tag :a, "#{controller_name.titleize} > #{action_name.titleize}", id: route.anchor %>
-</h3>
+    <h3>
+    <%= content_tag :a, "#{controller_name.titleize} > #{action_name.titleize}", id: route.anchor %>
+    </h3>
 
-<h4>Route</h4>
-<%= route.spec %>
+    <h4>Route</h4>
+    <%= route.spec %>
 
-<% if schema.request_schema %>
-  <h4>Request schema</h4>
+    <% if schema.request_schema %>
+      <h4>Request schema</h4>
 
-  <% if schema.request_schema.headers %>
-    <h5>Headers schema</h4>
-    <%= highlight_json_schema schema.request_schema.headers.to_h %>
-  <% else %>
-    No headers schema.
-  <% end %>
+      <% if schema.request_schema.headers %>
+        <h5>Headers schema</h4>
+        <%= highlight_json_schema schema.request_schema.headers.to_h %>
+      <% else %>
+        No headers schema.
+      <% end %>
 
-  <% [ :path, :query, :body ].each do |name| %>
-    <h5><%= name.capitalize %> parameters</h5>
-    <% if schema.request_schema.send("#{name}_parameters").documented_properties.empty? %>
-      No <%= name %> parameters schema.
-    <% else %>
-      <%= highlight_json_schema schema.request_schema.send("#{name}_parameters").to_h %>
+      <% [ :path, :query, :body ].each do |name| %>
+        <h5><%= name.capitalize %> parameters</h5>
+        <% if schema.request_schema.send("#{name}_parameters").documented_properties.empty? %>
+          No <%= name %> parameters schema.
+        <% else %>
+          <%= highlight_json_schema schema.request_schema.send("#{name}_parameters").to_h %>
+        <% end %>
+      <% end %>
+
     <% end %>
-  <% end %>
 
-<% end %>
-
-<% unless schema.response_schemas.empty? %>
-<h4>Response schema</h4>
-  <% schema.response_schemas.each do |status, response_schema| %>
-    <h5><%= response_schema.status %> [<%= response_schema.http_status %>]</h5>
-    <% if response_schema.headers %>
-      <h4>Headers schema</h4>
-      <%= highlight_json_schema response_schema.headers.to_h %>
-    <% else %>
-      No headers schema.
+    <% unless schema.response_schemas.empty? %>
+      <h4>Response schema</h4>
+      <% schema.response_schemas.each do |status, response_schema| %>
+        <h5><%= response_schema.status %> [<%= response_schema.http_status %>]</h5>
+        <% if response_schema.headers %>
+          <h4>Headers schema</h4>
+          <%= highlight_json_schema response_schema.headers.to_h %>
+        <% else %>
+          No headers schema.
+        <% end %>
+        <% if response_schema.body %>
+          <h4>Body schema</h4>
+          <%= highlight_json_schema response_schema.body.to_h %>
+        <% else %>
+          No body schema.
+        <% end %>
+      <% end %>
     <% end %>
-    <% if response_schema.body %>
-      <h4>Body schema</h4>
-      <%= highlight_json_schema response_schema.body.to_h %>
-    <% else %>
-      No body schema.
-    <% end %>
-  <% end %>
-<% end %>
 
-<% end %>
+  <% end %>
 <% end %>
