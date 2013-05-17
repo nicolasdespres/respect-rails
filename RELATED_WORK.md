@@ -14,10 +14,10 @@ This section is not meant to be accurate even if we try to stay objective here.
 * Resource and controllers description API.
 * Good looking generated doc.
 * Allow to statically deployed the documentation apart of the Rails app.
-* TODO: Is there sanitizers?
-* TODO: Is there headers checker?
-* TODO: Is there url and query parameters ?
-* TODO: Support for json-schema.org standard ?
+* Apparently there is no sanitizer.
+* Apparently you can't specify headers.
+* Apparently you can't specify url and query parameters.
+* Apparently there is no support for json-schema.org standard.
 
 TODO: Study to be continued...
 
