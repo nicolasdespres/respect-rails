@@ -22,5 +22,17 @@ module Respect
         s.record_timestamps
       end
     end
+
+    def error(name)
+      array name, required: false do |s|
+        s.string
+      end
+    end
+
+    def contact_errors
+      error "name"
+      error "age"
+      error "homepage"
+    end
   end
 end

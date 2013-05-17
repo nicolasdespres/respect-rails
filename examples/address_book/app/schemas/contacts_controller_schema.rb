@@ -74,7 +74,7 @@ class ContactsControllerSchema < ApplicationControllerSchema
       status.created # contacts/create-created.schema
       status.unprocessable_entity do |s|
         s.body do |s|
-          s.string "error"
+          s.contact_errors
         end
       end
     end
@@ -104,7 +104,7 @@ class ContactsControllerSchema < ApplicationControllerSchema
       end
       status.unprocessable_entity do |s|
         s.body do |s|
-          s.string "error"
+          s.contact_errors
         end
       end
     end
