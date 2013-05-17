@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = Respect::Rails::VERSION
   s.authors     = ["Nicolas Despres"]
   s.email       = ["nicolas.despres@gmail.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Respect Rails."
-  s.description = "TODO: Description of Respect Rails."
+  s.homepage    = "http://nicolasdespres.github.io/respect-rails"
+  s.summary     = "REST API specification/documentation tool for Rails."
+  s.description = "Respect for Rails let's you write the documentation of your REST API using Ruby code. Documentation is published using a Rails engine to stay synchronized. Filter is available to validate requests and responses. Parameters are sanitized so you get URI object instead of string object containing an URI."
 
   s.files = Dir["{app,config,db,lib}/**/*"] + [
     "MIT-LICENSE",
