@@ -13,6 +13,8 @@ class ContactsControllerSchema < ApplicationControllerSchema
             s.hash do |s|
               s.integer "id"
               s.contact_attributes
+              s.datetime "created_at"
+              s.datetime "updated_at"
             end
           end
         end
