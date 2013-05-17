@@ -62,30 +62,40 @@ class ResponseSchemaTest < Test::Unit::TestCase
   end
 
   def test_validate_raise_response_validation_error_on_validation_error
-    body = {}
     response = mock()
+    headers = mock()
+    response.stubs(:headers).returns(headers)
+    headers_schema = Respect::HashSchema.new
+    @rs.stubs(:headers).returns(headers_schema)
+    headers_schema.stubs(:validate).with(headers).once
+
+    body = mock()
     response.stubs(:body).returns(body)
-    schema = Respect::HashSchema.new
-    @rs.stubs(:body).returns(schema)
-    decoded_body = {}
+    body_schema = Respect::HashSchema.new
+    @rs.stubs(:body).returns(body_schema)
+    decoded_body = mock()
     ActiveSupport::JSON.stubs(:decode).with(body).returns(decoded_body).once
-    schema.stubs(:validate).with(decoded_body).raises(Respect::ValidationError.new("message"))
+    body_schema.stubs(:validate).with(decoded_body).raises(Respect::ValidationError.new("message"))
     assert_raises(Respect::Rails::ResponseValidationError) do
       @rs.validate(response)
     end
   end
 
-  def test_validate_returns_schema_validation_on_success
-    body = {}
+  def test_validate_returns_true_on_success
     response = mock()
+    headers = mock()
+    response.stubs(:headers).returns(headers)
+    headers_schema = Respect::HashSchema.new
+    @rs.stubs(:headers).returns(headers_schema)
+    headers_schema.stubs(:validate).with(headers).once
+    body = mock()
     response.stubs(:body).returns(body)
-    schema = Respect::HashSchema.new
-    @rs.stubs(:body).returns(schema)
-    result = Object.new
-    decoded_body = {}
+    body_schema = Respect::HashSchema.new
+    @rs.stubs(:body).returns(body_schema)
+    decoded_body = mock()
     ActiveSupport::JSON.stubs(:decode).with(body).returns(decoded_body).once
-    schema.stubs(:validate).with(decoded_body).returns(result)
-    assert_equal result.object_id, @rs.validate(response).object_id
+    body_schema.stubs(:validate).with(decoded_body).once
+    assert_equal true, @rs.validate(response)
   end
 
   def test_validate_query_returns_true_when_no_error

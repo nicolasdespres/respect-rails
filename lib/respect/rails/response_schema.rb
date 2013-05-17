@@ -29,6 +29,7 @@ module Respect
 
       def initialize(status = :ok)
         @status = status
+        @headers = HashSchema.new
       end
 
       attr_reader :status
@@ -58,6 +59,7 @@ module Respect
             raise Respect::Rails::ResponseValidationError.new(e, :body)
           end
         end
+        true
       end
 
       def validate?(response)
