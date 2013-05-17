@@ -25,25 +25,13 @@ module Respect
 
       attr_accessor :headers
 
-      attr_reader :body_parameters, :query_parameters
+      attr_accessor :body_parameters, :query_parameters
 
       attr_reader :path_parameters, :default_path_parameters
 
       # Merge +path_parameters+ with {#default_path_parameters} and store it.
       def path_parameters=(path_parameters)
         @path_parameters = @default_path_parameters.merge(path_parameters)
-        @path_parameters.options[:strict] = false
-        @path_parameters
-      end
-
-      [ :body, :query ].each do |name|
-        eval <<-EOS
-          def #{name}_parameters=(#{name}_parameters)
-            @#{name}_parameters = #{name}_parameters
-            @#{name}_parameters.options[:strict] = false
-            @#{name}_parameters
-          end
-          EOS
       end
 
       attr_reader :sanitized_params
@@ -60,9 +48,10 @@ module Respect
         end
         [ :path, :query, :body ].each do |name|
           begin
-            send("#{name}_parameters").validate(request.params)
+            params = request.send("#{name}_parameters")
+            send("#{name}_parameters").validate(params)
           rescue Respect::ValidationError => e
-            raise RequestValidationError.new(e, name, request.params)
+            raise RequestValidationError.new(e, name, params)
           end
         end
         # Build sane parameters.

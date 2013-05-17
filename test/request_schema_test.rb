@@ -25,14 +25,18 @@ class RequestSchemaTest < Test::Unit::TestCase
     request = mock()
     headers = {}
     request.stubs(:headers).with().returns(headers).at_least_once
-    params = {}
-    request.stubs(:params).with().returns(params).at_least_once
-    @rs.path_parameters.stubs(:validate).with(params).once
-    @rs.path_parameters.stubs(:sanitized_object).returns(params).once
-    @rs.query_parameters.stubs(:validate).with(params).once
-    @rs.query_parameters.stubs(:sanitized_object).returns(params).once
-    @rs.body_parameters.stubs(:validate).with(params).once
-    @rs.body_parameters.stubs(:sanitized_object).returns(params).once
+    path_parameters = {}
+    request.stubs(:path_parameters).with().returns(path_parameters).at_least_once
+    @rs.path_parameters.stubs(:validate).with(path_parameters).once
+    @rs.path_parameters.stubs(:sanitized_object).returns(path_parameters).once
+    query_parameters = {}
+    request.stubs(:query_parameters).with().returns(query_parameters).at_least_once
+    @rs.query_parameters.stubs(:validate).with(query_parameters).once
+    @rs.query_parameters.stubs(:sanitized_object).returns(query_parameters).once
+    body_parameters = {}
+    request.stubs(:body_parameters).with().returns(body_parameters).at_least_once
+    @rs.body_parameters.stubs(:validate).with(body_parameters).once
+    @rs.body_parameters.stubs(:sanitized_object).returns(body_parameters).once
     assert_equal true, @rs.validate(request)
   end
 
@@ -40,11 +44,15 @@ class RequestSchemaTest < Test::Unit::TestCase
     request = mock()
     headers = {}
     request.stubs(:headers).with().returns(headers).at_least_once
-    params = {}
-    request.stubs(:params).with().returns(params).at_least_once
-    @rs.path_parameters.stubs(:validate).with(params).raises(Respect::ValidationError.new("error message")).once
-    @rs.query_parameters.stubs(:validate).with(params)
-    @rs.body_parameters.stubs(:validate).with(params)
+    path_parameters = {}
+    request.stubs(:path_parameters).with().returns(path_parameters).at_least_once
+    query_parameters = {}
+    request.stubs(:query_parameters).with().returns(query_parameters)
+    body_parameters = {}
+    request.stubs(:body_parameters).with().returns(body_parameters)
+    @rs.path_parameters.stubs(:validate).with(path_parameters).raises(Respect::ValidationError.new("error message")).once
+    @rs.query_parameters.stubs(:validate).with(query_parameters)
+    @rs.body_parameters.stubs(:validate).with(body_parameters)
     begin
       @rs.validate(request)
       assert false, "nothing raised"
@@ -52,7 +60,7 @@ class RequestSchemaTest < Test::Unit::TestCase
       assert e.error.is_a?(Respect::ValidationError)
       assert_equal "error message", e.message
       assert e.part.path?
-      assert_equal params, e.object
+      assert_equal path_parameters, e.object
     end
   end
 
@@ -60,11 +68,15 @@ class RequestSchemaTest < Test::Unit::TestCase
     request = mock()
     headers = {}
     request.stubs(:headers).with().returns(headers).at_least_once
-    params = {}
-    request.stubs(:params).with().returns(params).at_least_once
-    @rs.path_parameters.stubs(:validate).with(params)
-    @rs.query_parameters.stubs(:validate).with(params).raises(Respect::ValidationError.new("error message")).once
-    @rs.body_parameters.stubs(:validate).with(params)
+    path_parameters = {}
+    request.stubs(:path_parameters).with().returns(path_parameters)
+    query_parameters = {}
+    request.stubs(:query_parameters).with().returns(query_parameters).at_least_once
+    body_parameters = {}
+    request.stubs(:body_parameters).with().returns(body_parameters)
+    @rs.path_parameters.stubs(:validate).with(path_parameters)
+    @rs.query_parameters.stubs(:validate).with(query_parameters).raises(Respect::ValidationError.new("error message")).once
+    @rs.body_parameters.stubs(:validate).with(body_parameters)
     begin
       @rs.validate(request)
       assert false, "nothing raised"
@@ -72,7 +84,7 @@ class RequestSchemaTest < Test::Unit::TestCase
       assert e.error.is_a?(Respect::ValidationError)
       assert_equal "error message", e.message
       assert e.part.query?
-      assert_equal params, e.object
+      assert_equal query_parameters, e.object
     end
   end
 
@@ -80,11 +92,15 @@ class RequestSchemaTest < Test::Unit::TestCase
     request = mock()
     headers = {}
     request.stubs(:headers).with().returns(headers).at_least_once
-    params = {}
-    request.stubs(:params).with().returns(params).at_least_once
-    @rs.path_parameters.stubs(:validate).with(params)
-    @rs.query_parameters.stubs(:validate).with(params)
-    @rs.body_parameters.stubs(:validate).with(params).raises(Respect::ValidationError.new("error message")).once
+    path_parameters = {}
+    request.stubs(:path_parameters).with().returns(path_parameters)
+    query_parameters = {}
+    request.stubs(:query_parameters).with().returns(query_parameters)
+    body_parameters = {}
+    request.stubs(:body_parameters).with().returns(body_parameters).at_least_once
+    @rs.path_parameters.stubs(:validate).with(path_parameters)
+    @rs.query_parameters.stubs(:validate).with(query_parameters)
+    @rs.body_parameters.stubs(:validate).with(body_parameters).raises(Respect::ValidationError.new("error message")).once
     begin
       @rs.validate(request)
       assert false, "nothing raised"
@@ -92,7 +108,7 @@ class RequestSchemaTest < Test::Unit::TestCase
       assert e.error.is_a?(Respect::ValidationError)
       assert_equal "error message", e.message
       assert e.part.body?
-      assert_equal params, e.object
+      assert_equal body_parameters, e.object
     end
   end
 
