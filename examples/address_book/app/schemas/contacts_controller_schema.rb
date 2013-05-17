@@ -46,6 +46,26 @@ class ContactsControllerSchema < ApplicationControllerSchema
     end
   end
 
+  def new
+    documentation <<-EOS.strip_heredoc
+      Create a new contact with default value and return it.
+
+      This request create a new contact with default value but
+      does not store it in the database. It simply return it in
+      the response.
+    EOS
+    response_for do |status|
+      status.ok do |s|
+        s.body do |s|
+          s.id
+          s.contact_attributes
+          s.datetime "created_at"
+          s.datetime "updated_at"
+        end
+      end
+    end
+  end
+
   def create
     documentation <<-EOS.strip_heredoc
       Create a new contact in the address book.
