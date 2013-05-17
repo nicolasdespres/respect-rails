@@ -61,7 +61,7 @@ class ContactsControllerSchema < ApplicationControllerSchema
       end
     end
     response_for do |status|
-      status.ok # contacts/create.schema
+      status.created # contacts/create-created.schema
       status.unprocessable_entity do |s|
         s.body do |s|
           s.string "error"
