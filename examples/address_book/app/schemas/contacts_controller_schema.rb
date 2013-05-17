@@ -11,7 +11,7 @@ class ContactsControllerSchema < ApplicationControllerSchema
         s.body root: false do |s|
           s.array do |s|
             s.hash do |s|
-              s.integer "id"
+              s.id
               s.contact_attributes
               s.datetime "created_at"
               s.datetime "updated_at"
@@ -31,13 +31,13 @@ class ContactsControllerSchema < ApplicationControllerSchema
     EOS
     request do |r|
       r.path_parameters do |s|
-        s.integer "id", greater_than: 0
+        s.id
       end
     end
     response_for do |status|
       status.ok do |s|
         s.body do |s|
-          s.integer "id"
+          s.id
           s.contact_attributes
           s.datetime "created_at"
           s.datetime "updated_at"
