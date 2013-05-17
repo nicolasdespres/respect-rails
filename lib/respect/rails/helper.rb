@@ -1,69 +1,10 @@
 require 'respect/rails/request_helper'
+require 'respect/rails/response_helper'
 
 module Respect
   module Rails
     module Helper
       extend ActiveSupport::Concern
-
-      module Response
-        attr_reader :schema
-        attr_writer :schema
-        private :schema=
-
-        def has_schema?
-          !!@schema
-        end
-
-        # Return whether this response validates the schema.
-        # You can get the validation error via {#last_validation_error}.
-        def validate_schema?
-          begin
-            validate_schema
-          rescue Respect::Rails::ResponseValidationError => e
-            false
-          end
-        end
-
-        # Raise a {Respect::Rails::ResponseValidationError} exception if this
-        # response does not validate the schema.
-        def validate_schema
-          log_msg = "  Response validation: "
-          valid = nil
-          measure = Benchmark.realtime do
-            if schema && content_type == Mime::JSON
-              valid = schema.validate?(self)
-            end
-          end
-          if valid.nil?
-            log_msg += "none"
-          else
-            if valid
-              log_msg += "success"
-            else
-              log_msg += "failure"
-            end
-          end
-          log_msg += " (%.1fms)" % [ measure * 1000 ]
-          ::Rails.logger.info log_msg
-          if valid == false
-            last_validation_error.context.each do |msg|
-              ::Rails.logger.info "    #{msg}"
-            end
-            if Respect::Rails::Engine.catch_response_validation_error
-              self.body = last_validation_error.to_json
-              self.status = :internal_server_error
-            else
-              raise last_validation_error
-            end
-          end
-          true
-        end
-
-        def last_validation_error
-          schema.last_error
-        end
-
-      end # module Response
 
       included do |base|
         around_filter :load_schemas
@@ -126,34 +67,17 @@ module Respect
         end
       end
 
-      # This "before" filter load and attach the request schema to the request object.
+      # This "before" filter load and attach the action schema to the request object.
       # It is safe to call this method several times.
       def load_request_schema
         request.send(:action_schema=, Respect::Rails.load_schema(controller_name, action_name)) unless request.has_schema?
       end
 
-      # This "after" filter extends the response object with validation methods
-      # and load the associated schema.
+      # This "after" filter attach the response schema to the response object.
       # You can safely call this filter multiple times (i.e. from other after
       # filters callbacks).
       def load_response_schema
-        # If the request is instrumented.
-        if request.respond_to? :response_schema
-          # If the response is not already instrumented. This is necessary since
-          # response validation after filter may have been executed first if it
-          # is enabled.
-          # When both load_schemas and validation_schemas are enabled callback
-          # are called in this order:
-          #   load_request_schema
-          #   validate_request_schema
-          #   controller's action
-          #   validate_response_schema
-          #   load_response_schema
-          unless response.respond_to? :schema
-            response.extend(Response)
-            response.send(:schema=, request.response_schema(response.status))
-          end
-        end
+        response.send(:schema=, request.response_schema(response.status)) unless response.has_schema?
       end
 
       # Before filter which sanitize all request parameters: +params+,
