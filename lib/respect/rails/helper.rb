@@ -20,7 +20,7 @@ module Respect
           log_msg = "  Request validation: "
           valid = nil
           measure = Benchmark.realtime do
-            valid = request_schema.validate!(self) unless request_schema.nil?
+            valid = request_schema.validate?(self) unless request_schema.nil?
           end
           if valid.nil?
             log_msg += "none"
@@ -62,6 +62,17 @@ module Respect
 
         def body_parameters
           request_parameters
+        end
+
+        # Returns the sanitized parameters if the schema validation has succeed.
+        def sane_params
+          request_schema.sanitized_params if request_schema
+        end
+
+        # Sanitize all the request's parameters (path, query and body) *in-place*.
+        # if the schema validation has succeed.
+        def sanitize_params!
+          request_schema.sanitize!(self) if sane_params
         end
 
       end # module Request
@@ -216,6 +227,19 @@ module Respect
             response.send(:schema=, request.response_schema(response.status))
           end
         end
+      end
+
+      # Before filter which sanitize all request parameters: +params+,
+      # +query_parameters+, +path_parameters+ and +request_parameters+.
+      # The request have to be validated first.
+      #
+      # Example:
+      #   class UsersController < ApplicationController
+      #     around_filter :validate_schemas
+      #     before_filter :sanitize_params
+      #   end
+      def sanitize_params
+        request.sanitize_params!
       end
     end # module Helper
   end # module Rails

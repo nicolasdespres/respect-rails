@@ -46,10 +46,13 @@ module Respect
           EOS
       end
 
+      attr_reader :sanitized_params
+
       # Validate the given +request+.
       # Raise a {RequestValidationError} if an error occur.
       # Returns +true+ on success.
       def validate(request)
+        # Validate requests.
         begin
           headers.validate(request.headers)
         rescue Respect::ValidationError => e
@@ -61,6 +64,11 @@ module Respect
           rescue Respect::ValidationError => e
             raise RequestValidationError.new(e, name, request.params)
           end
+        end
+        # Build sane parameters.
+        @sanitized_params = {}
+        [ :path, :query, :body ].each do |name|
+          @sanitized_params.merge!(send("#{name}_parameters").sanitized_object)
         end
         true
       end
@@ -85,13 +93,18 @@ module Respect
       # {Respect::Rails::Engine.sanitize_request_parameters}.
       def validate!(request)
         valid = validate?(request)
-        if valid && Respect::Rails::Engine.sanitize_request_parameters
-          [ :path, :query, :body ].each do |name|
-            send("#{name}_parameters").sanitize_object!(request.params)
-            send("#{name}_parameters").sanitize_object!(request.send("#{name}_parameters"))
-          end
+        if valid
+          sanitize!(request)
         end
         valid
+      end
+
+      # Sanitize all the request's parameters (path, query and body) *in-place*.
+      def sanitize!(request)
+        [ :path, :query, :body ].each do |name|
+          send("#{name}_parameters").sanitize_object!(request.params)
+          send("#{name}_parameters").sanitize_object!(request.send("#{name}_parameters"))
+        end
       end
 
     end

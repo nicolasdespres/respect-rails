@@ -25,10 +25,6 @@ module Respect
       mattr_accessor :load_response_schema
       self.load_response_schema = (::Rails.env.development? || ::Rails.env.test?)
 
-      # Whether to sanitize request parameters (+true+ by default).
-      mattr_accessor :sanitize_request_parameters
-      self.sanitize_request_parameters = true
-
       # Default way to setup Respect for Rails.
       def self.setup(&block)
         block.call(self)

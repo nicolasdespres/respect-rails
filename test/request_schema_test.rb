@@ -21,15 +21,18 @@ class RequestSchemaTest < Test::Unit::TestCase
     assert_equal result.object_id, @rs.path_parameters.object_id
   end
 
-  def test_validate_both_body_and_path_parameters
+  def test_validate_all_parameters
     request = mock()
     headers = {}
     request.stubs(:headers).with().returns(headers).at_least_once
     params = {}
     request.stubs(:params).with().returns(params).at_least_once
     @rs.path_parameters.stubs(:validate).with(params).once
+    @rs.path_parameters.stubs(:sanitized_object).returns(params).once
     @rs.query_parameters.stubs(:validate).with(params).once
+    @rs.query_parameters.stubs(:sanitized_object).returns(params).once
     @rs.body_parameters.stubs(:validate).with(params).once
+    @rs.body_parameters.stubs(:sanitized_object).returns(params).once
     assert_equal true, @rs.validate(request)
   end
 
@@ -130,21 +133,8 @@ class RequestSchemaTest < Test::Unit::TestCase
 
   def test_validate_shebang_returns_true_on_success_and_sanitize
     request = mock()
-    params = mock()
-    request.stubs(:params).with().returns(params).at_least_once
-    path_params = mock()
-    request.stubs(:path_parameters).with().returns(path_params)
-    query_params = mock()
-    request.stubs(:query_parameters).with().returns(query_params)
-    body_params = mock()
-    request.stubs(:body_parameters).with().returns(body_params)
     @rs.stubs(:validate?).with(request).returns(true).once
-    @rs.path_parameters.stubs(:sanitize_object!).with(params).once
-    @rs.path_parameters.stubs(:sanitize_object!).with(path_params).once
-    @rs.query_parameters.stubs(:sanitize_object!).with(params).once
-    @rs.query_parameters.stubs(:sanitize_object!).with(query_params).once
-    @rs.body_parameters.stubs(:sanitize_object!).with(params).once
-    @rs.body_parameters.stubs(:sanitize_object!).with(body_params).once
+    @rs.stubs(:sanitize!).with(request).once
     assert_equal true, @rs.validate!(request)
   end
 
@@ -154,13 +144,22 @@ class RequestSchemaTest < Test::Unit::TestCase
     assert_equal false, @rs.validate!(request)
   end
 
-  def test_no_sanitization_when_disabled
-    Respect::Rails::Engine.stubs(:sanitize_request_parameters).returns(false)
+  def test_sanitize_all_params
     request = mock()
-    @rs.stubs(:validate?).with(request).returns(true).once
-    @rs.path_parameters.stubs(:sanitize_object!).never
-    @rs.query_parameters.stubs(:sanitize_object!).never
-    @rs.body_parameters.stubs(:sanitize_object!).never
-    assert_equal true, @rs.validate!(request)
+    params = mock()
+    request.stubs(:params).with().returns(params).at_least_once
+    path_params = mock()
+    request.stubs(:path_parameters).with().returns(path_params)
+    query_params = mock()
+    request.stubs(:query_parameters).with().returns(query_params)
+    body_params = mock()
+    request.stubs(:body_parameters).with().returns(body_params)
+    @rs.path_parameters.stubs(:sanitize_object!).with(params).once
+    @rs.path_parameters.stubs(:sanitize_object!).with(path_params).once
+    @rs.query_parameters.stubs(:sanitize_object!).with(params).once
+    @rs.query_parameters.stubs(:sanitize_object!).with(query_params).once
+    @rs.body_parameters.stubs(:sanitize_object!).with(params).once
+    @rs.body_parameters.stubs(:sanitize_object!).with(body_params).once
+    @rs.sanitize!(request)
   end
 end
