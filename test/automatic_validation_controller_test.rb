@@ -67,7 +67,8 @@ class AutomaticValidationControllerTest < ActionController::TestCase
       assert false, "exception should be raised"
     rescue Respect::Rails::RequestValidationError => e
       assert(e.context.first == e.message)
-      assert_equal(4, e.context.size)
+      assert_match e.context.last, /\b#{e.part}\b/
+      assert_equal(5, e.context.size)
     end
   end
 
@@ -77,7 +78,8 @@ class AutomaticValidationControllerTest < ActionController::TestCase
       assert false
     rescue Respect::Rails::ResponseValidationError => e
       assert(e.context.first == e.message)
-      assert_equal(4, e.context.size)
+      assert_match e.context.last, /\b#{e.part}\b/
+      assert_equal(5, e.context.size)
     end
   end
 

@@ -21,11 +21,13 @@ module Respect
         @error = error
         @part = ActiveSupport::StringInquirer.new(part.to_s)
         @object = object
+        @context = error.context + ["in #@part"]
       end
 
       attr_reader :error
       attr_reader :part
-      delegate :context, :message, to: :@error
+      attr_reader :context
+      delegate :message, to: :@error
       attr_reader :object
 
       def to_h

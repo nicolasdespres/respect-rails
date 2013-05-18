@@ -57,9 +57,11 @@ class RequestHelperTest < Test::Unit::TestCase
   end
 
   def test_request_validation_schema_query_on_failure
+    error = mock()
+    error.stubs(:context).returns([])
     request = Object.new
     request.extend(Respect::Rails::RequestHelper)
-    request.stubs(:validate_schema).raises(Respect::Rails::RequestValidationError.new(mock(), :path, {}))
+    request.stubs(:validate_schema).raises(Respect::Rails::RequestValidationError.new(error, :path, {}))
     assert_equal(false, request.validate_schema?)
   end
 end
