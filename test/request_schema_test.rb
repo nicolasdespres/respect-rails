@@ -25,6 +25,9 @@ class RequestSchemaTest < Test::Unit::TestCase
     request = mock()
     headers = {}
     request.stubs(:headers).with().returns(headers).at_least_once
+    simplified_headers = mock()
+    @rs.stubs(:simplify_headers).with(headers).returns(simplified_headers).once
+    @rs.headers.stubs(:validate).with(simplified_headers).once
     params = {}
     request.stubs(:params).with().returns(params).at_least_once
     @rs.path_parameters.stubs(:validate).with(params).once

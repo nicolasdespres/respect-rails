@@ -1,6 +1,7 @@
 module Respect
   module Rails
     class RequestSchema
+      include HeadersSimplifier
 
       class << self
         def define(*args, &block)
@@ -42,9 +43,10 @@ module Respect
       def validate(request)
         # Validate requests.
         begin
-          headers.validate(request.headers)
+          simplified_headers = simplify_headers(request.headers)
+          headers.validate(simplified_headers)
         rescue Respect::ValidationError => e
-          raise RequestValidationError.new(e, :headers, request.headers)
+          raise RequestValidationError.new(e, :headers, simplified_headers)
         end
         [ :path, :query, :body ].each do |name|
           begin

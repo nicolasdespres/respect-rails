@@ -1,6 +1,7 @@
 module Respect
   module Rails
     class ResponseSchema
+      include HeadersSimplifier
 
       class << self
 
@@ -47,9 +48,10 @@ module Respect
       def validate(response)
         if headers
           begin
-            headers.validate(response.headers)
+            simplified_headers = simplify_headers(response.headers)
+            headers.validate(simplified_headers)
           rescue Respect::ValidationError => e
-            raise Respect::Rails::ResponseValidationError.new(e, :headers, response.headers)
+            raise Respect::Rails::ResponseValidationError.new(e, :headers, simplified_headers)
           end
         end
         if body

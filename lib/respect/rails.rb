@@ -15,6 +15,7 @@ module Respect
     autoload :ApplicationInfo
     autoload :EngineInfo
     autoload :RouteInfo
+    autoload :HeadersSimplifier
 
     class ValidationError < StandardError
       def initialize(error, part, object)

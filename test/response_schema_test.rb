@@ -67,7 +67,9 @@ class ResponseSchemaTest < Test::Unit::TestCase
     response.stubs(:headers).returns(headers)
     headers_schema = Respect::HashSchema.new
     @rs.stubs(:headers).returns(headers_schema)
-    headers_schema.stubs(:validate).with(headers).once
+    simplified_headers = mock()
+    @rs.stubs(:simplify_headers).with(headers).returns(simplified_headers).once
+    headers_schema.stubs(:validate).with(simplified_headers).once
 
     body = mock()
     response.stubs(:body).returns(body)
@@ -87,7 +89,9 @@ class ResponseSchemaTest < Test::Unit::TestCase
     response.stubs(:headers).returns(headers)
     headers_schema = Respect::HashSchema.new
     @rs.stubs(:headers).returns(headers_schema)
-    headers_schema.stubs(:validate).with(headers).once
+    simplified_headers = mock()
+    @rs.stubs(:simplify_headers).with(headers).returns(simplified_headers).once
+    headers_schema.stubs(:validate).with(simplified_headers).once
     body = mock()
     response.stubs(:body).returns(body)
     body_schema = Respect::HashSchema.new
