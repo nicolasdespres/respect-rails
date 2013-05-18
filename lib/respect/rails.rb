@@ -9,6 +9,7 @@ module Respect
     autoload :ResponseSchemaSet
     autoload :RequestSchema
     autoload :ResponseSchema
+    autoload :ActionDef
     autoload :RequestDef
     autoload :ResponseDef
     autoload :Info

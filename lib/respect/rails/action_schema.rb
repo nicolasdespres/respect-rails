@@ -9,11 +9,8 @@ module Respect
           @schema = klass.new.action_schema(action_name) if klass
         end
 
-        def define(controller, action_name, &block)
-          # FIXME(Nicolas Despres): Add ActionDef.
-          instance = self.new(controller, action_name)
-          block.call(instance)
-          instance
+        def define(*args, &block)
+          ActionDef.eval(*args, &block)
         end
       end
 
@@ -29,16 +26,7 @@ module Respect
         @controller.controller_name
       end
 
-      def request(&block)
-        @request_schema = RequestSchema.define(controller_name, action_name, &block)
-      end
-
-      attr_reader :request_schema
-
-      def response_for(&block)
-        block.call(@response_schemas)
-        @response_schemas
-      end
+      attr_accessor :request_schema
 
       attr_reader :response_schemas
 
@@ -47,16 +35,7 @@ module Respect
         request_schema || !response_schemas.empty? || documentation
       end
 
-      # Returns the documentation of this action schema if +text+ is +nil+.
-      # Set the documentation to +text+ if not +nil+.
-      def documentation(text = nil)
-        if text
-          @doc = text
-        else
-          @doc
-        end
-      end
-
+      attr_accessor :documentation
     end
   end
 end
