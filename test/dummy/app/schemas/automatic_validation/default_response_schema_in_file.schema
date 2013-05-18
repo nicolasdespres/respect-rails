@@ -1,3 +1,0 @@
-body do |s|
-  s.integer "id", equal_to: 42
-end

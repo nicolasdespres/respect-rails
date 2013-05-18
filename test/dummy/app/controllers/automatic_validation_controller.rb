@@ -74,39 +74,6 @@ class AutomaticValidationController < ApplicationController
   end
 
 
-  def_action_schema :response_schema_from_file do |s|
-    # - No request schema defined.
-    # - Response for status ok is defined in the associated file.
-  end
-
-  def response_schema_from_file
-    respond_to do |format|
-      format.json do
-        if params[:failure]
-          result = { error: "failure" }
-          render json: result, status: :unprocessable_entity
-        else
-          result = { id: params[:returned_id] }
-          render json: result, status: :created
-        end
-      end
-    end
-  end
-
-  def_action_schema :response_schema_from_file_unknown_status do |s|
-    # - No request schema defined.
-    # - Response for status ok is defined in the associated file.
-  end
-
-  def response_schema_from_file_unknown_status
-    respond_to do |format|
-      format.json do
-        result = { id: params[:returned_id] }
-        render json: result, status: :foo
-      end
-    end
-  end
-
   # Route constraints prevent this endpoint to raise any validation error.
   def_action_schema :route_constraints do |s|
     s.request do |r|
@@ -167,25 +134,6 @@ class AutomaticValidationController < ApplicationController
     respond_to do |format|
       format.json do
         render json: result, status: :ok
-      end
-    end
-  end
-
-  def_action_schema :default_response_schema_in_file do |s|
-    # - No request schema defined.
-    # - Default response for :ok is defined in automatic_validation/default_response_in_file.schema
-  end
-
-  def default_response_schema_in_file
-    respond_to do |format|
-      format.json do
-        if params[:failure]
-          result = { error: "failure" }
-          render json: result, status: :unprocessable_entity
-        else
-          result = { id: 42 }
-          render json: result, status: :ok
-        end
       end
     end
   end
