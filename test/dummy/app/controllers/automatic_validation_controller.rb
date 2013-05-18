@@ -108,6 +108,14 @@ class AutomaticValidationController < ApplicationController
   end
 
   # Route constraints prevent this endpoint to raise any validation error.
+  def_action_schema :route_constraints do |s|
+    s.request do |r|
+      r.query_parameters do |s|
+        s.string "param1", equal_to: "42"
+      end
+    end
+  end
+
   def route_constraints
     unless params['param1'] == "42"
       raise "should never be rasised since the route has a constraint on this parameter value."

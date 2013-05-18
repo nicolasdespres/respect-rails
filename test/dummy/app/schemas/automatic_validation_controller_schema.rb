@@ -7,14 +7,6 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
     raise NameError, "user has raised a NameError"
   end
 
-  def route_constraints
-    request do |r|
-      r.query_parameters do |s|
-        s.string "param1", equal_to: "42"
-      end
-    end
-  end
-
   def composite_custom_types
     request do |r|
       r.query_parameters do |s|
