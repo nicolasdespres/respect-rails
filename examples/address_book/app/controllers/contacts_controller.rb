@@ -156,7 +156,7 @@ class ContactsController < ApplicationController
       end
       r.body_parameters do |s|
         s.hash "contact" do |s|
-          s.contact_attributes
+          s.contact_attributes required: false
         end
       end
     end

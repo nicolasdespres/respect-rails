@@ -4,16 +4,16 @@ module Respect
       integer name, greather_than: 0
     end
 
-    def contact_attributes
+    def contact_attributes(options = {})
       doc <<-EOS.strip_heredoc
         The name of the contact.
 
         First name and last name are separated by white space.
         EOS
-      string "name"
+      string "name", options
       doc "How old is the contact."
-      integer "age"
-      uri "homepage", doc: "The URL of the contact's homepage"
+      integer "age", options
+      uri "homepage", options.merge(doc: "The URL of the contact's homepage")
     end
 
     def record_timestamps

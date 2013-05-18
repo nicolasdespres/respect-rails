@@ -71,6 +71,11 @@ class ContactsControllerTest < ActionController::TestCase
     assert_response :no_content
   end
 
+  test "should partially update contact in JSON" do
+    put :update, format: 'json', id: @contact, contact: { age: (@contact.age + 1) }
+    assert_response :no_content
+  end
+
   test "should destroy contact" do
     assert_difference('Contact.count', -1) do
       delete :destroy, id: @contact
