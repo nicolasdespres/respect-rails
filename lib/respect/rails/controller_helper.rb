@@ -32,7 +32,7 @@ module Respect
         # FIXME(Nicolas Despres): Document me.
         def def_action_schema(action_name, &block)
           define_method("#{action_name}_schema") do
-            Respect::Rails::ActionSchema.define(controller_name, action_name, &block)
+            Respect::Rails::ActionSchema.define(self, action_name, &block)
           end
         end
       end

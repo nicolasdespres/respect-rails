@@ -12,4 +12,5 @@ class ActionSchematest < ActiveSupport::TestCase
       Respect::Rails::ActionSchema.from_controller(:automatic_validation, :raise_name_error)
     end
   end
+
 end
