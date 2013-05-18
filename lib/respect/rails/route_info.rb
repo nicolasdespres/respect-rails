@@ -53,6 +53,9 @@ module Respect
       end
 
       def schema
+        klass = "#{controller_name}_controller".classify.safe_constantize
+        @schema = klass.new.action_schema(action_name) if klass
+        # FIXME(Nicolas Despres): Remove me once reorganization is finished.
         @schema ||= OldActionSchema.from_controller(controller_name, action_name)
       end
 

@@ -37,6 +37,15 @@ module Respect
         end
       end
 
+      # FIXME(Nicolas Despres): Test me!!!
+      def action_schema(action = nil)
+        action ||= self.action_name
+        method_name = "#{action}_schema"
+        if self.respond_to?(method_name)
+          send(method_name)
+        end
+      end
+
       private
 
       # This "around" filter calls +validation_request_schema+ and +validation_response_schema+
@@ -80,19 +89,6 @@ module Respect
           # FIXME(Nicolas Despres): Remove me once OldActionSchema has been removed
           schema ||= Respect::Rails.load_schema(controller_name, action_name)
           request.send(:action_schema=, schema)
-        end
-      end
-
-      # FIXME(Nicolas Despres): Test me!!!
-      def action_schema(action = nil)
-        action ||= self.action_name
-        method_name = "#{action}_schema"
-        if self.respond_to?(method_name)
-          if action == self.action_name
-            @action_schema ||= send(method_name)
-          else
-            send(method_name)
-          end
         end
       end
 
