@@ -1,7 +1,7 @@
 # A controller disabling the automatic validation filter
 # installed in the super class.
 class SkippedAutomaticValidationController < AutomaticValidationController
-  skip_around_filter :validate_schemas
+  skip_around_filter :validate_schemas!
 
   # GET /automatic_validation/basic_get.json
   def basic_get

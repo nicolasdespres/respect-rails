@@ -4,7 +4,7 @@ module Respect
       extend ActiveSupport::Concern
 
       included do |base|
-        around_filter :load_schemas
+        around_filter :load_schemas!
       end
 
       module ClassMethods
@@ -34,21 +34,21 @@ module Respect
 
       # This "around" filter calls +validation_request_schema+ and +validation_response_schema+
       # respectively before and after the controller's action.
-      def validate_schemas
-        validate_request_schema
+      def validate_schemas!
+        validate_request_schema!
         yield
-        validate_response_schema if Respect::Rails::Engine.validate_response
+        validate_response_schema! if Respect::Rails::Engine.validate_response
       end
 
       # This "before" filter validates the request.
-      def validate_request_schema
+      def validate_request_schema!
         request.validate_schema
       end
 
       # This "after" filter validates the response with the schema associated to the
       # response status if one is found.
-      def validate_response_schema
-        load_response_schema
+      def validate_response_schema!
+        load_response_schema!
         response.validate_schema
       end
 
@@ -57,24 +57,24 @@ module Respect
       # if you want to do the validation yourself. It only load the action schema
       # and attach the request schema to the request object and the response schema to
       # the response object.
-      def load_schemas
-        load_request_schema
+      def load_schemas!
+        load_request_schema!
         yield
         if Respect::Rails::Engine.validate_response
-          load_response_schema
+          load_response_schema!
         end
       end
 
       # This "before" filter load and attach the action schema to the request object.
       # It is safe to call this method several times.
-      def load_request_schema
+      def load_request_schema!
         request.send(:action_schema=, Respect::Rails.load_schema(controller_name, action_name)) unless request.has_schema?
       end
 
       # This "after" filter attach the response schema to the response object.
       # You can safely call this filter multiple times (i.e. from other after
       # filters callbacks).
-      def load_response_schema
+      def load_response_schema!
         response.send(:schema=, request.response_schema(response.status)) unless response.has_schema?
       end
 
@@ -87,7 +87,7 @@ module Respect
       #     around_filter :validate_schemas
       #     before_filter :sanitize_params
       #   end
-      def sanitize_params
+      def sanitize_params!
         request.sanitize_params!
       end
     end # module ControllerHelper

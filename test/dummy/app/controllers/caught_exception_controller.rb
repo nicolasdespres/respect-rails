@@ -1,5 +1,5 @@
 class CaughtExceptionController < ApplicationController
-  around_filter :validate_schemas
+  around_filter :validate_schemas!
   rescue_from_request_validation_error
 
   def request_validator

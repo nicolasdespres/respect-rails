@@ -1,7 +1,7 @@
 # An example of automatic validation using the "validate_schemas" around filter.
 class AutomaticValidationController < ApplicationController
-  around_filter :validate_schemas
-  before_filter :sanitize_params
+  around_filter :validate_schemas!
+  before_filter :sanitize_params!
 
   # GET /automatic_validation/basic_get.json
   def basic_get
