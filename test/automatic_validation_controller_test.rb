@@ -66,7 +66,7 @@ class AutomaticValidationControllerTest < ActionController::TestCase
       get :request_contextual_error, format: 'json', o1: { o2: { i: 54 } }
       assert false, "exception should be raised"
     rescue Respect::Rails::RequestValidationError => e
-      assert(e.context.first == e.message)
+      assert(e.context.first == e.error.message)
       assert_match e.context.last, /\b#{e.part}\b/
       assert_equal(5, e.context.size)
     end
@@ -77,7 +77,7 @@ class AutomaticValidationControllerTest < ActionController::TestCase
       get :response_contextual_error, format: 'json'
       assert false
     rescue Respect::Rails::ResponseValidationError => e
-      assert(e.context.first == e.message)
+      assert(e.context.first == e.error.message)
       assert_match e.context.last, /\b#{e.part}\b/
       assert_equal(5, e.context.size)
     end

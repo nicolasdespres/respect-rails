@@ -28,7 +28,15 @@ module Respect
       attr_reader :error
       attr_reader :part
       attr_reader :context
-      delegate :message, to: :@error
+
+      def message
+        if ::Rails.env.test?
+          @context.join("; ")
+        else
+          @error.message
+        end
+      end
+
       attr_reader :object
 
       def to_h

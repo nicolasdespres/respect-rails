@@ -53,7 +53,7 @@ class RequestSchemaTest < Test::Unit::TestCase
       assert false, "nothing raised"
     rescue Respect::Rails::RequestValidationError => e
       assert e.error.is_a?(Respect::ValidationError)
-      assert_equal "error message", e.message
+      assert_equal "error message; in path", e.message
       assert e.part.path?
       assert_equal params, e.object
     end
@@ -73,7 +73,7 @@ class RequestSchemaTest < Test::Unit::TestCase
       assert false, "nothing raised"
     rescue Respect::Rails::RequestValidationError => e
       assert e.error.is_a?(Respect::ValidationError)
-      assert_equal "error message", e.message
+      assert_equal "error message; in query", e.message
       assert e.part.query?
       assert_equal params, e.object
     end
@@ -93,7 +93,7 @@ class RequestSchemaTest < Test::Unit::TestCase
       assert false, "nothing raised"
     rescue Respect::Rails::RequestValidationError => e
       assert e.error.is_a?(Respect::ValidationError)
-      assert_equal "error message", e.message
+      assert_equal "error message; in body", e.message
       assert e.part.body?
       assert_equal params, e.object
     end
@@ -114,7 +114,7 @@ class RequestSchemaTest < Test::Unit::TestCase
       assert false, "nothing raised"
     rescue Respect::Rails::RequestValidationError => e
       assert e.error.is_a?(Respect::ValidationError)
-      assert_equal "error message", e.message
+      assert_equal "error message; in headers", e.message
       assert e.part.headers?
       assert_equal headers, e.object
     end
