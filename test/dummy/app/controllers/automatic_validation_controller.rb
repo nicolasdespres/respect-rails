@@ -54,6 +54,16 @@ class AutomaticValidationController < ApplicationController
     end
   end
 
+  def_action_schema :no_request_schema do |s|
+    s.response_for do |status|
+      status.ok do |r|
+        r.body do |s|
+          s.integer "id", equal_to: 42
+        end
+      end
+    end
+  end
+
   def no_request_schema
     respond_to do |format|
       format.json do

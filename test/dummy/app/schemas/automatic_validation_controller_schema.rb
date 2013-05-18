@@ -7,16 +7,6 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
     raise NameError, "user has raised a NameError"
   end
 
-  def no_request_schema
-    response_for do |status|
-      status.ok do |r|
-        r.body do |s|
-          s.integer "id", equal_to: 42
-        end
-      end
-    end
-  end
-
   def response_schema_from_file
     # - No request schema defined.
     # - Response for status ok is defined in the associated file.
