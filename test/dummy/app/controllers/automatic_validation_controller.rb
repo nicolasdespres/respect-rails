@@ -315,6 +315,16 @@ class AutomaticValidationController < ApplicationController
     end
   end
 
+  def_action_schema :check_response_headers do |s|
+    s.response_for do |status|
+      status.ok do |r|
+        r.headers do |h|
+          h["response_header"] = "good"
+        end
+      end
+    end
+  end
+
   def check_response_headers
     headers["response_header"] = params["response_header"]
     respond_to do |format|

@@ -7,16 +7,6 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
     raise NameError, "user has raised a NameError"
   end
 
-  def check_response_headers
-    response_for do |status|
-      status.ok do |r|
-        r.headers do |h|
-          h["response_header"] = "good"
-        end
-      end
-    end
-  end
-
   def only_documentation
     documentation <<-EOS
       Request with no schema but a documentation.
