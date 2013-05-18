@@ -41,6 +41,5 @@ class OldActionSchemaTest < ActiveSupport::TestCase
     assert(!Respect::Rails::OldActionSchema.from_controller(:automatic_validation, :no_schema_at_all).has_schema?)
     assert(Respect::Rails::OldActionSchema.from_controller(:automatic_validation, :response_schema_from_file).has_schema?)
     assert(Respect::Rails::OldActionSchema.from_controller(:automatic_validation, :response_schema_from_file_unknown_status).has_schema?)
-    assert(Respect::Rails::OldActionSchema.from_controller(:automatic_validation, :only_documentation).has_schema?)
   end
 end

@@ -334,6 +334,14 @@ class AutomaticValidationController < ApplicationController
     end
   end
 
+  def_action_schema :only_documentation do |s|
+    s.documentation <<-EOS
+      Request with no schema but a documentation.
+
+      It should be documented even if it does not have any schema defined.
+    EOS
+  end
+
   def only_documentation
     respond_to do |format|
       format.json do
