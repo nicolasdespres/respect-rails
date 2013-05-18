@@ -257,6 +257,24 @@ class AutomaticValidationController < ApplicationController
   end
 
   # POST /automatic_validation/basic_post.json
+  def_action_schema :basic_post do |s|
+    s.request do |r|
+      r.path_parameters do |s|
+        s.integer "path_param", equal_to: 42
+      end
+      r.body_parameters do |s|
+        s.integer "body_param", equal_to: 42
+      end
+    end
+    s.response_for do |status|
+      status.ok do |r|
+        r.body do |s|
+          s.integer "id", equal_to: 42
+        end
+      end
+    end
+  end
+
   def basic_post
     unless params['path_param'] == 42
       raise "should never be raised since the validator has raised one before when checking path_param"

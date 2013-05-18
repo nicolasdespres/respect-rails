@@ -7,24 +7,6 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
     raise NameError, "user has raised a NameError"
   end
 
-  def basic_post
-    request do |r|
-      r.path_parameters do |s|
-        s.integer "path_param", equal_to: 42
-      end
-      r.body_parameters do |s|
-        s.integer "body_param", equal_to: 42
-      end
-    end
-    response_for do |status|
-      status.ok do |r|
-        r.body do |s|
-          s.integer "id", equal_to: 42
-        end
-      end
-    end
-  end
-
   def check_request_headers
     request do |r|
       r.headers do |h|
