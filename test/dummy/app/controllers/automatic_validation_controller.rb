@@ -129,6 +129,15 @@ class AutomaticValidationController < ApplicationController
   end
 
   # Composite custom types like Circle and Point are expected in the parameters of this request.
+  def_action_schema :composite_custom_types do |s|
+    s.request do |r|
+      r.query_parameters do |s|
+        s.circle "circle"
+        s.rgba "color"
+      end
+    end
+  end
+
   def composite_custom_types
     expected_circle = Circle.new(Point.new(1.0, 2.0), 5.0)
     circle = params[:circle]

@@ -7,15 +7,6 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
     raise NameError, "user has raised a NameError"
   end
 
-  def composite_custom_types
-    request do |r|
-      r.query_parameters do |s|
-        s.circle "circle"
-        s.rgba "color"
-      end
-    end
-  end
-
   def default_response_schema_in_file
     # - No request schema defined.
     # - Default response for :ok is defined in automatic_validation/default_response_in_file.schema
