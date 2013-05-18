@@ -1,30 +1,4 @@
 class AutomaticValidationControllerSchema < ApplicationControllerSchema
-  def basic_get
-    documentation <<-EOS
-      A title.
-
-      A description.
-    EOS
-    request do |r|
-      r.query_parameters do |s|
-        s.doc <<-EOS.strip_heredoc
-          A parameter
-
-          An important parameter that should be equal to 42.
-          Yes really!.
-          EOS
-        s.integer "param1", equal_to: 42
-      end
-    end
-    response_for do |status|
-      status.ok do |r|
-        r.body do |s|
-          s.integer "id", equal_to: 42
-        end
-      end
-    end
-  end
-
   def raise_no_method_error
     raise NoMethodError, "user has raised NoMethodError"
   end

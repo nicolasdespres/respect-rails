@@ -5,6 +5,7 @@ module Respect
     extend ActiveSupport::Autoload
 
     autoload :OldActionSchema
+    autoload :ActionSchema
     autoload :ResponseSchemaSet
     autoload :RequestSchema
     autoload :ResponseSchema

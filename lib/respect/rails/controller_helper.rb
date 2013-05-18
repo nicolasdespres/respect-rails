@@ -28,6 +28,13 @@ module Respect
             end
           end
         end
+
+        # FIXME(Nicolas Despres): Document me.
+        def def_action_schema(action_name, &block)
+          define_method("#{action_name}_schema") do
+            Respect::Rails::ActionSchema.define(controller_name, action_name, &block)
+          end
+        end
       end
 
       private
@@ -68,7 +75,25 @@ module Respect
       # This "before" filter load and attach the action schema to the request object.
       # It is safe to call this method several times.
       def load_request_schema!
-        request.send(:action_schema=, Respect::Rails.load_schema(controller_name, action_name)) unless request.has_schema?
+        unless request.has_schema?
+          schema = action_schema
+          # FIXME(Nicolas Despres): Remove me once OldActionSchema has been removed
+          schema ||= Respect::Rails.load_schema(controller_name, action_name)
+          request.send(:action_schema=, schema)
+        end
+      end
+
+      # FIXME(Nicolas Despres): Test me!!!
+      def action_schema(action = nil)
+        action ||= self.action_name
+        method_name = "#{action}_schema"
+        if self.respond_to?(method_name)
+          if action == self.action_name
+            @action_schema ||= send(method_name)
+          else
+            send(method_name)
+          end
+        end
       end
 
       # This "after" filter attach the response schema to the response object.
