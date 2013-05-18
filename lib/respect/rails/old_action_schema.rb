@@ -1,6 +1,6 @@
 module Respect
   module Rails
-    class ActionSchema
+    class OldActionSchema
       include ::Rails.application.routes.url_helpers
       include Respect::DocHelper
 

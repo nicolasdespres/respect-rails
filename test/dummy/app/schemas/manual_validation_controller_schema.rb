@@ -1,4 +1,4 @@
-class ManualValidationControllerSchema < Respect::Rails::ActionSchema
+class ManualValidationControllerSchema < Respect::Rails::OldActionSchema
   def raise_custom_error
     request do |r|
       r.query_parameters do |s|

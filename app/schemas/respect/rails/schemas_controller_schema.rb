@@ -1,6 +1,6 @@
 module Respect
   module Rails
-    class SchemasControllerSchema < Respect::Rails::ActionSchema
+    class SchemasControllerSchema < Respect::Rails::OldActionSchema
       def index
         request do |r|
           r.path_parameters do |s|

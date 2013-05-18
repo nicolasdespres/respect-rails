@@ -1,4 +1,4 @@
-class SkippedAutomaticValidationControllerSchema < Respect::Rails::ActionSchema
+class SkippedAutomaticValidationControllerSchema < Respect::Rails::OldActionSchema
   def basic_get
     request do |r|
       r.body_parameters do |s|

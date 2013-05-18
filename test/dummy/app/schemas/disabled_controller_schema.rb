@@ -1,4 +1,4 @@
-class DisabledControllerSchema < Respect::Rails::ActionSchema
+class DisabledControllerSchema < Respect::Rails::OldActionSchema
   def basic
     request do |r|
       r.body_parameters do |s|

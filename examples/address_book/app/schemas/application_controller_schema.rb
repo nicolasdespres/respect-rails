@@ -1,3 +1,3 @@
-class ApplicationControllerSchema < Respect::Rails::ActionSchema
+class ApplicationControllerSchema < Respect::Rails::OldActionSchema
   helper Respect::ApplicationMacros
 end
