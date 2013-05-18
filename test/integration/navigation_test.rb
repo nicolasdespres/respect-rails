@@ -16,4 +16,10 @@ class NavigationTest < ActionDispatch::IntegrationTest
     get "/rest_spec/doc.html"
     assert_response :success
   end
+
+  test "params set by route are accepted" do
+    get "/"
+    assert_response :success
+  end
+
 end
