@@ -1,6 +1,3 @@
-require 'respect/rails/request_helper'
-require 'respect/rails/response_helper'
-
 module Respect
   module Rails
     module ControllerHelper

@@ -1,5 +1,7 @@
 require 'respect'
 
+require 'respect/rails/request_helper'
+require 'respect/rails/response_helper'
 require 'respect/rails/controller_helper'
 
 module Respect
