@@ -5,6 +5,21 @@ class SkippedAutomaticValidationController < AutomaticValidationController
   skip_before_filter :sanitize_params!
 
   # GET /automatic_validation/basic_get.json
+  def_action_schema :basic_get do |s|
+    s.request do |r|
+      r.body_parameters do |s|
+        s.integer "param1", equal_to: 42
+      end
+    end
+    s.response_for do |status|
+      status.ok do |r|
+        r.body do |s|
+          s.integer "id", equal_to: 42
+        end
+      end
+    end
+  end
+
   def basic_get
     unless params['param1'] == 42
       raise "will be raised since the validator is disabled"
