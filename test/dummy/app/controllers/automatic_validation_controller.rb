@@ -195,17 +195,4 @@ class AutomaticValidationController < ApplicationController
       end
     end
   end
-
-  # It is mandatory to prepend the after filter so that it is
-  # executed before load_response_schema. Or you have to call it
-  # yourself.
-  prepend_after_filter :test_response_is_instrumented
-
-  private
-
-  def test_response_is_instrumented
-    unless response.respond_to? :validate_schema
-      raise "response should be instrumented at this point"
-    end
-  end
 end

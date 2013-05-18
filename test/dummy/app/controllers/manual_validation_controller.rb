@@ -27,18 +27,4 @@ class ManualValidationController < ApplicationController
       end
     end
   end
-
-  after_filter :test_response_is_instrumented
-
-  private
-
-  def test_response_is_instrumented
-    # We have to explicitly load the response schema since our hook
-    # may be called before the gem's hook.
-    load_response_schema
-    unless response.respond_to? :validate_schema
-      raise "response should be instrumented at this point"
-    end
-  end
-
 end

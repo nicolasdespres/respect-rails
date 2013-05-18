@@ -40,22 +40,23 @@ module Respect
         validate_response_schema if Respect::Rails::Engine.validate_response
       end
 
-      # This "before" filter validates the request if it has been instrumented.
+      # This "before" filter validates the request.
       def validate_request_schema
-        request.validate_schema if request.respond_to? :validate_schema
+        request.validate_schema
       end
 
       # This "after" filter validates the response with the schema associated to the
-      # response status if one is found in the instrumented request.
+      # response status if one is found.
       def validate_response_schema
         load_response_schema
-        response.validate_schema if response.respond_to? :validate_schema
+        response.validate_schema
       end
 
       # This "around" filter calls +load_request_schema+ and +load_response_schema+
       # respectively before and after the controller's action. It is useful
-      # if you want to do the validation yourself. It only instruments the request
-      # and the response object.
+      # if you want to do the validation yourself. It only load the action schema
+      # and attach the request schema to the request object and the response schema to
+      # the response object.
       def load_schemas
         load_request_schema
         yield
