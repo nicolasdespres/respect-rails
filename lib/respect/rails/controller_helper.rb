@@ -80,13 +80,7 @@ module Respect
 
       # Before filter which sanitize all request parameters: +params+,
       # +query_parameters+, +path_parameters+ and +request_parameters+.
-      # The request have to be validated first.
-      #
-      # Example:
-      #   class UsersController < ApplicationController
-      #     around_filter :validate_schemas
-      #     before_filter :sanitize_params
-      #   end
+      # The request is validated first if it has not been yet.
       def sanitize_params!
         request.sanitize_params!
       end

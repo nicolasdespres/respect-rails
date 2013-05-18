@@ -17,14 +17,14 @@ module Respect
       # request does not validate the schema.
       def validate_schema
         log_msg = "  Request validation: "
-        valid = nil
+        @validated = nil
         measure = Benchmark.realtime do
-          valid = request_schema.validate?(self) unless request_schema.nil?
+          @validated = request_schema.validate?(self) unless request_schema.nil?
         end
-        if valid.nil?
+        if @validated.nil?
           log_msg += "none"
         else
-          if valid == true
+          if @validated == true
             log_msg += "success"
           else
             log_msg += "failure"
@@ -32,7 +32,7 @@ module Respect
         end
         log_msg += " (%.1fms)" % [ measure * 1000 ]
         ::Rails.logger.info log_msg
-        if valid == false
+        if @validated == false
           last_validation_error.context.each do |msg|
             ::Rails.logger.info "    #{msg}"
           end
@@ -72,10 +72,24 @@ module Respect
         request_schema.sanitized_params if request_schema
       end
 
+      # Returns +nil+ if never validated, +true+ if validated successfully and
+      # +false+ if validation failed.
+      def validated
+        @validated
+      end
+
       # Sanitize all the request's parameters (path, query and body) *in-place*.
-      # if the schema validation has succeed.
+      # if the schema validation has succeed. Validate it first if it has not
+      # been yet.
       def sanitize_params!
-        request_schema.sanitize!(self) if sane_params
+        if request_schema
+          if validated.nil?
+            validate_schema
+          end
+          if validated == true
+            request_schema.sanitize!(self)
+          end
+        end
       end
 
     end # module RequestHelper
