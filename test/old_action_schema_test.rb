@@ -1,17 +1,6 @@
 require 'test_helper'
 
 class OldActionSchemaTest < ActiveSupport::TestCase
-  test "instantiating from controller do not catch NoMethodError" do
-    assert_raise(NoMethodError) do
-      Respect::Rails::OldActionSchema.from_controller(:automatic_validation, :raise_no_method_error)
-    end
-  end
-
-  test "instantiating from controller do not catch NameError" do
-    assert_raise(NameError) do
-      Respect::Rails::OldActionSchema.from_controller(:automatic_validation, :raise_name_error)
-    end
-  end
 
   test "url_for is working" do
     s = Respect::Rails::OldActionSchema.from_controller(:automatic_validation, :basic_get)

@@ -349,4 +349,13 @@ class AutomaticValidationController < ApplicationController
       end
     end
   end
+
+  def raise_no_method_error_schema
+    raise NoMethodError, "user has raised NoMethodError"
+  end
+
+  def raise_name_error_schema
+    raise NameError, "user has raised a NameError"
+  end
+
 end

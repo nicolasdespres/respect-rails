@@ -4,6 +4,11 @@ module Respect
       include Respect::DocHelper
 
       class << self
+        def from_controller(controller_name, action_name)
+          klass = "#{controller_name}_controller".classify.safe_constantize
+          @schema = klass.new.action_schema(action_name) if klass
+        end
+
         def define(controller, action, &block)
           # FIXME(Nicolas Despres): Add ActionDef.
           instance = self.new(controller, action)
