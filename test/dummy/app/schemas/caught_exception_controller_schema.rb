@@ -1,11 +1,4 @@
 class CaughtExceptionControllerSchema < ApplicationControllerSchema
-  def request_validator
-    request do |r|
-      r.query_parameters do |s|
-        s.integer :id, equal_to: 42
-      end
-    end
-  end
 
   def response_validator
     response_for do |status|
