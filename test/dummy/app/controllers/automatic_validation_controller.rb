@@ -190,6 +190,18 @@ class AutomaticValidationController < ApplicationController
     end
   end
 
+  def_action_schema :request_contextual_error do |s|
+    s.request do |r|
+      r.query_parameters do |s|
+        s.hash "o1" do |s|
+          s.hash "o2" do |s|
+            s.integer "i", equal_to: 42
+          end
+        end
+      end
+    end
+  end
+
   def request_contextual_error
     raise "Error should be raised before me!!"
   end

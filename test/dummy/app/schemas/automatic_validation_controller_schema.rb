@@ -7,18 +7,6 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
     raise NameError, "user has raised a NameError"
   end
 
-  def request_contextual_error
-    request do |r|
-      r.query_parameters do |s|
-        s.hash "o1" do |s|
-          s.hash "o2" do |s|
-            s.integer "i", equal_to: 42
-          end
-        end
-      end
-    end
-  end
-
   def response_contextual_error
     response_for do |status|
       status.is 200 do |r|
