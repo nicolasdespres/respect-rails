@@ -60,10 +60,6 @@ module Respect
           request_schema.last_error
         end
 
-        def body_parameters
-          request_parameters
-        end
-
         # Returns the sanitized parameters if the schema validation has succeed.
         def sane_params
           request_schema.sanitized_params if request_schema
