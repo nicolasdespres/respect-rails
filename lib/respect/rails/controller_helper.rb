@@ -60,7 +60,7 @@ module Respect
       def load_schemas
         load_request_schema
         yield
-        if Respect::Rails::Engine.validate_response || Respect::Rails::Engine.load_response_schema
+        if Respect::Rails::Engine.validate_response
           load_response_schema
         end
       end

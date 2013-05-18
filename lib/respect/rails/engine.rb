@@ -21,12 +21,6 @@ module Respect
       mattr_accessor :catch_response_validation_error
       self.catch_response_validation_error = ::Rails.env.development?
 
-      # Whether to load response schema (i.e. does not attach any response schema
-      # to the response object).
-      # By default it is +true+ in development and test mode.
-      mattr_accessor :load_response_schema
-      self.load_response_schema = (::Rails.env.development? || ::Rails.env.test?)
-
       # Default way to setup Respect for Rails.
       def self.setup(&block)
         block.call(self)
