@@ -7,21 +7,6 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
     raise NameError, "user has raised a NameError"
   end
 
-  def request_format
-    request do |r|
-      r.query_parameters do |s|
-        s.integer "id", required: false
-      end
-    end
-    response_for do |status|
-      status.is :ok do |r|
-        r.body do |s|
-          s.integer "id", equal_to: 42
-        end
-      end
-    end
-  end
-
   def basic_post
     request do |r|
       r.path_parameters do |s|

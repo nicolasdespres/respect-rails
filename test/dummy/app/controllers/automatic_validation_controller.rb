@@ -229,6 +229,21 @@ class AutomaticValidationController < ApplicationController
     end
   end
 
+  def_action_schema :request_format do |s|
+    s.request do |r|
+      r.query_parameters do |s|
+        s.integer "id", required: false
+      end
+    end
+    s.response_for do |status|
+      status.is :ok do |r|
+        r.body do |s|
+          s.integer "id", equal_to: 42
+        end
+      end
+    end
+  end
+
   def request_format
     respond_to do |format|
       format.json do
