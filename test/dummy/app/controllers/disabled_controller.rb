@@ -8,6 +8,23 @@ class DisabledController < ApplicationController
   around_filter :validate_schemas!
 
   # GET /disabled/basic.json
+  def_action_schema :basic do |s|
+    s.request do |r|
+      r.body_parameters do |s|
+        s.integer "param1", equal_to: 42
+      end
+    end
+    s.response_for do |status|
+      status.ok do |r|
+        r.body hash: false do |s|
+          s.hash do |s|
+            s.integer "id", equal_to: 42
+          end
+        end
+      end
+    end
+  end
+
   def basic
     respond_to do |format|
       format.json do
