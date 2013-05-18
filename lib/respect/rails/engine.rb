@@ -36,6 +36,12 @@ module Respect
           @@app_documentation
         end
       end
+
+      # Include all +helper_modules+ in the DSL definition classes, so that you can use its
+      # methods for defining schema.
+      def self.helpers(*helper_modules)
+        helper_modules.each{|m| Respect.extend_dsl_with(m) }
+      end
     end # class Engine
   end # module Rails
 end # module Respect

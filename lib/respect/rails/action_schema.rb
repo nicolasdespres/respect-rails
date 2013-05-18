@@ -22,16 +22,6 @@ module Respect
           end
         end
 
-        # Include +helper_module+ in the DSL definition classes, so that you can use its
-        # methods for defining schema.
-        #
-        # Contrary to controllers' helpers the methods provided by the helper are available
-        # in all schema definition throughout the application and not only when defining
-        # schema in the scope of this controller schema.
-        def helper(helper_module)
-          Respect.extend_dsl_with(helper_module)
-        end
-
       end
 
       def initialize(action_name)
