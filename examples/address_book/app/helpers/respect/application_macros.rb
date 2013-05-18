@@ -23,13 +23,11 @@ module Respect
       datetime "updated_at"
     end
 
-    def contact(name = "contact")
-      hash name do |s|
-        doc "The identifier of this contact."
-        s.id
-        s.contact_attributes
-        s.record_timestamps
-      end
+    def contact
+      doc "The identifier of this contact."
+      id
+      contact_attributes
+      record_timestamps
     end
 
     def error(name)
