@@ -1,6 +1,23 @@
 class ContactsController < ApplicationController
   # GET /contacts
   # GET /contacts.json
+  def_action_schema :index do |a|
+    a.documentation <<-EOS.strip_heredoc
+      List all the contacts in the address book.
+
+      This request lists all the contacts recorded in the database with
+      all their attributes.
+    EOS
+    a.response_for do |status|
+      status.ok do |s|
+        s.body hash: false do |s|
+          s.array do |s|
+            s.contact
+          end
+        end
+      end
+    end
+  end
   def index
     @contacts = Contact.all
 
@@ -12,6 +29,26 @@ class ContactsController < ApplicationController
 
   # GET /contacts/1
   # GET /contacts/1.json
+  def_action_schema :show do |a|
+    a.documentation <<-EOS.strip_heredoc
+      Show a contacts in the address book.
+
+      This request show the contacts identified by the given 'id'
+      recorded in the database with all its attributes.
+    EOS
+    a.request do |r|
+      r.path_parameters do |s|
+        s.id
+      end
+    end
+    a.response_for do |status|
+      status.ok do |s|
+        s.body hash: false do |s|
+          s.contact
+        end
+      end
+    end
+  end
   def show
     @contact = Contact.find(params[:id])
 
@@ -23,6 +60,22 @@ class ContactsController < ApplicationController
 
   # GET /contacts/new
   # GET /contacts/new.json
+  def_action_schema :new do |a|
+    a.documentation <<-EOS.strip_heredoc
+      Create a new contact with default value and return it.
+
+      This request create a new contact with default value but
+      does not store it in the database. It simply return it in
+      the response.
+    EOS
+    a.response_for do |status|
+      status.ok do |s|
+        s.body hash: false do |s|
+          s.contact
+        end
+      end
+    end
+  end
   def new
     @contact = Contact.new
 
@@ -39,6 +92,34 @@ class ContactsController < ApplicationController
 
   # POST /contacts
   # POST /contacts.json
+  def_action_schema :create do |a|
+    a.documentation <<-EOS.strip_heredoc
+      Create a new contact in the address book.
+
+      This request creates a new contact in the database with all the
+      attributes provided and respond its full description including
+      some more attributes.
+    EOS
+    a.request do |r|
+      r.body_parameters do |s|
+        s.hash "contact" do |s|
+          s.contact_attributes
+        end
+      end
+    end
+    a.response_for do |status|
+      status.created do |s|
+        s.body do |s|
+          s.contact
+        end
+      end
+      status.unprocessable_entity do |s|
+        s.body do |s|
+          s.contact_errors
+        end
+      end
+    end
+  end
   def create
     @contact = Contact.new(params[:contact])
 
@@ -55,6 +136,35 @@ class ContactsController < ApplicationController
 
   # PUT /contacts/1
   # PUT /contacts/1.json
+  def_action_schema :update do |a|
+    a.documentation <<-EOS.strip_heredoc
+      Update an existing contact in the address book.
+
+      This request updates an existing contact identified by the given 'id'
+      in the database with all the attributes provided and respond no content
+      if it succeed.
+    EOS
+    a.request do |r|
+      r.path_parameters do |s|
+        s.id
+      end
+      r.body_parameters do |s|
+        s.hash "contact" do |s|
+          s.contact_attributes
+        end
+      end
+    end
+    a.response_for do |status|
+      status.no_content do |s|
+        # Empty schema
+      end
+      status.unprocessable_entity do |s|
+        s.body do |s|
+          s.contact_errors
+        end
+      end
+    end
+  end
   def update
     @contact = Contact.find(params[:id])
 
@@ -71,6 +181,24 @@ class ContactsController < ApplicationController
 
   # DELETE /contacts/1
   # DELETE /contacts/1.json
+  def_action_schema :destroy do |a|
+    a.documentation <<-EOS.strip_heredoc
+      Destroy an existing contact in the address book.
+
+      This request destroy an existing contact identified by the given 'id'
+      in the database. No content is responded.
+    EOS
+    a.request do |r|
+      r.path_parameters do |s|
+        s.id
+      end
+    end
+    a.response_for do |status|
+      status.no_content do |s|
+        # Empty schema
+      end
+    end
+  end
   def destroy
     @contact = Contact.find(params[:id])
     @contact.destroy

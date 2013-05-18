@@ -1,6 +1,23 @@
 # An example of manual validation without using any filter.
 class ManualValidationController < ApplicationController
   # GET /manual_validation/raise_custom_error.json
+  def_action_schema :raise_custom_error do |s|
+    s.request do |r|
+      r.query_parameters do |s|
+        s.integer "param1", equal_to: 42
+      end
+    end
+    s.response_for do |status|
+      status.ok do |r|
+        r.body hash: false do |s|
+          s.hash do |s|
+            s.integer "id", equal_to: 53
+          end
+        end
+      end
+    end
+  end
+
   def raise_custom_error
     begin
       request.validate_schema
@@ -10,6 +27,22 @@ class ManualValidationController < ApplicationController
   end
 
   # GET /manual_validation/raise_custom_error.json
+  def_action_schema :raise_custom_error_without_rescue do |s|
+    # FIXME(Nicolas Despres): Factor this schema with "raise_custom_error
+    s.request do |r|
+      r.query_parameters do |s|
+        s.integer "param1", equal_to: 42
+      end
+    end
+    s.response_for do |status|
+      status.ok do |r|
+        r.body do |s|
+          s.integer "id", equal_to: 53
+        end
+      end
+    end
+  end
+
   def raise_custom_error_without_rescue
     unless request.validate_schema?
       raise "invalid request schema"
@@ -27,18 +60,4 @@ class ManualValidationController < ApplicationController
       end
     end
   end
-
-  after_filter :test_response_is_instrumented
-
-  private
-
-  def test_response_is_instrumented
-    # We have to explicitly load the response schema since our hook
-    # may be called before the gem's hook.
-    load_response_schema
-    unless response.respond_to? :validate_schema
-      raise "response should be instrumented at this point"
-    end
-  end
-
 end

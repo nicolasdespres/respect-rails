@@ -29,12 +29,11 @@ Coming soon:
 * Describe the schema of your resources.
 * Use routes' constraints as default request's path parameters validation rules.
 * Use models' validators as default request's body parameters validation rules.
-* Generator tasks: template for controller schema, helpers, etc...
+* Generator tasks: helpers, etc...
 * Statistic about how much routes you have documented.
 * Rake tasks to quickly access a controller action schema from the terminal.
 * A web service to programmatically inspect your API schemas
 * A web service to check a request is valid without actually performing the request.
-* Partial response schema.
 * An helper to easily specify nested attributes.
 * More appealing documentation rendering.
 

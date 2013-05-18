@@ -12,7 +12,7 @@ class CaughtExceptionControllerTest < ActionController::TestCase
     assert_select "pre", /\bid\b/
     assert_select "pre", /\bmalformed integer value\b/
     assert_select "pre", /\berror_value\b/
-    assert_select "p", /\bInvalid body parameters\b/
+    assert_select "p", /\bInvalid query parameters\b/
     assert_select "p", /\bProcessed object\b/ do
       assert_select "div[class=json_highlight]", true
     end
@@ -27,7 +27,7 @@ class CaughtExceptionControllerTest < ActionController::TestCase
     assert_match(/\bmalformed integer value\b/, json["error"]["message"])
     assert_match(/\berror_value\b/, json["error"]["message"])
     assert_kind_of(Array, json["error"]["context"])
-    assert_equal("body", json["error"]["part"])
+    assert_equal("query", json["error"]["part"])
     assert_equal({"id"=>"error_value",
         "format"=>"json",
         "controller"=>"caught_exception",

@@ -1,3 +1,0 @@
-body do |s|
-  s.contact
-end

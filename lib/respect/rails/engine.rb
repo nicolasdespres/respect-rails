@@ -1,6 +1,8 @@
 require 'respect'
 
-require 'respect/rails/helper'
+require 'respect/rails/request_helper'
+require 'respect/rails/response_helper'
+require 'respect/rails/controller_helper'
 
 module Respect
   module Rails
@@ -19,12 +21,6 @@ module Respect
       mattr_accessor :catch_response_validation_error
       self.catch_response_validation_error = ::Rails.env.development?
 
-      # Whether to load response schema. If the response schema is not loaded the
-      # response object is not instrumented.
-      # By default it is +true+ in development and test mode.
-      mattr_accessor :load_response_schema
-      self.load_response_schema = (::Rails.env.development? || ::Rails.env.test?)
-
       # Default way to setup Respect for Rails.
       def self.setup(&block)
         block.call(self)
@@ -39,6 +35,12 @@ module Respect
         else
           @@app_documentation
         end
+      end
+
+      # Include all +helper_modules+ in the DSL definition classes, so that you can use its
+      # methods for defining schema.
+      def self.helpers(*helper_modules)
+        helper_modules.each{|m| Respect.extend_dsl_with(m) }
       end
     end # class Engine
   end # module Rails

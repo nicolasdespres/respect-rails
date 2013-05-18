@@ -1,12 +1,38 @@
 # An example of automatic validation using the "validate_schemas" around filter.
 class AutomaticValidationController < ApplicationController
-  around_filter :validate_schemas
-  before_filter :sanitize_params
+  around_filter :validate_schemas!
+  before_filter :sanitize_params!
 
   # GET /automatic_validation/basic_get.json
+  def_action_schema :basic_get do |s|
+    s.documentation <<-EOS
+      A title.
+
+      A description.
+      EOS
+    s.request do |r|
+      r.query_parameters do |s|
+        s.doc <<-EOS.strip_heredoc
+          A parameter
+
+          An important parameter that should be equal to 42.
+          Yes really!.
+          EOS
+        s.integer "param1", equal_to: 42
+      end
+    end
+    s.response_for do |status|
+      status.ok do |r|
+        r.body do |s|
+          s.integer "id", equal_to: 42
+        end
+      end
+    end
+  end
+
   def basic_get
     unless params['param1'] == 42
-      raise "should never be rasised since the validator has raised one when checking parameters."
+      raise "should never be raised since the validator has raised one when checking parameters."
     end
     respond_to do |format|
       format.json do
@@ -25,6 +51,16 @@ class AutomaticValidationController < ApplicationController
     end
   end
 
+  def_action_schema :no_request_schema do |s|
+    s.response_for do |status|
+      status.ok do |r|
+        r.body do |s|
+          s.integer "id", equal_to: 42
+        end
+      end
+    end
+  end
+
   def no_request_schema
     respond_to do |format|
       format.json do
@@ -34,30 +70,16 @@ class AutomaticValidationController < ApplicationController
     end
   end
 
-  def response_schema_from_file
-    respond_to do |format|
-      format.json do
-        if params[:failure]
-          result = { error: "failure" }
-          render json: result, status: :unprocessable_entity
-        else
-          result = { id: params[:returned_id] }
-          render json: result, status: :created
-        end
-      end
-    end
-  end
-
-  def response_schema_from_file_unknown_status
-    respond_to do |format|
-      format.json do
-        result = { id: params[:returned_id] }
-        render json: result, status: :foo
-      end
-    end
-  end
 
   # Route constraints prevent this endpoint to raise any validation error.
+  def_action_schema :route_constraints do |s|
+    s.request do |r|
+      r.query_parameters do |s|
+        s.string "param1", equal_to: "42"
+      end
+    end
+  end
+
   def route_constraints
     unless params['param1'] == "42"
       raise "should never be rasised since the route has a constraint on this parameter value."
@@ -71,6 +93,15 @@ class AutomaticValidationController < ApplicationController
   end
 
   # Composite custom types like Circle and Point are expected in the parameters of this request.
+  def_action_schema :composite_custom_types do |s|
+    s.request do |r|
+      r.query_parameters do |s|
+        s.circle "circle"
+        s.rgba "color"
+      end
+    end
+  end
+
   def composite_custom_types
     expected_circle = Circle.new(Point.new(1.0, 2.0), 5.0)
     circle = params[:circle]
@@ -104,15 +135,13 @@ class AutomaticValidationController < ApplicationController
     end
   end
 
-  def default_response_schema_in_file
-    respond_to do |format|
-      format.json do
-        if params[:failure]
-          result = { error: "failure" }
-          render json: result, status: :unprocessable_entity
-        else
-          result = { id: 42 }
-          render json: result, status: :ok
+  def_action_schema :request_contextual_error do |s|
+    s.request do |r|
+      r.query_parameters do |s|
+        s.hash "o1" do |s|
+          s.hash "o2" do |s|
+            s.integer "i", equal_to: 42
+          end
         end
       end
     end
@@ -122,11 +151,40 @@ class AutomaticValidationController < ApplicationController
     raise "Error should be raised before me!!"
   end
 
+  def_action_schema :response_contextual_error do |s|
+    s.response_for do |status|
+      status.is 200 do |r|
+        r.body do |s|
+          s.hash "o1" do |s|
+            s.hash "o2" do |s|
+              s.integer "i", equal_to: 51
+            end
+          end
+        end
+      end
+    end
+  end
+
   def response_contextual_error
     respond_to do |format|
       format.json do
         result = { o1: { o2: { i: 42 } } }
         render json: result, status: :ok
+      end
+    end
+  end
+
+  def_action_schema :request_format do |s|
+    s.request do |r|
+      r.query_parameters do |s|
+        s.integer "id", required: false
+      end
+    end
+    s.response_for do |status|
+      status.is :ok do |r|
+        r.body do |s|
+          s.integer "id", equal_to: 42
+        end
       end
     end
   end
@@ -144,6 +202,24 @@ class AutomaticValidationController < ApplicationController
   end
 
   # POST /automatic_validation/basic_post.json
+  def_action_schema :basic_post do |s|
+    s.request do |r|
+      r.path_parameters do |s|
+        s.integer "path_param", equal_to: 42
+      end
+      r.body_parameters do |s|
+        s.integer "body_param", equal_to: 42
+      end
+    end
+    s.response_for do |status|
+      status.ok do |r|
+        r.body do |s|
+          s.integer "id", equal_to: 42
+        end
+      end
+    end
+  end
+
   def basic_post
     unless params['path_param'] == 42
       raise "should never be raised since the validator has raised one before when checking path_param"
@@ -159,6 +235,14 @@ class AutomaticValidationController < ApplicationController
     end
   end
 
+  def_action_schema :check_request_headers do |s|
+    s.request do |r|
+      r.headers do |h|
+        h["test_header"] = "value"
+      end
+    end
+  end
+
   def check_request_headers
     unless request.headers["test_header"] == "value"
       raise "should never be raised since the validator has raised one before when checking headers"
@@ -166,6 +250,16 @@ class AutomaticValidationController < ApplicationController
     respond_to do |format|
       format.json do
         render json: {}
+      end
+    end
+  end
+
+  def_action_schema :check_response_headers do |s|
+    s.response_for do |status|
+      status.ok do |r|
+        r.headers do |h|
+          h["response_header"] = "good"
+        end
       end
     end
   end
@@ -179,6 +273,14 @@ class AutomaticValidationController < ApplicationController
     end
   end
 
+  def_action_schema :only_documentation do |s|
+    s.documentation <<-EOS
+      Request with no schema but a documentation.
+
+      It should be documented even if it does not have any schema defined.
+    EOS
+  end
+
   def only_documentation
     respond_to do |format|
       format.json do
@@ -187,16 +289,12 @@ class AutomaticValidationController < ApplicationController
     end
   end
 
-  # It is mandatory to prepend the after filter so that it is
-  # executed before load_response_schema. Or you have to call it
-  # yourself.
-  prepend_after_filter :test_response_is_instrumented
-
-  private
-
-  def test_response_is_instrumented
-    unless response.respond_to? :validate_schema
-      raise "response should be instrumented at this point"
-    end
+  def raise_no_method_error_schema
+    raise NoMethodError, "user has raised NoMethodError"
   end
+
+  def raise_name_error_schema
+    raise NameError, "user has raised a NameError"
+  end
+
 end

@@ -8,6 +8,7 @@ module Respect
     autoload :ResponseSchemaSet
     autoload :RequestSchema
     autoload :ResponseSchema
+    autoload :ActionDef
     autoload :RequestDef
     autoload :ResponseDef
     autoload :Info
@@ -53,10 +54,6 @@ module Respect
     end
 
     class << self
-      def load_schema(controller_name, action_name)
-        ActionSchema.from_controller(controller_name, action_name)
-      end
-
       # Return the name of the application where Respect's engine is mounted.
       def application_name
         ::Rails.application.class.parent_name

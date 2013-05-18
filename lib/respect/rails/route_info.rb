@@ -53,7 +53,7 @@ module Respect
       end
 
       def schema
-        @schema ||= ActionSchema.from_controller(controller_name, action_name)
+        @schema = ActionSchema.from_controller(controller_name, action_name)
       end
 
       def has_schema?

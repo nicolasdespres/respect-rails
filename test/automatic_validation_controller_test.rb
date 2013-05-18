@@ -32,31 +32,6 @@ class AutomaticValidationControllerTest < ActionController::TestCase
     end
   end
 
-  def test_response_schema_from_file_for_created_status
-    get :response_schema_from_file, format: 'json', returned_id: 42
-    assert_response :created
-    assert response.has_schema?
-  end
-
-  def test_response_schema_from_file_for_created_status_with_wrong_response
-    assert_raise(Respect::Rails::ResponseValidationError) do
-      get :response_schema_from_file, format: 'json', returned_id: 51
-    end
-  end
-
-  def test_response_schema_from_file_for_unprocessable_entity_status
-    get :response_schema_from_file, format: 'json', failure: true
-    assert_response :unprocessable_entity
-    assert response.has_schema?
-  end
-
-  def test_response_schema_from_file_for_unknown_status
-    assert_nothing_raised do
-      # We let the users define whatever non-sens status code they want.
-      get :response_schema_from_file_unknown_status, format: 'json', returned_id: 42
-    end
-  end
-
   def test_route_constraints_validates_before_validator
     # FIXME(Nicolas Despres): This test does not work because route's constraints do not
     # seem to be applied in test mode. The test work manually from the web browser. Here we
@@ -84,18 +59,6 @@ class AutomaticValidationControllerTest < ActionController::TestCase
     assert_equal "/rest_spec", json['respect_path']
     assert_equal "/rest_spec/doc", json['respect']['doc_path']
     assert_equal "/rest_spec/", json['respect']['root_path']
-  end
-
-  def test_default_response_schema_in_file_found_for_ok
-    get :default_response_schema_in_file, format: 'json', failure: false
-    assert_response :ok
-    assert response.has_schema?
-  end
-
-  def test_default_response_schema_in_file_not_found_for_not_ok
-    get :default_response_schema_in_file, format: 'json', failure: true
-    assert_response :unprocessable_entity
-    assert !response.has_schema?
   end
 
   def test_request_validation_error_have_context

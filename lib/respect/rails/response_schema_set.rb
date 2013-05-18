@@ -2,26 +2,7 @@ module Respect
   module Rails
     class ResponseSchemaSet
 
-      # FIXME(Nicolas Despres): Factor all file related code. This code should belongs to
-      # ResponseSchema as other way to define it.
-
       class << self
-        def each_response_file(controller_name, action_name, &block)
-          glob = "#{::Rails.root}/app/schemas/#{controller_name}/#{action_name}-*.schema"
-          Pathname.glob(glob).each do |path|
-            if path.basename.to_s =~ /^#{action_name}-(.*?)\.schema$/
-              status = $1.to_sym
-              block.call(path, status)
-            else
-              raise "should never ever happens"
-            end
-          end
-          ok_file = Pathname.new("#{::Rails.root}/app/schemas/#{controller_name}/#{action_name}.schema")
-          if ok_file.exist?
-            block.call(ok_file, :ok)
-          end
-        end
-
         # FIXME(Nicolas Despres): Move me to another module/class.
         def symbolize_status(status)
           case status
@@ -47,7 +28,6 @@ module Respect
         @controller_name = controller_name
         @action_name = action_name
         @set = {}
-        collect_from_files
       end
 
       attr_reader :controller_name, :action_name
@@ -58,10 +38,6 @@ module Respect
 
       def [](http_status)
         @set[http_status]
-      end
-
-      def each_response_file(&block)
-        self.class.each_response_file(@controller_name, @action_name, &block)
       end
 
       delegate :each, :empty?, to: :@set
@@ -76,28 +52,7 @@ module Respect
 
       def define_response(status, *arguments, &block)
         status = self.class.symbolize_status(status)
-        if block
-          self << ResponseSchema.define(status, *arguments, &block)
-        else
-          filenames = [ "#{::Rails.root}/app/schemas/#@controller_name/#@action_name-#{status}.schema" ]
-          if status == :ok
-            filenames << "#{::Rails.root}/app/schemas/#@controller_name/#@action_name.schema"
-          end
-          filenames.each do |filename|
-            if File.exists?(filename)
-              self << ResponseSchema.from_file(status, filename)
-              break
-            end
-          end
-        end
-      end
-
-      private
-
-      def collect_from_files
-        each_response_file do |path, status|
-          self << ResponseSchema.from_file(status, path.to_s)
-        end
+        self << ResponseSchema.define(status, *arguments, &block)
       end
 
     end

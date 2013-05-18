@@ -4,4 +4,6 @@ Respect::Rails.setup do |config|
 
     This is a great dummy app we love to torture.
   EOS
+
+  config.helpers Respect::ApplicationMacros
 end
