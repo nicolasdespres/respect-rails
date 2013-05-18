@@ -1,3 +1,0 @@
-class CaughtExceptionControllerSchema < ApplicationControllerSchema
-
-end

@@ -1,3 +1,0 @@
-class AutomaticValidationControllerSchema < ApplicationControllerSchema
-
-end
