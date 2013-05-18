@@ -171,6 +171,11 @@ class AutomaticValidationController < ApplicationController
     end
   end
 
+  def_action_schema :default_response_schema_in_file do |s|
+    # - No request schema defined.
+    # - Default response for :ok is defined in automatic_validation/default_response_in_file.schema
+  end
+
   def default_response_schema_in_file
     respond_to do |format|
       format.json do
