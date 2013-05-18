@@ -93,6 +93,11 @@ class AutomaticValidationController < ApplicationController
     end
   end
 
+  def_action_schema :response_schema_from_file_unknown_status do |s|
+    # - No request schema defined.
+    # - Response for status ok is defined in the associated file.
+  end
+
   def response_schema_from_file_unknown_status
     respond_to do |format|
       format.json do
