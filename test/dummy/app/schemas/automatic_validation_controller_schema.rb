@@ -7,14 +7,6 @@ class AutomaticValidationControllerSchema < ApplicationControllerSchema
     raise NameError, "user has raised a NameError"
   end
 
-  def check_request_headers
-    request do |r|
-      r.headers do |h|
-        h["test_header"] = "value"
-      end
-    end
-  end
-
   def check_response_headers
     response_for do |status|
       status.ok do |r|
