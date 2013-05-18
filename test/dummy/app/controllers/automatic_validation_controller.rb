@@ -206,6 +206,20 @@ class AutomaticValidationController < ApplicationController
     raise "Error should be raised before me!!"
   end
 
+  def_action_schema :response_contextual_error do |s|
+    s.response_for do |status|
+      status.is 200 do |r|
+        r.body do |s|
+          s.hash "o1" do |s|
+            s.hash "o2" do |s|
+              s.integer "i", equal_to: 51
+            end
+          end
+        end
+      end
+    end
+  end
+
   def response_contextual_error
     respond_to do |format|
       format.json do
