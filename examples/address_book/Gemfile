@@ -35,7 +35,7 @@ gem 'jquery-rails'
 # gem 'capistrano'
 
 # To use debugger
-# gem 'debugger'
+gem 'debugger'
 
 if ENV["EDGE_GEM_FILE"] != "no" && File.exists?("EdgeGemfile")
   eval(File.read("EdgeGemfile"))
