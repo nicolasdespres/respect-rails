@@ -4,7 +4,6 @@ module Respect
   module Rails
     extend ActiveSupport::Autoload
 
-    autoload :OldActionSchema
     autoload :ActionSchema
     autoload :ResponseSchemaSet
     autoload :RequestSchema
@@ -55,10 +54,6 @@ module Respect
     end
 
     class << self
-      def load_schema(controller_name, action_name)
-        OldActionSchema.from_controller(controller_name, action_name)
-      end
-
       # Return the name of the application where Respect's engine is mounted.
       def application_name
         ::Rails.application.class.parent_name

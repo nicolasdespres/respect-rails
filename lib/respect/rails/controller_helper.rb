@@ -84,12 +84,7 @@ module Respect
       # This "before" filter load and attach the action schema to the request object.
       # It is safe to call this method several times.
       def load_request_schema!
-        unless request.has_schema?
-          schema = action_schema
-          # FIXME(Nicolas Despres): Remove me once OldActionSchema has been removed
-          schema ||= Respect::Rails.load_schema(controller_name, action_name)
-          request.send(:action_schema=, schema)
-        end
+        request.send(:action_schema=, action_schema) unless request.has_schema?
       end
 
       # This "after" filter attach the response schema to the response object.

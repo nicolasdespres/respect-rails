@@ -54,8 +54,6 @@ module Respect
 
       def schema
         @schema = ActionSchema.from_controller(controller_name, action_name)
-        # FIXME(Nicolas Despres): Remove me once reorganization is finished.
-        @schema ||= OldActionSchema.from_controller(controller_name, action_name)
       end
 
       def has_schema?
