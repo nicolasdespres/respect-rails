@@ -8,9 +8,6 @@ class AutomaticValidationController < ApplicationController
     unless params['param1'] == 42
       raise "should never be rasised since the validator has raised one when checking parameters."
     end
-    unless request.query_parameters[:param1] == 42
-      raise "should never be rasised since the validator has sanitized query_parameters"
-    end
     respond_to do |format|
       format.json do
         result = { id: 42 }
@@ -153,12 +150,6 @@ class AutomaticValidationController < ApplicationController
     end
     unless params['body_param'] == 42
       raise "should never be raised since the validator has raised one before when checking body_param"
-    end
-    unless request.path_parameters['path_param'] == 42
-      raise "should never be raised since the validator has sanitized path_parameters"
-    end
-    unless request.body_parameters['body_param'] == 42
-      raise "should never be raised since the validator has sanitized body_parameters"
     end
     respond_to do |format|
       format.json do

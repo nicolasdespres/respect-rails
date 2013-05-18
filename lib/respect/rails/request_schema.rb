@@ -103,7 +103,6 @@ module Respect
       def sanitize!(request)
         [ :path, :query, :body ].each do |name|
           send("#{name}_parameters").sanitize_object!(request.params)
-          send("#{name}_parameters").sanitize_object!(request.send("#{name}_parameters"))
         end
       end
 
