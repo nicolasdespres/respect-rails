@@ -18,6 +18,8 @@ class ContactsControllerTest < ActionController::TestCase
 
   test "should create contact" do
     assert_difference('Contact.count') do
+      # Set the request header so the request will be validated.
+      set_request_header("HTTP_X_AB_SIGNATURE", "api_public_key")
       post :create, contact: { age: @contact.age, homepage: @contact.homepage, name: @contact.name }
     end
 
@@ -45,5 +47,13 @@ class ContactsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to contacts_path
+  end
+
+  private
+
+  def set_request_header(key, value)
+    # This is hacky but if should become easier with Rails 4 according
+    # to ActionDispatch::Http::Headers new implementation.
+    @request.instance_variable_get(:@env)[key] = value
   end
 end

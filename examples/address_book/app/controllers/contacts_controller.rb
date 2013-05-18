@@ -101,6 +101,9 @@ class ContactsController < ApplicationController
       some more attributes.
     EOS
     a.request do |r|
+      r.headers do |h|
+        h['HTTP_X_AB_SIGNATURE'] = "api_public_key"
+      end
       r.body_parameters do |s|
         s.hash "contact" do |s|
           s.contact_attributes
