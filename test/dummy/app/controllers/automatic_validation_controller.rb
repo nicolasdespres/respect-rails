@@ -32,10 +32,10 @@ class AutomaticValidationController < ApplicationController
 
   def basic_get
     unless params['param1'] == 42
-      raise "should never be rasised since the validator has raised one when checking parameters."
+      raise "should never be raised since the validator has raised one when checking parameters."
     end
     unless request.query_parameters[:param1] == 42
-      raise "should never be rasised since the validator has sanitized query_parameters"
+      raise "should never be raised since the validator has sanitized query_parameters"
     end
     respond_to do |format|
       format.json do
