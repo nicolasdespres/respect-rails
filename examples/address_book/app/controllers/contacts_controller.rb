@@ -118,10 +118,8 @@ class ContactsController < ApplicationController
     a.request do |r|
       # Specify the headers that must be present when sending this request.
       r.headers do |h|
-        # Currently we do not allow to write:
-        #   h['HTTP-X-AB-SIGNATURE'] = "api_public_key"
-        # but this will be fixed in the future.
-        h['HTTP_X_AB_SIGNATURE'] = "api_public_key"
+        # User must provide an API public key to do this request.
+        h['X-AB-Signature'] = "api_public_key"
       end
       # The parameters are sent in the body part of the request.
       r.body_parameters do |s|
