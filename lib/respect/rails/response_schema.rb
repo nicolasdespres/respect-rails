@@ -2,6 +2,7 @@ module Respect
   module Rails
     class ResponseSchema
       include HeadersSimplifier
+      include Respect::DocHelper
 
       class << self
 
@@ -77,6 +78,7 @@ module Respect
       attr_reader :last_error
 
       attr_accessor :headers
+      attr_accessor :documentation
     end
   end
 end

@@ -33,6 +33,11 @@ module Respect
         @response_schema.headers = HashSchema.define(options, &block)
       end
 
+      # Set the documentation to +text+.
+      def documentation(text)
+        @response_schema.documentation = text
+      end
+
     end # class ResponseDef
   end # module Rails
 end # module Respect

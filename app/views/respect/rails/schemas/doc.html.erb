@@ -61,6 +61,8 @@ who wants to interoperate with <%= @info.app.name %> in their own application.
       <% unless schema.response_schemas.empty? %>
         <% schema.response_schemas.each do |status, response_schema| %>
           <h3>Response <%= response_schema.http_status %> [ <%= response_schema.status %> ]</h3>
+          <%= content_tag :p, response_schema.title %>
+          <%= content_tag :p, response_schema.description %>
           <% unless response_schema.headers.documented_properties.empty? %>
             <h4>Headers</h4>
             <%= highlight_json_schema response_schema.headers.to_h %>
