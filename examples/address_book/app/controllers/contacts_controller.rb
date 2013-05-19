@@ -136,7 +136,7 @@ class ContactsController < ApplicationController
       # The JSON schema of the response body when the status is 'created'
       # is the full representation of the contact.
       status.created do |s|
-        s.documentation <<-EOS
+        s.documentation <<-EOS.strip_heredoc
           Success.
 
           The contact has been correctly created. All the recorded attributes are returned.
@@ -146,7 +146,7 @@ class ContactsController < ApplicationController
         end
       end
       status.unprocessable_entity do |s|
-        s.documentation <<-EOS
+        s.documentation <<-EOS.strip_heredoc
           Failure.
 
           An error occurred and prevented the contact from being created. The error are detailed in the
@@ -194,14 +194,14 @@ class ContactsController < ApplicationController
     end
     a.response_for do |status|
       status.no_content do |s|
-        s.documentation <<-EOS
+        s.documentation <<-EOS.strip_heredoc
           Success.
 
           The contact has been correctly updated.
         EOS
       end
       status.unprocessable_entity do |s|
-        s.documentation <<-EOS
+        s.documentation <<-EOS.strip_heredoc
           Failure.
 
           An error occurred and prevented the contact from being updated. The error are detailed in the

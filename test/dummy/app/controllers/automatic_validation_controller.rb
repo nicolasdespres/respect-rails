@@ -5,7 +5,7 @@ class AutomaticValidationController < ApplicationController
 
   # GET /automatic_validation/basic_get.json
   def_action_schema :basic_get do |s|
-    s.documentation <<-EOS
+    s.documentation <<-EOS.strip_heredoc
       A title.
 
       A description.
@@ -274,7 +274,7 @@ class AutomaticValidationController < ApplicationController
   end
 
   def_action_schema :only_documentation do |s|
-    s.documentation <<-EOS
+    s.documentation <<-EOS.strip_heredoc
       Request with no schema but a documentation.
 
       It should be documented even if it does not have any schema defined.
