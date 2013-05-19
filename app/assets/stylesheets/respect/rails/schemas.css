@@ -103,6 +103,44 @@ hr {
   text-decoration: none;
 }
 
+.route table {
+  width: 100%;
+  border-spacing: 0px;
+}
+
+.route tr:hover {
+  background-color: #f8f8f8;
+}
+
+.route td {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 8px;
+  text-align: left;
+  vertical-align: top;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #ccc;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #ccc;
+}
+
+.route ul {
+  padding-left: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.route li {
+  /* list-style-type: none; */
+}
+
+.route .constraint {
+  color: rgb(100, 100, 100);
+  font-size: smaller;
+}
+
 /* JSON highlighting */
 
 .json_highlight .keyword {
