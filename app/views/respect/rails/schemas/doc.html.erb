@@ -1,12 +1,12 @@
-<h1><%= @info.app.name.titleize %> REST API Reference documentation</h1>
+<h1><%= @info.app.name %> API Documentation</h1>
 
-<h2>Title</h2>
-<%= @info.app.title ? @info.app.title : "No title" %>
+<%= content_tag :p, @info.app.title %>
+<%= content_tag :p, @info.app.description %>
+<p>
+This document describes the <%= @info.app.name %> API interface. It is designed for developers
+who wants to interoperate with <%= @info.app.name %> in their own application.
+</p>
 
-<h2>Description</h2>
-<%= @info.app.description ? @info.app.description : "No description" %>
-
-<h2>Routes index</h2>
 
 <ul>
 <% @info.routes.sort.each do |route| %>
