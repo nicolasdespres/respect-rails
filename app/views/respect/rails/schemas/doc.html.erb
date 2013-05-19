@@ -34,32 +34,32 @@ who wants to interoperate with <%= @info.app.name %> in their own application.
     @info.toc[controller_name].keys.sort.each do |action_name|
 
       route = @info.toc[controller_name][action_name]
-      schema = route.schema
+      action_schema = route.schema
   %>
       <h2 class="title">
         <%= content_tag :a, route.spec, id: route.anchor %>
       </h2>
 
-      <%= content_tag :p, schema.title %>
-      <%= content_tag :p, schema.description %>
+      <%= content_tag :p, action_schema.title %>
+      <%= content_tag :p, action_schema.description %>
 
-      <% if schema.request %>
+      <% if action_schema.request %>
         <h3>Request</h3>
-        <% unless schema.request.headers.documented_properties.empty? %>
+        <% unless action_schema.request.headers.documented_properties.empty? %>
           <h4>Headers</h4>
-          <%= highlight_json_schema schema.request.headers.to_h %>
+          <%= highlight_json_schema action_schema.request.headers.to_h %>
         <% end %>
 
         <% [ :path, :query, :body ].each do |name| %>
-          <% unless schema.request.send("#{name}_parameters").documented_properties.empty? %>
+          <% unless action_schema.request.send("#{name}_parameters").documented_properties.empty? %>
             <h4><%= name.capitalize %> parameters</h4>
-            <%= highlight_json_schema schema.request.send("#{name}_parameters").to_h %>
+            <%= highlight_json_schema action_schema.request.send("#{name}_parameters").to_h %>
           <% end %>
         <% end %>
       <% end %>
 
-      <% unless schema.responses.empty? %>
-        <% schema.responses.each do |status, response_schema| %>
+      <% unless action_schema.responses.empty? %>
+        <% action_schema.responses.each do |status, response_schema| %>
           <h3>Response <%= response_schema.http_status %> [ <%= response_schema.status %> ]</h3>
           <%= content_tag :p, response_schema.title %>
           <%= content_tag :p, response_schema.description %>
