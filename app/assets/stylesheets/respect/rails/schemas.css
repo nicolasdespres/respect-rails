@@ -73,6 +73,12 @@ table {
   border-spacing: 0px;
 }
 
+.summary {
+  padding-top: 15px;
+  padding-left: 15px;
+  display: block;
+}
+
 /* Table of contents */
 
 .toc .title {

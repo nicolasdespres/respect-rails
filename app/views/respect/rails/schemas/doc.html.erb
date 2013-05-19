@@ -82,7 +82,13 @@ who wants to interoperate with <%= @info.app.name %> in their own application.
           <% end %>
           </table>
 
-          <%= highlight_json_schema request_schema.headers.to_h %>
+          <div>
+            <div class="summary">
+              <a href="#" onclick="return toggleHeadersDump()" id="headers_dump_toggle">Show headers schema</a>
+            </div>
+            <div id="headers_dump" style="display:none"><%= highlight_json_schema request_schema.headers.to_h %></div>
+          </div>
+
         <% end %>
 
         <% [ :path, :query, :body ].each do |name| %>

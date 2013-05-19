@@ -13,3 +13,20 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+var toggle = function(id) {
+  var s = document.getElementById(id).style;
+  var t = document.getElementById("headers_dump_toggle");
+  if (s.display == 'none') {
+    s.display = 'block';
+    t.innerHTML = 'Hide headers schema';
+  } else {
+    s.display = 'none';
+    t.innerHTML = 'Show headers schema';
+  }
+  return false;
+}
+
+var toggleHeadersDump = function() {
+  return toggle('headers_dump');
+}
