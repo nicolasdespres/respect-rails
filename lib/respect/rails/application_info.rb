@@ -14,7 +14,7 @@ module Respect
       attr_reader :app_class
 
       def name
-        @app_class.parent_name.underscore
+        Engine.doc_app_name
       end
 
       def documentation

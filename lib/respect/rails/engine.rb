@@ -30,6 +30,13 @@ module Respect
       mattr_accessor :disable_request_headers_validation
       self.disable_request_headers_validation = ::Rails.env.test?
 
+      # Set the application name use in the documentation. By default it is the same
+      # as your application class.
+      mattr_writer :doc_app_name
+      def self.doc_app_name
+        @@doc_app_name ||= ::Rails.application.class.parent_name
+      end
+
       # Default way to setup Respect for Rails.
       def self.setup(&block)
         block.call(self)

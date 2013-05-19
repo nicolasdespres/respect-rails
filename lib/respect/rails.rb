@@ -65,11 +65,6 @@ module Respect
     end
 
     class << self
-      # Return the name of the application where Respect's engine is mounted.
-      def application_name
-        ::Rails.application.class.parent_name
-      end
-
       # Shortcut for {Respect::Rails::Engine.setup}.
       def setup(&block)
         Engine.setup(&block)

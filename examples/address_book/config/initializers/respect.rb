@@ -9,4 +9,8 @@ Respect::Rails.setup do |config|
   # Specify as many helpers as you want here. Helpers extend the schema definition DSL so
   # that you can factor your code.
   config.helpers Respect::ApplicationMacros
+
+  # Set the application name use in the documentation. By default it is the same
+  # as your application class.
+  # config.doc_app_name = "My custom app name"
 end

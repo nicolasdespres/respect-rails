@@ -6,6 +6,6 @@ class ApplicationInfoTest < ActiveSupport::TestCase
   end
 
   def test_name
-    assert_equal("dummy", @app.name)
+    assert_equal("Dummy", @app.name)
   end
 end
