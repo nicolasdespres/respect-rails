@@ -26,9 +26,7 @@ class RequestSchemaTest < Test::Unit::TestCase
     request = mock()
     headers = {}
     request.stubs(:headers).with().returns(headers).at_least_once
-    simplified_headers = mock()
-    @rs.stubs(:simplify_headers).with(headers).returns(simplified_headers).once
-    @rs.headers.stubs(:validate).with(simplified_headers).once
+    @rs.headers.stubs(:validate).with(headers).once
     params = {}
     request.stubs(:params).with().returns(params).at_least_once
     @rs.path_parameters.stubs(:validate).with(params).once
@@ -109,6 +107,8 @@ class RequestSchemaTest < Test::Unit::TestCase
     headers = {}
     request.stubs(:headers).with().returns(headers).at_least_once
     @rs.headers.stubs(:validate).with(headers).raises(Respect::ValidationError.new("error message")).once
+    simplified_headers = {}
+    @rs.stubs(:simplify_headers).with(headers).returns(simplified_headers).once
     params = {}
     request.stubs(:params).with().returns(params)
     @rs.path_parameters.stubs(:validate).with(params)
@@ -121,7 +121,7 @@ class RequestSchemaTest < Test::Unit::TestCase
       assert e.error.is_a?(Respect::ValidationError)
       assert_equal "error message; in headers", e.message
       assert e.part.headers?
-      assert_equal headers, e.object
+      assert_equal simplified_headers.object_id, e.object.object_id
     end
   end
 

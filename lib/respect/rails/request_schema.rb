@@ -44,10 +44,9 @@ module Respect
         # Validate requests.
         unless Respect::Rails::Engine.disable_request_headers_validation
           begin
-            simplified_headers = simplify_headers(request.headers)
-            headers.validate(simplified_headers)
+            headers.validate(request.headers)
           rescue Respect::ValidationError => e
-            raise RequestValidationError.new(e, :headers, simplified_headers)
+            raise RequestValidationError.new(e, :headers, simplify_headers(request.headers))
           end
         end
         [ :path, :query, :body ].each do |name|

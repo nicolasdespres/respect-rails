@@ -40,4 +40,19 @@ class CaughtExceptionController < ApplicationController
     end
   end
 
+  def_action_schema :headers_check do |s|
+    s.request do |r|
+      r.headers do |h|
+        h["X-Test-Header"] = "good"
+      end
+    end
+  end
+  def headers_check
+    respond_to do |format|
+      format.json do
+        render json: {}
+      end
+    end
+  end
+
 end

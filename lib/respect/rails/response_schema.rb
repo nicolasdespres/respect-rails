@@ -48,10 +48,9 @@ module Respect
       def validate(response)
         if headers
           begin
-            simplified_headers = simplify_headers(response.headers)
-            headers.validate(simplified_headers)
+            headers.validate(response.headers)
           rescue Respect::ValidationError => e
-            raise Respect::Rails::ResponseValidationError.new(e, :headers, simplified_headers)
+            raise Respect::Rails::ResponseValidationError.new(e, :headers, simplify_headers(response.headers))
           end
         end
         if body

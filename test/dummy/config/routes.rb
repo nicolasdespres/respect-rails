@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   end
   match 'caught_exception/request_validator' => "caught_exception#request_validator", via: :get
   match 'caught_exception/response_validator' => "caught_exception#response_validator", via: :get
+  match 'caught_exception/headers_check' => "caught_exception#headers_check", via: :get
 
   mount Respect::Rails::Engine => "/rest_spec"
 end

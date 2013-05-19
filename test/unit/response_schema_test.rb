@@ -67,9 +67,7 @@ class ResponseSchemaTest < Test::Unit::TestCase
     response.stubs(:headers).returns(headers)
     headers_schema = Respect::HashSchema.new
     @rs.stubs(:headers).returns(headers_schema)
-    simplified_headers = mock()
-    @rs.stubs(:simplify_headers).with(headers).returns(simplified_headers).once
-    headers_schema.stubs(:validate).with(simplified_headers).once
+    headers_schema.stubs(:validate).with(headers).once
 
     body = mock()
     response.stubs(:body).returns(body)
@@ -89,9 +87,7 @@ class ResponseSchemaTest < Test::Unit::TestCase
     response.stubs(:headers).returns(headers)
     headers_schema = Respect::HashSchema.new
     @rs.stubs(:headers).returns(headers_schema)
-    simplified_headers = mock()
-    @rs.stubs(:simplify_headers).with(headers).returns(simplified_headers).once
-    headers_schema.stubs(:validate).with(simplified_headers).once
+    headers_schema.stubs(:validate).with(headers).once
     body = mock()
     response.stubs(:body).returns(body)
     body_schema = Respect::HashSchema.new
@@ -121,5 +117,31 @@ class ResponseSchemaTest < Test::Unit::TestCase
     assert_equal :internal_server_error, Respect::Rails::ResponseSchema.symbolize_http_status(0)
     assert_equal :gateway_timeout, Respect::Rails::ResponseSchema.symbolize_http_status(504)
     assert_equal :http_version_not_supported, Respect::Rails::ResponseSchema.symbolize_http_status(505)
+  end
+
+  def test_validate_raise_response_validation_error_for_headers_error
+    response = mock()
+    headers = mock()
+    response.stubs(:headers).returns(headers)
+    headers_schema = Respect::HashSchema.new
+    @rs.stubs(:headers).returns(headers_schema)
+    headers_schema.stubs(:validate).with(headers).raises(Respect::ValidationError.new("message")).once
+    simplified_headers = {}
+    @rs.stubs(:simplify_headers).with(headers).returns(simplified_headers).once
+
+    body = mock()
+    response.stubs(:body).returns(body)
+    body_schema = Respect::HashSchema.new
+    @rs.stubs(:body).returns(body_schema)
+    decoded_body = mock()
+    ActiveSupport::JSON.stubs(:decode).with(body).returns(decoded_body)
+    body_schema.stubs(:validate).with(decoded_body)
+    begin
+      @rs.validate(response)
+      assert false
+    rescue Respect::Rails::ResponseValidationError => e
+      assert_equal "headers", e.part
+      assert_equal simplified_headers.object_id, e.object.object_id
+    end
   end
 end
