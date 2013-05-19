@@ -258,14 +258,14 @@ class AutomaticValidationController < ApplicationController
     s.response_for do |status|
       status.ok do |r|
         r.headers do |h|
-          h["response_header"] = "good"
+          h["X-Test-Header"] = "good"
         end
       end
     end
   end
 
   def check_response_headers
-    headers["response_header"] = params["response_header"]
+    headers["X-Test-Header"] = params["response_header_value"]
     respond_to do |format|
       format.json do
         render json: {}
