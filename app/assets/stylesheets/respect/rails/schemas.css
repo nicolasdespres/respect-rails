@@ -68,6 +68,11 @@ hr {
   margin-bottom: 50px;
 }
 
+table {
+  width: 100%;
+  border-spacing: 0px;
+}
+
 /* Table of contents */
 
 .toc .title {
@@ -76,11 +81,6 @@ hr {
   border-bottom-color: rgb(205, 91, 69);
   line-height: 30px;
   margin-bottom: 40px;
-}
-
-.toc table {
-  width: 100%;
-  border-spacing: 0px;
 }
 
 .toc h3 {
@@ -101,11 +101,6 @@ hr {
 
 .route .title a:hover {
   text-decoration: none;
-}
-
-.route table {
-  width: 100%;
-  border-spacing: 0px;
 }
 
 .route tr:hover {
