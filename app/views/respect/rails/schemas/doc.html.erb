@@ -43,46 +43,33 @@ who wants to interoperate with <%= @info.app.name %> in their own application.
       <%= content_tag :p, schema.title %>
       <%= content_tag :p, schema.description %>
 
-      <h4>Request schema</h4>
       <% if schema.request_schema %>
-        <h5>Headers schema</h4>
+        <h3>Request</h3>
         <% unless schema.request_schema.headers.documented_properties.empty? %>
+          <h4>Headers</h4>
           <%= highlight_json_schema schema.request_schema.headers.to_h %>
-        <% else %>
-          No headers schema specification.
         <% end %>
 
         <% [ :path, :query, :body ].each do |name| %>
-          <h5><%= name.capitalize %> parameters</h5>
-          <% if schema.request_schema.send("#{name}_parameters").documented_properties.empty? %>
-            No <%= name %> parameters schema.
-          <% else %>
+          <% unless schema.request_schema.send("#{name}_parameters").documented_properties.empty? %>
+            <h4><%= name.capitalize %> parameters</h4>
             <%= highlight_json_schema schema.request_schema.send("#{name}_parameters").to_h %>
           <% end %>
         <% end %>
-      <% else %>
-        No request schema specification.
       <% end %>
 
-      <h4>Response schema</h4>
       <% unless schema.response_schemas.empty? %>
         <% schema.response_schemas.each do |status, response_schema| %>
-          <h5><%= response_schema.status %> [<%= response_schema.http_status %>]</h5>
-          <h6>Headers schema</h4>
+          <h3>Response <%= response_schema.http_status %> [ <%= response_schema.status %> ]</h3>
           <% unless response_schema.headers.documented_properties.empty? %>
+            <h4>Headers</h4>
             <%= highlight_json_schema response_schema.headers.to_h %>
-          <% else %>
-            No headers schema specification.
           <% end %>
-          <h6>Body schema</h4>
           <% if response_schema.body %>
+            <h4>Body</h4>
             <%= highlight_json_schema response_schema.body.to_h %>
-          <% else %>
-            No body schema specification.
           <% end %>
         <% end %>
-      <% else %>
-        No response schema specification.
       <% end %>
 
     <% end %>
