@@ -29,8 +29,10 @@ class ContactsControllerTest < ActionController::TestCase
 
   test "should create contact" do
     assert_difference('Contact.count') do
-      # Set the request header so the request will be validated.
-      set_request_header("HTTP_X_AB_SIGNATURE", "api_public_key")
+      # Rails 3 has no good support for headers in functional test. This test should failed normally
+      # since the headers specified in the schema is not set. To let you do non-headers related test
+      # anyway, we have disabled request headers validation in test mode by default.
+      # See +Respect::Rails::Engine::disable_request_headers_validation+.
       post :create, contact: { age: @contact.age, homepage: @contact.homepage, name: @contact.name }
     end
 
@@ -39,8 +41,10 @@ class ContactsControllerTest < ActionController::TestCase
 
   test "should create contact in JSON" do
     assert_difference('Contact.count') do
-      # Set the request header so the request will be validated.
-      set_request_header("HTTP_X_AB_SIGNATURE", "api_public_key")
+      # Rails 3 has no good support for headers in functional test. This test should failed normally
+      # since the headers specified in the schema is not set. To let you do non-headers related test
+      # anyway, we have disabled request headers validation in test mode by default.
+      # See +Respect::Rails::Engine::disable_request_headers_validation+.
       post :create, format: 'json', contact: { age: @contact.age, homepage: @contact.homepage, name: @contact.name }
     end
     assert_response :created
@@ -89,14 +93,6 @@ class ContactsControllerTest < ActionController::TestCase
       delete :destroy, format: 'json', id: @contact
     end
     assert_response :no_content
-  end
-
-  private
-
-  def set_request_header(key, value)
-    # This is hacky but if should become easier with Rails 4 according
-    # to ActionDispatch::Http::Headers new implementation.
-    @request.instance_variable_get(:@env)[key] = value
   end
 
 end
