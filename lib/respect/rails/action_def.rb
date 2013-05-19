@@ -18,7 +18,7 @@ module Respect
       end
 
       def request(&block)
-        @action_schema.request_schema = RequestSchema.define(@action_schema.controller_name,
+        @action_schema.request = RequestSchema.define(@action_schema.controller_name,
           @action_schema.action_name, &block)
       end
 

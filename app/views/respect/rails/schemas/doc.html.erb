@@ -43,17 +43,17 @@ who wants to interoperate with <%= @info.app.name %> in their own application.
       <%= content_tag :p, schema.title %>
       <%= content_tag :p, schema.description %>
 
-      <% if schema.request_schema %>
+      <% if schema.request %>
         <h3>Request</h3>
-        <% unless schema.request_schema.headers.documented_properties.empty? %>
+        <% unless schema.request.headers.documented_properties.empty? %>
           <h4>Headers</h4>
-          <%= highlight_json_schema schema.request_schema.headers.to_h %>
+          <%= highlight_json_schema schema.request.headers.to_h %>
         <% end %>
 
         <% [ :path, :query, :body ].each do |name| %>
-          <% unless schema.request_schema.send("#{name}_parameters").documented_properties.empty? %>
+          <% unless schema.request.send("#{name}_parameters").documented_properties.empty? %>
             <h4><%= name.capitalize %> parameters</h4>
-            <%= highlight_json_schema schema.request_schema.send("#{name}_parameters").to_h %>
+            <%= highlight_json_schema schema.request.send("#{name}_parameters").to_h %>
           <% end %>
         <% end %>
       <% end %>

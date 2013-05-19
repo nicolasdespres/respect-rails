@@ -26,13 +26,13 @@ module Respect
         @controller.controller_name
       end
 
-      attr_accessor :request_schema
+      attr_accessor :request
 
       attr_reader :response_schemas
 
       # Whether there is at least a request schema or one response schema for this action.
       def has_schema?
-        request_schema || !response_schemas.empty? || documentation
+        request || !response_schemas.empty? || documentation
       end
 
       attr_accessor :documentation

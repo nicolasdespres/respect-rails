@@ -48,7 +48,7 @@ module Respect
       end
 
       def request_schema
-        action_schema.request_schema if action_schema
+        action_schema.request if action_schema
       end
 
       attr_reader :action_schema
