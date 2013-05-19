@@ -119,4 +119,13 @@ class AutomaticValidationControllerTest < ActionController::TestCase
     end
   end
 
+  # FIXME(Nicolas Despres): We cannot do functional test easily on this action because
+  # it expects an header to be set and Rails 3 does not provide an easy way to set it here.
+  # That's why request headers validation is disabled by default in test mode so we can do
+  # non-headers related test on this method.
+  # def test_successful_request_http_headers_check
+  #   get :check_request_headers, format: 'json'
+  #   assert_response :success
+  # end
+
 end

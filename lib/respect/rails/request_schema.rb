@@ -42,11 +42,13 @@ module Respect
       # Returns +true+ on success.
       def validate(request)
         # Validate requests.
-        begin
-          simplified_headers = simplify_headers(request.headers)
-          headers.validate(simplified_headers)
-        rescue Respect::ValidationError => e
-          raise RequestValidationError.new(e, :headers, simplified_headers)
+        unless Respect::Rails::Engine.disable_request_headers_validation
+          begin
+            simplified_headers = simplify_headers(request.headers)
+            headers.validate(simplified_headers)
+          rescue Respect::ValidationError => e
+            raise RequestValidationError.new(e, :headers, simplified_headers)
+          end
         end
         [ :path, :query, :body ].each do |name|
           begin

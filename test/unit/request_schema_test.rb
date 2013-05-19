@@ -22,6 +22,7 @@ class RequestSchemaTest < Test::Unit::TestCase
   end
 
   def test_validate_all_parameters
+    Respect::Rails::Engine.stubs(:disable_request_headers_validation).returns(false)
     request = mock()
     headers = {}
     request.stubs(:headers).with().returns(headers).at_least_once
@@ -40,6 +41,7 @@ class RequestSchemaTest < Test::Unit::TestCase
   end
 
   def test_validate_raise_request_validation_error_on_path_params_validation_error
+    Respect::Rails::Engine.stubs(:disable_request_headers_validation).returns(false)
     request = mock()
     headers = {}
     request.stubs(:headers).with().returns(headers).at_least_once
@@ -60,6 +62,7 @@ class RequestSchemaTest < Test::Unit::TestCase
   end
 
   def test_validate_raise_request_validation_error_on_query_params_validation_error
+    Respect::Rails::Engine.stubs(:disable_request_headers_validation).returns(false)
     request = mock()
     headers = {}
     request.stubs(:headers).with().returns(headers).at_least_once
@@ -80,6 +83,7 @@ class RequestSchemaTest < Test::Unit::TestCase
   end
 
   def test_validate_raise_request_validation_error_on_body_params_validation_error
+    Respect::Rails::Engine.stubs(:disable_request_headers_validation).returns(false)
     request = mock()
     headers = {}
     request.stubs(:headers).with().returns(headers).at_least_once
@@ -100,6 +104,7 @@ class RequestSchemaTest < Test::Unit::TestCase
   end
 
   def test_validate_raise_request_validation_error_on_headers_validation_error
+    Respect::Rails::Engine.stubs(:disable_request_headers_validation).returns(false)
     request = mock()
     headers = {}
     request.stubs(:headers).with().returns(headers).at_least_once

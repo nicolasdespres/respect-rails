@@ -21,6 +21,14 @@ module Respect
       mattr_accessor :catch_response_validation_error
       self.catch_response_validation_error = ::Rails.env.development?
 
+      # Whether to validate request headers.
+      # This option is available because Rails 3 does not support headers well in test mode.
+      # It is +false+ by default in test mode to let you do non-headers related functional
+      # test anyway.
+      # See: https://github.com/rails/rails/issues/6513
+      mattr_accessor :disable_request_headers_validation
+      self.disable_request_headers_validation = ::Rails.env.test?
+
       # Default way to setup Respect for Rails.
       def self.setup(&block)
         block.call(self)

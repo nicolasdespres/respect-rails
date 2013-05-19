@@ -28,6 +28,8 @@ class NavigationTest < ActionDispatch::IntegrationTest
   end
 
   test "request HTTP headers fail to validate" do
+    # We force request headers validation for the sake of automated tests.
+    Respect::Rails::Engine.stubs(:disable_request_headers_validation).returns(false)
     assert_raises(Respect::Rails::RequestValidationError) do
       get "/automatic_validation/check_request_headers.json", {}, {"X-Test-Header" => "erroneous_value"}
     end
