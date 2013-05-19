@@ -108,14 +108,14 @@ class AutomaticValidationControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  def test_successful_request_headers_check
-    set_request_header("test_header", "value")
+  def test_successful_request_http_headers_check
+    set_request_header("X-Test-Header", "value")
     get :check_request_headers, format: 'json'
     assert_response :success
   end
 
-  def test_failed_request_headers_check
-    set_request_header("test_header", "erroneous_value")
+  def test_failed_request_http_headers_check
+    set_request_header("X-Test-Header", "erroneous_value")
     assert_raises(Respect::Rails::RequestValidationError) do
       get :check_request_headers, format: 'json'
     end

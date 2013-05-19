@@ -238,13 +238,13 @@ class AutomaticValidationController < ApplicationController
   def_action_schema :check_request_headers do |s|
     s.request do |r|
       r.headers do |h|
-        h["test_header"] = "value"
+        h["X-Test-Header"] = "value"
       end
     end
   end
 
   def check_request_headers
-    unless request.headers["test_header"] == "value"
+    unless request.headers["X-Test-Header"] == "value"
       raise "should never be raised since the validator has raised one before when checking headers"
     end
     respond_to do |format|
