@@ -32,9 +32,10 @@ Coming soon:
 * Generator tasks: helpers, etc...
 * Statistic about how much routes you have documented.
 * Rake tasks to quickly access a controller action schema from the terminal.
-* A web service to programmatically inspect your API schemas
+* A web service to inspect your API schema by code.
 * A web service to check a request is valid without actually performing the request.
 * An helper to easily specify nested attributes.
+* Use markdown in documentation string.
 * More appealing documentation rendering.
 
 # Take a tour
@@ -218,7 +219,7 @@ Instead of the usual exception reporting view, you can get a dedicated one for
 to your `ApplicationController`:
 
 ```ruby
-rescue_from_request_validation_error if Rails.env.development?
+rescue_from_request_validation_error
 ```
 
 This helper can render the error in both HTML and JSON.
