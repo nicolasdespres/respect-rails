@@ -132,14 +132,25 @@ class ContactsController < ApplicationController
       end
     end
     a.response_for do |status|
+      # The JSON schema of the response body when the status is 'created'
+      # is the full representation of the contact.
       status.created do |s|
-        # The JSON schema of the response body when the status is 'created'
-        # is the full representation of the contact.
+        s.documentation <<-EOS
+          Success.
+
+          The contact has been correctly created. All the recorded attributes are returned.
+        EOS
         s.body do |s|
           s.contact
         end
       end
       status.unprocessable_entity do |s|
+        s.documentation <<-EOS
+          Failure.
+
+          An error occurred and prevented the contact from being created. The error are detailed in the
+          response. Each error is attached to its related attribute.
+        EOS
         s.body do |s|
           s.contact_errors
         end
@@ -182,9 +193,19 @@ class ContactsController < ApplicationController
     end
     a.response_for do |status|
       status.no_content do |s|
-        # Empty schema
+        s.documentation <<-EOS
+          Success.
+
+          The contact has been correctly updated.
+        EOS
       end
       status.unprocessable_entity do |s|
+        s.documentation <<-EOS
+          Failure.
+
+          An error occurred and prevented the contact from being updated. The error are detailed in the
+          response. Each error is attached to its related attribute.
+        EOS
         s.body do |s|
           s.contact_errors
         end
