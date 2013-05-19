@@ -9,29 +9,22 @@ who wants to interoperate with <%= @info.app.name %> in their own application.
 
 <h2 class="toc-header">Table of content</h2>
 
-<ul>
-<% @info.routes.sort.each do |route| %>
-  <li><%= link_to route.spec, doc_path(anchor: route.anchor) %></li>
-<% end %>
-</ul>
-
-<h2>Table of content</h2>
-
-<ul>
 <% @info.toc.keys.sort.each do |controller_name| %>
-  <li>
-    <%= controller_name.titleize %>
-    <ul>
-      <% @info.toc[controller_name].keys.sort.each do |action_name| %>
-        <% route = @info.toc[controller_name][action_name] %>
-        <li><%= link_to action_name.titleize, doc_path(anchor: route.anchor) %></li>
-      <% end %>
-    </ul>
-  </li>
+  <%= content_tag :h3, controller_name.gsub(%r{/}, ' ').titleize, class: "toc-section" %>
+  <table class="toc">
+    <% @info.toc[controller_name].keys.sort.each do |action_name| %>
+      <% route = @info.toc[controller_name][action_name] %>
+      <tr>
+        <%= content_tag :td do %>
+          <%= link_to route.spec, doc_path(anchor: route.anchor) %>
+        <% end %>
+        <%= content_tag :td, route.schema.title, width: "60%" %>
+      </tr>
+    <% end %>
+  </table>
 <% end %>
-</ul>
 
-<h2>Schema</h2>
+<hr>
 
 <% @info.toc.keys.sort.each do |controller_name| %>
   <% @info.toc[controller_name].keys.sort.each do |action_name| %>

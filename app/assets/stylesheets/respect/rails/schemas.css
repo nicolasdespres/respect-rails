@@ -15,9 +15,9 @@
 body { background-color: #fff; color: #333; }
 
 body, p, ol, ul, td {
-  font-family: helvetica, verdana, arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size:   14px;
-  line-height: 1.4;
+  line-height: 24px;
 }
 
 body {
@@ -39,15 +39,65 @@ pre {
   border-color: #ccc;
 }
 
-a { color: #000; }
-a:visited { color: #666; }
-a:hover { color: #fff; background-color:#000; }
+a {
+  color: rgb(205, 91, 69);
+  text-decoration: none;
+}
+a:hover {
+  color: rgb(205, 91, 69);
+  text-decoration: underline;
+}
+
+h1 {
+  font-size: 30px;
+}
+
+h2 {
+  font-size: 27px;
+}
+
+h3 {
+  font-size: 22px;
+}
+
+hr {
+  border-color: rgb(205, 91, 69);
+  border-width: 4px;
+  border-style: solid;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+/* Table of contents */
 
 .toc-header {
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: rgb(205, 91, 69);
+  line-height: 30px;
+  margin-bottom: 40px;
 }
+
+.toc {
+  width: 100%;
+  border-spacing: 0px;
+}
+
+.toc-section {
+  color: rgb(205, 91, 69);
+}
+
+.toc tr:hover {
+  background-color: rgb(255, 240, 237);
+}
+
+.toc td {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 8px;
+}
+
+/* JSON highlighting */
 
 .json_highlight .keyword {
   font-weight: bold;
