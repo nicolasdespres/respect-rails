@@ -17,7 +17,7 @@ body { background-color: #fff; color: #333; }
 body, p, ol, ul, td {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size:   14px;
-  line-height: 24px;
+  line-height: 1.4;
 }
 
 body {
@@ -92,8 +92,8 @@ hr {
 }
 
 .toc td {
-  padding-top: 2px;
-  padding-bottom: 2px;
+  padding-top: 6px;
+  padding-bottom: 6px;
   padding-left: 8px;
 }
 
