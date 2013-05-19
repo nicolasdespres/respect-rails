@@ -22,4 +22,15 @@ class NavigationTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "request HTTP headers validate successfully" do
+    get "/automatic_validation/check_request_headers.json", {}, { "X-Test-Header" => "value" }
+    assert_response :success
+  end
+
+  test "request HTTP headers fail to validate" do
+    assert_raises(Respect::Rails::RequestValidationError) do
+      get "/automatic_validation/check_request_headers.json", {}, {"X-Test-Header" => "erroneous_value"}
+    end
+  end
+
 end

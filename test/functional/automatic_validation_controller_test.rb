@@ -108,19 +108,6 @@ class AutomaticValidationControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  def test_successful_request_http_headers_check
-    set_request_header("X-Test-Header", "value")
-    get :check_request_headers, format: 'json'
-    assert_response :success
-  end
-
-  def test_failed_request_http_headers_check
-    set_request_header("X-Test-Header", "erroneous_value")
-    assert_raises(Respect::Rails::RequestValidationError) do
-      get :check_request_headers, format: 'json'
-    end
-  end
-
   def test_successful_response_headers_check
     get :check_response_headers, format: 'json', response_header_value: "good"
     assert_response :success
@@ -132,11 +119,4 @@ class AutomaticValidationControllerTest < ActionController::TestCase
     end
   end
 
-  private
-
-  def set_request_header(key, value)
-    # FIXME(Nicolas Despres): Find a less hacky way to do it. This should become
-    # easier with Rails 4 according to ActionDispatch::Http::Headers new implementation.
-    @request.instance_variable_get(:@env)[key] = value
-  end
 end
