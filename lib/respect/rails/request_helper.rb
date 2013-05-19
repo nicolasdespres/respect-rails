@@ -42,8 +42,8 @@ module Respect
       end
 
       def response_schema(http_status)
-        unless action_schema.nil? || action_schema.response_schemas.nil?
-          action_schema.response_schemas[http_status]
+        unless action_schema.nil? || action_schema.responses.nil?
+          action_schema.responses[http_status]
         end
       end
 

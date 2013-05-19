@@ -23,8 +23,8 @@ module Respect
       end
 
       def response_for(&block)
-        block.call(@action_schema.response_schemas)
-        @action_schema.response_schemas
+        block.call(@action_schema.responses)
+        @action_schema.responses
       end
 
       # Set the documentation to +text+.
