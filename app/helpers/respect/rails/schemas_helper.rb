@@ -23,6 +23,15 @@ module Respect
         end
       end
 
+      # FIXME(Nicolas Despres): Make me more generic to all enumerable and test me.
+      def flat_each(hash, &block)
+        flat_each_rec([], hash, &block)
+      end
+
+      def build_parameter_name(path)
+        path.first.to_s + path[1..-1].reduce(""){|r, x| r + "[#{x}]" }
+      end
+
       private
 
       def describe_option_internal(name, value)
@@ -43,8 +52,23 @@ module Respect
           else
             nil
           end
+        when :strict
+          if value
+            "Must contains exactly these parameters"
+          else
+            nil
+          end
         else
           "#{name}: #{value.inspect}"
+        end
+      end
+
+      def flat_each_rec(path, hash, &block)
+        hash.each do |k, v|
+          block.call(path + [k], v)
+          if v.is_a?(Respect::HashSchema)
+            flat_each_rec(path + [k], v, &block)
+          end
         end
       end
     end

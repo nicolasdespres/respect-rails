@@ -96,6 +96,40 @@ who wants to interoperate with <%= @info.app.name %> in their own application.
            unless params_schema.documented_properties.empty? %>
              <h4><%= name.capitalize %> parameters</h4>
 
+             <table>
+             <% flat_each(params_schema) do |path, schema| %>
+                <tr>
+                  <td width="30%">
+                    <strong><%= build_parameter_name path %></strong>
+                    <br>
+                    <span class="constraint">
+                      <%= schema.optional? ? "optional" : "required" %>
+                      <%= schema.class.statement_name %>
+                    </span>
+                  </td>
+                  <td>
+                    <% if schema.title %>
+                      <%= schema.title %>
+                      <br>
+                    <% end %>
+                    <% if schema.description %>
+                      <%= schema.description %>
+                      <br>
+                    <% end %>
+                    <ul>
+                      <%
+                         schema.options.each do |name, value|
+                           desc = describe_option(name, value)
+                           if desc %>
+                             <li><span class="constraint"><%= desc %></span></li>
+                           <% end %>
+                      <% end %>
+                    </ul>
+                  </td>
+                </tr>
+             <% end %>
+             </table>
+
              <%= toggler "Show #{name} parameters schema" do %>
                <%= highlight_json_schema params_schema.to_h %>
              <% end %>
