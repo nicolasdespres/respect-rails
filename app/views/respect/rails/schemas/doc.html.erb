@@ -26,11 +26,13 @@ who wants to interoperate with <%= @info.app.name %> in their own application.
 
 <hr>
 
-<% @info.toc.keys.sort.each do |controller_name| %>
-  <% @info.toc[controller_name].keys.sort.each do |action_name| %>
+<%
+@info.toc.keys.sort.each do |controller_name|
+  @info.toc[controller_name].keys.sort.each do |action_name|
 
-    <% route = @info.toc[controller_name][action_name] %>
-    <% schema = route.schema %>
+    route = @info.toc[controller_name][action_name]
+    schema = route.schema
+%>
 
     <h3>
     <%= content_tag :a, "#{controller_name.titleize} > #{action_name.titleize}", id: route.anchor %>
