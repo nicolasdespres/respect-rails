@@ -43,6 +43,12 @@ a { color: #000; }
 a:visited { color: #666; }
 a:hover { color: #fff; background-color:#000; }
 
+.toc-header {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: rgb(205, 91, 69);
+}
+
 .json_highlight .keyword {
   font-weight: bold;
 }
