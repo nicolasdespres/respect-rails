@@ -1,6 +1,6 @@
 Respect::Rails.setup do |config|
   # The title and description of your application.
-  config.app_documentation <<-EOS
+  config.app_documentation <<-EOS.strip_heredoc
     The greatest address book out there.
 
     This application let you store your contacts information on a server database.
