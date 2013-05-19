@@ -57,7 +57,10 @@ who wants to interoperate with <%= @info.app.name %> in their own application.
                <td width="30%">
                  <strong><%= name %></strong>
                  <br>
-                 <span class="constraint"><%= schema.optional? ? "optional" : "required" %></span>
+                 <span class="constraint">
+                   <%= schema.optional? ? "optional" : "required" %>
+                   <%= schema.class.statement_name %>
+                 </span>
                </td>
                <td>
                  <% if schema.title %>
