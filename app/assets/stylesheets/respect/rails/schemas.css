@@ -74,11 +74,29 @@ table {
   border-collapse: collapse;
 }
 
+tr:hover {
+  background-color: rgb(255, 240, 237);
+}
+
+td {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 8px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #ccc;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #ccc;
+  text-align: left;
+}
+
 .summary {
   padding-top: 15px;
   padding-left: 15px;
   display: block;
 }
+
 
 /* Table of contents */
 
@@ -94,38 +112,14 @@ table {
   color: rgb(205, 91, 69);
 }
 
-.toc tr:hover {
-  background-color: rgb(255, 240, 237);
-}
-
-.toc td {
-  padding-top: 6px;
-  padding-bottom: 6px;
-  padding-left: 8px;
-}
-
 /* Route section */
 
 .route .title a:hover {
   text-decoration: none;
 }
 
-.route tr:hover {
-  background-color: #f8f8f8;
-}
-
 .route td {
-  padding-top: 6px;
-  padding-bottom: 6px;
-  padding-left: 8px;
-  text-align: left;
   vertical-align: top;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #ccc;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  border-bottom-color: #ccc;
 }
 
 .route ul {
