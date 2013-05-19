@@ -70,7 +70,7 @@ hr {
 
 /* Table of contents */
 
-.toc-header {
+.toc .title {
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: rgb(205, 91, 69);
@@ -78,12 +78,12 @@ hr {
   margin-bottom: 40px;
 }
 
-.toc {
+.toc table {
   width: 100%;
   border-spacing: 0px;
 }
 
-.toc-section {
+.toc h3 {
   color: rgb(205, 91, 69);
 }
 

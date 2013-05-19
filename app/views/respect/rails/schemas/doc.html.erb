@@ -7,22 +7,24 @@ This document describes the <%= @info.app.name %> API interface. It is designed 
 who wants to interoperate with <%= @info.app.name %> in their own application.
 </p>
 
-<h2 class="toc-header">Table of content</h2>
+<div class="toc">
+  <h2 class="title">Table of content</h2>
 
-<% @info.toc.keys.sort.each do |controller_name| %>
-  <%= content_tag :h3, controller_name.gsub(%r{/}, ' ').titleize, class: "toc-section" %>
-  <table class="toc">
-    <% @info.toc[controller_name].keys.sort.each do |action_name| %>
-      <% route = @info.toc[controller_name][action_name] %>
-      <tr>
-        <%= content_tag :td do %>
-          <%= link_to route.spec, doc_path(anchor: route.anchor) %>
-        <% end %>
-        <%= content_tag :td, route.schema.title, width: "60%" %>
-      </tr>
-    <% end %>
-  </table>
-<% end %>
+  <% @info.toc.keys.sort.each do |controller_name| %>
+    <%= content_tag :h3, controller_name.gsub(%r{/}, ' ').titleize %>
+    <table>
+      <% @info.toc[controller_name].keys.sort.each do |action_name| %>
+        <% route = @info.toc[controller_name][action_name] %>
+        <tr>
+          <%= content_tag :td do %>
+            <%= link_to route.spec, doc_path(anchor: route.anchor) %>
+          <% end %>
+          <%= content_tag :td, route.schema.title, width: "60%" %>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+</div>
 
 <hr>
 
