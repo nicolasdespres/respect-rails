@@ -5,15 +5,17 @@ module Respect
     end
 
     def contact_attributes(options = {})
-      doc <<-EOS.strip_heredoc
-        The name of the contact.
+      with_options options do
+        doc <<-EOS.strip_heredoc
+          The name of the contact.
 
-        First name and last name are separated by white space.
-        EOS
-      string "name", options
-      doc "How old is the contact."
-      integer "age", options
-      uri "homepage", options.merge(doc: "The URL of the contact's homepage")
+          First name and last name are separated by white space.
+          EOS
+        string "name"
+        doc "How old is the contact."
+        integer "age"
+        uri "homepage", doc: "The URL of the contact's homepage"
+      end
     end
 
     def record_timestamps
