@@ -91,11 +91,13 @@ who wants to interoperate with <%= @info.app.name %> in their own application.
 
         <% end %>
 
-        <% [ :path, :query, :body ].each do |name| %>
-          <% unless request_schema.send("#{name}_parameters").documented_properties.empty? %>
-            <h4><%= name.capitalize %> parameters</h4>
-            <%= highlight_json_schema request_schema.send("#{name}_parameters").to_h %>
-          <% end %>
+        <%
+        [ :path, :query, :body ].each do |name|
+          params_schema = request_schema.send("#{name}_parameters")
+           unless params_schema.documented_properties.empty? %>
+             <h4><%= name.capitalize %> parameters</h4>
+             <%= highlight_json_schema params_schema.to_h %>
+           <% end %>
         <% end %>
       <% end %>
 
