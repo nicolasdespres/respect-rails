@@ -36,16 +36,12 @@ who wants to interoperate with <%= @info.app.name %> in their own application.
       route = @info.toc[controller_name][action_name]
       schema = route.schema
   %>
+      <h2 class="title">
+        <%= content_tag :a, route.spec, id: route.anchor %>
+      </h2>
 
-      <h3 class="title">
-      <%= content_tag :a, route.spec, id: route.anchor %>
-      </h3>
-
-      <h4>Title</h4>
-      <%= schema.title ? schema.title : "No title" %>
-
-      <h4>Description</h4>
-      <%= schema.description ? schema.description : "No description" %>
+      <%= content_tag :p, schema.title %>
+      <%= content_tag :p, schema.description %>
 
       <h4>Request schema</h4>
       <% if schema.request_schema %>
