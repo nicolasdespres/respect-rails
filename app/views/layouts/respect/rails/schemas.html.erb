@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>RespectRails</title>
+  <%= content_tag :title, "#{Respect::Rails::application_name.titleize} API" %>
   <%= stylesheet_link_tag    "respect/rails/schemas", :media => "all" %>
   <%= javascript_include_tag "respect/rails/schemas" %>
   <%= csrf_meta_tags %>
