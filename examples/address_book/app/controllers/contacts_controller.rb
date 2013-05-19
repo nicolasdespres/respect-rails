@@ -10,9 +10,13 @@ class ContactsController < ApplicationController
     EOS
     a.response_for do |status|
       status.ok do |s|
+        # The JSON schema of the response body when status is 'ok' is
+        # an array of contact hash. Something like:
+        #   [ { id: 123, name: "Albert", ...}, {...} ]
         s.body hash: false do |s|
           s.array do |s|
             s.hash do |s|
+              # +contact+ is a method defined in +Respect::ApplicationMacros+ helper.
               s.contact
             end
           end
@@ -39,12 +43,21 @@ class ContactsController < ApplicationController
       recorded in the database with all its attributes.
     EOS
     a.request do |r|
+      # The 'id' parameter is passed in the URL path.
       r.path_parameters do |s|
         s.id
       end
     end
     a.response_for do |status|
       status.ok do |s|
+        # The JSON schema of the response body when status is 'ok' is
+        # contact hash. Something like:
+        #   {
+        #     id: 123,
+        #     name: "Albert",
+        #     age: 42,
+        #     homepage: "http::/example.org",
+        #     created_at: "}
         s.body do |s|
           s.contact
         end
@@ -103,17 +116,27 @@ class ContactsController < ApplicationController
       some more attributes.
     EOS
     a.request do |r|
+      # Specify the headers that must be present when sending this request.
       r.headers do |h|
+        # Currently we do not allow to write:
+        #   h['HTTP-X-AB-SIGNATURE'] = "api_public_key"
+        # but this will be fixed in the future.
         h['HTTP_X_AB_SIGNATURE'] = "api_public_key"
       end
+      # The parameters are sent in the body part of the request.
       r.body_parameters do |s|
+        # They look like something like that:
+        #   { contact: { name: "Albert", age: 62, homepage: "http://example.org" }
         s.hash "contact" do |s|
+          # This macros is defined in +Respect::ApplicationMacros+.
           s.contact_attributes
         end
       end
     end
     a.response_for do |status|
       status.created do |s|
+        # The JSON schema of the response body when the status is 'created'
+        # is the full representation of the contact.
         s.body do |s|
           s.contact
         end

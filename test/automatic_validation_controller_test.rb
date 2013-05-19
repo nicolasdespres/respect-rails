@@ -135,7 +135,8 @@ class AutomaticValidationControllerTest < ActionController::TestCase
   private
 
   def set_request_header(key, value)
-    # FIXME(Nicolas Despres): Find a less hacky way to do it.
+    # FIXME(Nicolas Despres): Find a less hacky way to do it. This should become
+    # easier with Rails 4 according to ActionDispatch::Http::Headers new implementation.
     @request.instance_variable_get(:@env)[key] = value
   end
 end

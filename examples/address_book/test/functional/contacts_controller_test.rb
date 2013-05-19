@@ -98,4 +98,5 @@ class ContactsControllerTest < ActionController::TestCase
     # to ActionDispatch::Http::Headers new implementation.
     @request.instance_variable_get(:@env)[key] = value
   end
+
 end
