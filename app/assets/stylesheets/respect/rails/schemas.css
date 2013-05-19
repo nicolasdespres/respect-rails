@@ -97,6 +97,12 @@ hr {
   padding-left: 8px;
 }
 
+/* Route section */
+
+.route .title a:hover {
+  text-decoration: none;
+}
+
 /* JSON highlighting */
 
 .json_highlight .keyword {
