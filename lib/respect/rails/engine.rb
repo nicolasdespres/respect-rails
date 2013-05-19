@@ -1,5 +1,6 @@
 require 'respect'
 
+require 'respect/rails/headers_helper'
 require 'respect/rails/request_helper'
 require 'respect/rails/response_helper'
 require 'respect/rails/controller_helper'
