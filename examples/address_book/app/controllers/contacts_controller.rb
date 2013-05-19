@@ -62,23 +62,22 @@ class ContactsController < ApplicationController
 
   # GET /contacts/new
   # GET /contacts/new.json
-  # FIXME(Nicolas Despres): Enable it when allow_nil is supported.
-  # def_action_schema :new do |a|
-  #   a.documentation <<-EOS.strip_heredoc
-  #     Create a new contact with default value and return it.
+  def_action_schema :new do |a|
+    a.documentation <<-EOS.strip_heredoc
+      Create a new contact with default value and return it.
 
-  #     This request create a new contact with default value but
-  #     does not store it in the database. It simply return it in
-  #     the response.
-  #   EOS
-  #   a.response_for do |status|
-  #     status.ok do |s|
-  #       s.body do |s|
-  #         s.contact_attributes allow_nil: true, required: true
-  #       end
-  #     end
-  #   end
-  # end
+      This request create a new contact with default value but
+      does not store it in the database. It simply return it in
+      the response.
+    EOS
+    a.response_for do |status|
+      status.ok do |s|
+        s.body do |s|
+          s.contact_attributes allow_nil: true, required: true
+        end
+      end
+    end
+  end
   def new
     @contact = Contact.new
 
