@@ -11,6 +11,18 @@ module Respect
         result.html_safe if result
       end
 
+      def toggler(text, &block)
+        @toggler_id ||= -1
+        @toggler_id += 1
+        toggler_key = "toggle_#@toggler_id"
+        content_tag :div do
+          result = content_tag(:div, class: "summary") do
+            content_tag :a, text, href: "#", onclick: "return toggle(#@toggler_id)", id: "#{toggler_key}_toggle"
+          end
+          result << content_tag(:div, capture(&block), id: toggler_key, style: "display:none")
+        end
+      end
+
       private
 
       def describe_option_internal(name, value)

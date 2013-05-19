@@ -82,13 +82,9 @@ who wants to interoperate with <%= @info.app.name %> in their own application.
           <% end %>
           </table>
 
-          <div>
-            <div class="summary">
-              <a href="#" onclick="return toggleHeadersDump()" id="headers_dump_toggle">Show headers schema</a>
-            </div>
-            <div id="headers_dump" style="display:none"><%= highlight_json_schema request_schema.headers.to_h %></div>
-          </div>
-
+          <%= toggler "Show headers schema" do %>
+            <%= highlight_json_schema request_schema.headers.to_h %>
+          <% end %>
         <% end %>
 
         <%
@@ -96,7 +92,10 @@ who wants to interoperate with <%= @info.app.name %> in their own application.
           params_schema = request_schema.send("#{name}_parameters")
            unless params_schema.documented_properties.empty? %>
              <h4><%= name.capitalize %> parameters</h4>
-             <%= highlight_json_schema params_schema.to_h %>
+
+             <%= toggler "Show #{name} parameters schema" do %>
+               <%= highlight_json_schema params_schema.to_h %>
+             <% end %>
            <% end %>
         <% end %>
       <% end %>

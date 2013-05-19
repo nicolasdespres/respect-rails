@@ -15,14 +15,14 @@
 //= require_tree .
 
 var toggle = function(id) {
-  var s = document.getElementById(id).style;
-  var t = document.getElementById("headers_dump_toggle");
+  var s = document.getElementById("toggle_" + id).style;
+  var t = document.getElementById("toggle_" + id + "_toggle");
   if (s.display == 'none') {
     s.display = 'block';
-    t.innerHTML = 'Hide headers schema';
+    t.innerHTML = t.innerHTML.replace(/^Show/, 'Hide');
   } else {
     s.display = 'none';
-    t.innerHTML = 'Show headers schema';
+    t.innerHTML = t.innerHTML.replace(/^Hide/, 'Show');
   }
   return false;
 }
