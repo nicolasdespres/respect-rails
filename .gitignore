@@ -11,3 +11,13 @@
 # Do not force other developers to use exactly the same version has mine.
 /Gemfile.lock
 /EdgeGemfile
+
+# From the example app
+/examples/address_book/EdgeGemfile
+/examples/address_book/Gemfile.lock
+/examples/address_book/db/*.sqlite3
+/examples/address_book/log/*.log
+/examples/address_book/tmp/
+/examples/address_book/.sass-cache
+/examples/address_book/doc/
+/examples/address_book/doc/
