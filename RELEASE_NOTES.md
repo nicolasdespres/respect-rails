@@ -10,7 +10,11 @@ with all sufficient information, see the git(1) log.
 A lot more is coming soon check out the issue tagged as `feature`
 in the tracker.
 
-## Part of the first release
+## Part of 0.1.1
+
+* Bug fix: do not summarize undocumented parameters.
+
+## Part of the first release 0.1.0
 
 * Feature: An engine to render and deploy the REST API documentation.
 * Feature: Filter to validate requests/responses.

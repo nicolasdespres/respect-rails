@@ -98,6 +98,7 @@ who wants to interoperate with <%= @info.app.name %> in their own application.
 
              <table>
              <% flat_each(params_schema) do |path, schema| %>
+                <% next unless schema.documented? %>
                 <tr>
                   <td width="30%">
                     <strong><%= build_parameter_name path %></strong>
