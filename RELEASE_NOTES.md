@@ -12,6 +12,7 @@ in the tracker.
 
 ## Part of 0.1.1
 
+* Feature: More constraint description in documentation.
 * Bug fix: do not summarize undocumented parameters.
 
 ## Part of the first release 0.1.0

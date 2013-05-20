@@ -60,6 +60,8 @@ module Respect
           else
             nil
           end
+        when :greater_than
+          "Must be greater than #{value}"
         else
           "#{name}: #{value.inspect}"
         end
