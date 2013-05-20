@@ -86,7 +86,7 @@ end
 
 The generated documentation would look like that:
 
-![Alt Tesxt](/examples/screenshots/controllers_create_response.png "A response documentation")
+![Alt Text](/examples/screenshots/controllers_create_response.png "A response documentation")
 
 The specification standard used to document schema is defined at [json-schema.org](http://json-schema.org/)
 (we currenly follow [draft v3](http://tools.ietf.org/id/draft-zyp-json-schema-03.html)).
