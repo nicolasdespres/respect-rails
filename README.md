@@ -231,6 +231,21 @@ integer "age"
 uri "homepage", doc: "The URL of the contact's homepage"
 ```
 
+# Example
+
+There is an example in this repository. To have a look at it:
+
+```
+$ git clone git@github.com:nicolasdespres/respect-rails.git
+$ cd respect-rails/examples/address_book
+$ bundle install
+$ rake db:create
+$ rake db:migrate
+$ rails server
+```
+
+Point your favorite web browser to `http://localhost:3000`.
+
 # Getting started
 
 The easiest way to install _Respect for Rails_ is to add it to your `Gemfile`:
