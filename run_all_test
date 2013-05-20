@@ -1,0 +1,29 @@
+#!/bin/bash
+#
+#::BEGIN::
+# USAGE
+#
+#  run_all_test
+#
+# DESCRIPTION
+#
+#  Run *all* the test of the project including: examples tests,
+#  package integration, test in development mode, etc...
+#
+#  Report any problem to <nicolas.despres@gmail.com>
+#::END::
+#
+
+# FIXME(Nicolas Despres): Try to do that in the Rakefile instead.
+
+set -o errexit
+set -o nounset
+
+export LC_ALL=C
+
+set -x
+
+rake test
+(cd examples/address_book && rake test)
+./test/request_headers_validation_in_dev_mode.sh
+./test/headers_can_dumped_in_json.sh
