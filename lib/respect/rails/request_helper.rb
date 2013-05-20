@@ -74,6 +74,12 @@ module Respect
         @validated
       end
 
+      # Returns +true+ if the validation has been done and succeed and +false+
+      # otherwise.
+      def validated?
+        !!validated
+      end
+
       # Sanitize all the request's parameters (path, query and body) *in-place*.
       # if the schema validation has succeed. Validate it first if it has not
       # been yet.
@@ -82,7 +88,7 @@ module Respect
           if validated.nil?
             validate_schema
           end
-          if validated == true
+          if validated?
             request_schema.sanitize!(self)
           end
         end
