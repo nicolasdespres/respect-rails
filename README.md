@@ -60,7 +60,7 @@ mount Respect::Rails::Engine => "/rest_spec"
 
 and point your favorite web browser to `http://localhost:3000/rest_spec`. You should see something like that
 
-![Alt Text](/examples/screenshots/controllers_create_request.png "A request documentation")
+![Alt Text](examples/screenshots/controllers_create_request.png "A request documentation")
 
 ## Document an action response
 
@@ -86,7 +86,7 @@ end
 
 The generated documentation would look like that:
 
-![Alt Text](/examples/screenshots/controllers_create_response.png "A response documentation")
+![Alt Text](examples/screenshots/controllers_create_response.png "A response documentation")
 
 The specification standard used to document schema is defined at [json-schema.org](http://json-schema.org/)
 (we currenly follow [draft v3](http://tools.ietf.org/id/draft-zyp-json-schema-03.html)).
