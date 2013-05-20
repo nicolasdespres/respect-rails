@@ -2,7 +2,7 @@ module Respect
   module ApplicationMacros
     # A helper to specify the JSON schema of an identifier parameter key.
     def id(name = "id")
-      integer name, greather_than: 0
+      integer name, greater_than: 0
     end
 
     # A macro specifying the JSON schema of all 'contacts' attributes.

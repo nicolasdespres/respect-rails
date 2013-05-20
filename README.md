@@ -73,7 +73,7 @@ to specify the body of the response when the status is "created":
 a.response_for do |status|
   status.created do |r|
     r.body do |s|
-      s.integer name, greather_than: 0, doc: "The identifier of this contact."
+      s.integer name, greater_than: 0, doc: "The identifier of this contact."
       s.string "name", doc: "The name of the contact."
       s.integer "age", doc: "How old is the contact."
       s.uri "homepage", doc: "The URL of the contact's homepage"
@@ -101,7 +101,7 @@ like this:
 module Respect
   module ApplicationMacros
     def id(name = "id")
-      integer name, greather_than: 0
+      integer name, greater_than: 0
     end
 
     def contact_attributes
@@ -244,7 +244,7 @@ $ rake db:migrate
 $ rails server
 ```
 
-Point your favorite web browser to `http://localhost:3000`.
+Point your favorite web browser to `http://localhost:3000/rest_spec`.
 
 # Getting started
 
