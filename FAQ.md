@@ -42,7 +42,7 @@ is ok.  However, it has some drawbacks:
    For instance, it may not handle properly a call like this one:
      `Circle.from_h(center: { x: "foo", y: "bar" }, radius: "invalid")`
 1. In case of invalid schema the user may not get an helpful message.  This is perfectly
-   acceptable for security reason (see the discussion about error reporting here FIXME).
+   acceptable for security reason.
 
 We can get _Respect for Rails_ do this work for you by adding a helper method which create a
 `Circle` object for you when validating the JSON document:
