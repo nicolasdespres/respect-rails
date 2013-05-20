@@ -194,6 +194,43 @@ filter:
 before_filter :sanitize_params!
 ```
 
+## Headers documentation
+
+Often REST API expect headers to be set in the request and/or set headers in their responses.
+_Respect for Rails_ let's you document using the `headers` command available for both
+the request and the response.
+
+```ruby
+a.request do |r|
+  r.headers do |h|
+    h.doc "Set this header."
+    h['X-AB-Signature'] = "api_public_key"
+  end
+end
+```
+
+## Documentation string
+
+The DSL let you write documentation string at many places. All this string are structured with a title
+on the first line followed by an empty line and a description for the rest of the string. It is much
+like git commit message except that if there is only one paragraph the title will be omit. You can set
+the documentation like this of most of the item using the `doc` statement or the `:doc` option when
+available. See this example:
+
+```ruby
+doc <<-EOS.strip_heredoc
+  The name of the contact.
+
+  First name and last name are separated by white space.
+  EOS
+string "name"
+
+doc "How old is the contact."
+integer "age"
+
+uri "homepage", doc: "The URL of the contact's homepage"
+```
+
 # Getting started
 
 The easiest way to install _Respect for Rails_ is to add it to your `Gemfile`:
