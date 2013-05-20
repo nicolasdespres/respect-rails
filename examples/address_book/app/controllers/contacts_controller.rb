@@ -125,7 +125,7 @@ class ContactsController < ApplicationController
       # The parameters are sent in the body part of the request.
       r.body_parameters do |s|
         # They look like something like that:
-        #   { contact: { name: "Albert", age: 62, homepage: "http://example.org" }
+        #   { contact: { name: "Albert", age: 62, homepage: "http://example.org" } }
         s.hash "contact" do |s|
           # This macros is defined in +Respect::ApplicationMacros+.
           s.contact_attributes
