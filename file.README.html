@@ -135,7 +135,7 @@ to specify the body of the response when the status is &quot;created&quot;:</p>
 </span><span class='id identifier rubyid_a'>a</span><span class='period'>.</span><span class='id identifier rubyid_response_for'>response_for</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_status'>status</span><span class='op'>|</span>
   <span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_created'>created</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span>
     <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
-      <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_integer'>integer</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>greather_than:</span> <span class='int'>0</span><span class='comma'>,</span> <span class='label'>doc:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The identifier of this contact.</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_integer'>integer</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>greater_than:</span> <span class='int'>0</span><span class='comma'>,</span> <span class='label'>doc:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The identifier of this contact.</span><span class='tstring_end'>&quot;</span></span>
       <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_string'>string</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>name</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>doc:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The name of the contact.</span><span class='tstring_end'>&quot;</span></span>
       <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_integer'>integer</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>age</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>doc:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>How old is the contact.</span><span class='tstring_end'>&quot;</span></span>
       <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_uri'>uri</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>homepage</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>doc:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The URL of the contact's homepage</span><span class='tstring_end'>&quot;</span></span>
@@ -162,7 +162,7 @@ like this:</p>
 </span><span class='kw'>module</span> <span class='const'>Respect</span>
   <span class='kw'>module</span> <span class='const'>ApplicationMacros</span>
     <span class='kw'>def</span> <span class='id identifier rubyid_id'>id</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_integer'>integer</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>greather_than:</span> <span class='int'>0</span>
+      <span class='id identifier rubyid_integer'>integer</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>greater_than:</span> <span class='int'>0</span>
     <span class='kw'>end</span>
 
     <span class='kw'>def</span> <span class='id identifier rubyid_contact_attributes'>contact_attributes</span>
@@ -295,7 +295,7 @@ $ rake db:migrate
 $ rails server
 </code></pre>
 
-<p>Point your favorite web browser to <code>http://localhost:3000</code>.</p>
+<p>Point your favorite web browser to <code>http://localhost:3000/rest_spec</code>.</p>
 
 <h1>Getting started</h1>
 
@@ -360,7 +360,7 @@ Copyright (c) 2013 Nicolas Despres.</p>
 </div></div>
 
     <div id="footer">
-  Generated on Mon May 20 14:08:34 2013 by
+  Generated on Mon May 20 14:58:03 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.5.2 (ruby-1.9.3).
 </div>
