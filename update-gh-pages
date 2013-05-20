@@ -1,0 +1,36 @@
+#!/bin/bash
+#
+#::BEGIN::
+# USAGE
+#
+#  update-gh-pages
+#
+# DESCRIPTION
+#
+#  Update GitHub Pages of this project.
+#
+#  Report any problem to <nicolas.despres@gmail.com>
+#::END::
+#
+
+set -o errexit
+set -o nounset
+
+export LC_ALL=C
+
+if ! test -d .git
+then
+  echo >&2 "Not at the root of the git repository."
+  exit 1
+fi
+rake yard
+git checkout gh-pages
+git clean -f
+cp -r doc/* .
+mkdir -p examples/screenshots
+git show master:examples/screenshots/controllers_create_request.png > examples/screenshots/controllers_create_request.png
+git show master:examples/screenshots/controllers_create_response.png  > examples/screenshots/controllers_create_response.png
+git add -A .
+git commit -m "Update GitHub Pages site."
+git push origin gh-pages
+git checkout master
