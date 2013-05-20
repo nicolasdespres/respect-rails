@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Module: Respect::Rails
+  
+    &mdash; Documentation by YARD 0.8.5.2
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (R)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Respect.html" title="Respect (module)">Respect</a></span></span>
+     &raquo; 
+    <span class="title">Rails</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Module: Respect::Rails
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+      <dt class="r1">Extended by:</dt>
+      <dd class="r1">ActiveSupport::Autoload</dd>
+      
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/respect/rails.rb<span class="defines">,<br />
+  lib/respect/rails/info.rb,<br /> lib/respect/rails/engine.rb,<br /> lib/respect/rails/version.rb,<br /> lib/respect/rails/route_info.rb,<br /> lib/respect/rails/action_def.rb,<br /> lib/respect/rails/request_def.rb,<br /> lib/respect/rails/engine_info.rb,<br /> lib/respect/rails/response_def.rb,<br /> lib/respect/rails/action_schema.rb,<br /> lib/respect/rails/request_helper.rb,<br /> lib/respect/rails/headers_helper.rb,<br /> lib/respect/rails/request_schema.rb,<br /> lib/respect/rails/response_helper.rb,<br /> lib/respect/rails/response_schema.rb,<br /> lib/respect/rails/application_info.rb,<br /> lib/respect/rails/controller_helper.rb,<br /> lib/respect/rails/headers_simplifier.rb,<br /> lib/respect/rails/response_schema_set.rb</span>
+</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Rails/ControllerHelper.html" title="Respect::Rails::ControllerHelper (module)">ControllerHelper</a></span>, <span class='object_link'><a href="Rails/HeadersHelper.html" title="Respect::Rails::HeadersHelper (module)">HeadersHelper</a></span>, <span class='object_link'><a href="Rails/HeadersSimplifier.html" title="Respect::Rails::HeadersSimplifier (module)">HeadersSimplifier</a></span>, <span class='object_link'><a href="Rails/RequestHelper.html" title="Respect::Rails::RequestHelper (module)">RequestHelper</a></span>, <span class='object_link'><a href="Rails/ResponseHelper.html" title="Respect::Rails::ResponseHelper (module)">ResponseHelper</a></span>
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Rails/ActionDef.html" title="Respect::Rails::ActionDef (class)">ActionDef</a></span>, <span class='object_link'><a href="Rails/ActionSchema.html" title="Respect::Rails::ActionSchema (class)">ActionSchema</a></span>, <span class='object_link'><a href="Rails/ApplicationInfo.html" title="Respect::Rails::ApplicationInfo (class)">ApplicationInfo</a></span>, <span class='object_link'><a href="Rails/Engine.html" title="Respect::Rails::Engine (class)">Engine</a></span>, <span class='object_link'><a href="Rails/EngineInfo.html" title="Respect::Rails::EngineInfo (class)">EngineInfo</a></span>, <span class='object_link'><a href="Rails/Info.html" title="Respect::Rails::Info (class)">Info</a></span>, <span class='object_link'><a href="Rails/RequestDef.html" title="Respect::Rails::RequestDef (class)">RequestDef</a></span>, <span class='object_link'><a href="Rails/RequestSchema.html" title="Respect::Rails::RequestSchema (class)">RequestSchema</a></span>, <span class='object_link'><a href="Rails/RequestValidationError.html" title="Respect::Rails::RequestValidationError (class)">RequestValidationError</a></span>, <span class='object_link'><a href="Rails/ResponseDef.html" title="Respect::Rails::ResponseDef (class)">ResponseDef</a></span>, <span class='object_link'><a href="Rails/ResponseSchema.html" title="Respect::Rails::ResponseSchema (class)">ResponseSchema</a></span>, <span class='object_link'><a href="Rails/ResponseSchemaSet.html" title="Respect::Rails::ResponseSchemaSet (class)">ResponseSchemaSet</a></span>, <span class='object_link'><a href="Rails/ResponseValidationError.html" title="Respect::Rails::ResponseValidationError (class)">ResponseValidationError</a></span>, <span class='object_link'><a href="Rails/RouteInfo.html" title="Respect::Rails::RouteInfo (class)">RouteInfo</a></span>, <span class='object_link'><a href="Rails/ValidationError.html" title="Respect::Rails::ValidationError (class)">ValidationError</a></span>
+    
+  
+</p>
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="VERSION-constant" class="">VERSION =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0.1.0</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#setup-class_method" title="setup (class method)">+ (Object) <strong>setup</strong>(&amp;block) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Shortcut for <span class='object_link'><a href="Rails/Engine.html#setup-class_method" title="Respect::Rails::Engine.setup (method)">Engine.setup</a></span>.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="setup-class_method">
+  
+    + (<tt>Object</tt>) <strong>setup</strong>(&amp;block) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Shortcut for <span class='object_link'><a href="Rails/Engine.html#setup-class_method" title="Respect::Rails::Engine.setup (method)">Respect::Rails::Engine.setup</a></span>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+69
+70
+71</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/respect/rails.rb', line 69</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_setup'>setup</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='const'>Engine</span><span class='period'>.</span><span class='id identifier rubyid_setup'>setup</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Mon May 20 13:17:55 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.5.2 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>

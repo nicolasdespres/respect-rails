@@ -1,0 +1,355 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII" />
+<title>
+  File: README
+
+    &mdash; Documentation by YARD 0.8.5.2
+
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+
+    <a href="_index.html">Index</a> &raquo;
+    <span class="title">File: README</span>
+
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><div id='filecontents'><h1>Respect plugin for Rails</h1>
+
+<p><em>Respect for Rails</em> let&#39;s you write the documentation of your REST API using Ruby code. Your app&#39;s
+API is published using a Rails engine so it is always deployed along with your application and stay
+synchronized. A filter is available so you can also easily validate requests and responses. Thanks
+to that your incoming parameters will also be sanitized so if you expect a URI in a parameter value you will get a URI object instead of a string object containing a URI.
+It follows Rails DRY principle and save you a lot of typing since it
+fetches most of the information automatically by inspecting your routes, their constraints and your
+model validators. You can always adjust the default by defining the schema per resource and/or
+controller.</p>
+
+<h1>Features</h1>
+
+<ul>
+<li>A compact DSL from to the <a href="https://github.com/nicolasdespres/respect">Respect</a> gem to specify your REST API documentation.</li>
+<li>Filters to automatically validates and sanitize incoming parameters.</li>
+<li>A Rails engine to serve your public REST API documentation.</li>
+</ul>
+
+<p>See the RELEASE_NOTES file for detailed feature listing.</p>
+
+<h1>Take a tour</h1>
+
+<p>This section guides for a walk around the main features available.</p>
+
+<h2>Document an action request</h2>
+
+<p><em>Respect for Rails</em> let&#39;s you easily describe the structure of incoming requests and outgoing responses
+using a simple and compact Ruby DSL. Assuming you have the scaffold of a <code>ContactsController</code>, the structure
+for its <code>create</code> action may look like this:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='comment'># in app/controllers/contacts_controller_schema.rb
+</span><span class='comment'># POST /contacts
+</span><span class='comment'># POST /contacts.json
+</span><span class='id identifier rubyid_def_action_schema'>def_action_schema</span> <span class='symbol'>:create</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_a'>a</span><span class='op'>|</span>
+  <span class='id identifier rubyid_a'>a</span><span class='period'>.</span><span class='id identifier rubyid_documentation'>documentation</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Create a new contact in the address book.</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_a'>a</span><span class='period'>.</span><span class='id identifier rubyid_request'>request</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span>
+    <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_body_parameters'>body_parameters</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
+      <span class='comment'># They look like something like that:
+</span>      <span class='comment'>#   { contact: { name: &quot;Albert&quot;, age: 62, homepage: &quot;http://example.org&quot; } }
+</span>      <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_hash'>hash</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>contact</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
+        <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_string'>string</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>name</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>doc:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The name of the contact.</span><span class='tstring_end'>&quot;</span></span>
+        <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_integer'>integer</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>age</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>doc:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>How old is the contact.</span><span class='tstring_end'>&quot;</span></span>
+        <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_uri'>uri</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>homepage</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>doc:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The URL of the contact's homepage</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span>
+  <span class='comment'># ...
+</span><span class='kw'>end</span>
+</code></pre>
+
+<p>Note that we distinguish from where the parameters comes from (path, query or body) for the sake of documentation.
+To see the generated doc, you must mount the provided engine like this:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='comment'># in config/routes.rb
+</span><span class='id identifier rubyid_mount'>mount</span> <span class='const'>Respect</span><span class='op'>::</span><span class='const'>Rails</span><span class='op'>::</span><span class='const'>Engine</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/rest_spec</span><span class='tstring_end'>&quot;</span></span>
+</code></pre>
+
+<p>and point your favorite web browser to <code>http://localhost:3000/rest_spec</code>. You should see something like that</p>
+
+<p><img src="examples/screenshots/controllers_create_request.png" alt="Alt Text" title="A request documentation"></p>
+
+<h2>Document an action response</h2>
+
+<p>When documenting an API it is also important to write how the response will look like. You can add this code
+to specify the body of the response when the status is &quot;created&quot;:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='comment'># in app/controllers/contacts_controller_schema.rb
+</span><span class='comment'># in def_action_schema :create block
+</span><span class='id identifier rubyid_a'>a</span><span class='period'>.</span><span class='id identifier rubyid_response_for'>response_for</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_status'>status</span><span class='op'>|</span>
+  <span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_created'>created</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span>
+    <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
+      <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_integer'>integer</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>greather_than:</span> <span class='int'>0</span><span class='comma'>,</span> <span class='label'>doc:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The identifier of this contact.</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_string'>string</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>name</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>doc:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The name of the contact.</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_integer'>integer</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>age</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>doc:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>How old is the contact.</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_uri'>uri</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>homepage</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>doc:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The URL of the contact's homepage</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_datetime'>datetime</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>created_at</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>doc:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>When this record has been created.</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_datetime'>datetime</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>updated_at</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>doc:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>When this record has been updated lastly.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>The generated documentation would look like that:</p>
+
+<p><img src="examples/screenshots/controllers_create_response.png" alt="Alt Text" title="A response documentation"></p>
+
+<p>The specification standard used to document schema is defined at <a href="http://json-schema.org/">json-schema.org</a>
+(we currenly follow <a href="http://tools.ietf.org/id/draft-zyp-json-schema-03.html">draft v3</a>).</p>
+
+<h2>Factor specification code</h2>
+
+<p>As you have probably noticed there is some repetition in this code. To avoid it you can create an helper
+like this:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='comment'># in app/helpers/respect/application_macros.rb
+</span><span class='kw'>module</span> <span class='const'>Respect</span>
+  <span class='kw'>module</span> <span class='const'>ApplicationMacros</span>
+    <span class='kw'>def</span> <span class='id identifier rubyid_id'>id</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_integer'>integer</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>greather_than:</span> <span class='int'>0</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>def</span> <span class='id identifier rubyid_contact_attributes'>contact_attributes</span>
+      <span class='id identifier rubyid_string'>string</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>name</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>doc:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The name of the contact.</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_integer'>integer</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>age</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>doc:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>How old is the contact.</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_uri'>uri</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>homepage</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>doc:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The URL of the contact's homepage</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>def</span> <span class='id identifier rubyid_contact'>contact</span>
+      <span class='id identifier rubyid_id'>id</span>
+      <span class='id identifier rubyid_contact_attributes'>contact_attributes</span>
+      <span class='id identifier rubyid_record_timestamps'>record_timestamps</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>def</span> <span class='id identifier rubyid_record_timestamps'>record_timestamps</span>
+      <span class='id identifier rubyid_doc'>doc</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>When this record has been created.</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_datetime'>datetime</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>created_at</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_doc'>doc</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>When this record has been updated lastly.</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_datetime'>datetime</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>updated_at</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>Notice that we have also provided a macro for the usual +id+ attribute. This helper must be install in the
+schema definition DSL like that:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='comment'># in config/initializers/respect.rb
+</span><span class='const'>Respect</span><span class='op'>::</span><span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_setup'>setup</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_config'>config</span><span class='op'>|</span>
+  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_helpers'>helpers</span> <span class='const'>Respect</span><span class='op'>::</span><span class='const'>ApplicationMacros</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>Now the request schema can be rewritten like this:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_body_parameters'>body_parameters</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
+  <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_hash'>hash</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>contact</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
+    <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_contact_attributes'>contact_attributes</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>and the response schema like that:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
+  <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_hash'>hash</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>contact</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
+    <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_contact'>contact</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<h2>Validate requests and response</h2>
+
+<p>All the information you have included in the action specification can also be used to drive a
+validation process. To enable it you just have to install an &quot;around&quot; filter in your
+<code>ApplicationController</code> like this:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_around_filter'>around_filter</span> <span class='symbol'>:validate_schemas!</span>
+</code></pre>
+
+<p>Responses formatted in JSON are validated only in development and test mode.
+When validation failed an exception is raised. To help you debug, we provide a more specific
+view than the usual exception reporting view of Rails. You can install this view by adding the
+following line to your <code>ApplicationController</code>:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_rescue_from_request_validation_error'>rescue_from_request_validation_error</span> <span class='kw'>if</span> <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_env'>env</span><span class='period'>.</span><span class='id identifier rubyid_development?'>development?</span>
+</code></pre>
+
+<h2>Sanitize your incoming parameters</h2>
+
+<p>Incoming requests parameters must often be sanitized since they come from un-trusted users.
+A sanitized version of the request parameters is built along the validation process and stored
+in the <code>request</code> object. We can access it using <code>request.sane_params</code>. Sanitized object of a
+more specific type than the original parameter value. For instance the <code>homepage</code> parameter
+will be a <code>URI</code> object instead of a simple string:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_sane_params'>sane_params</span><span class='lbracket'>[</span><span class='symbol'>:contact</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:homepage</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span>  <span class='comment'>#=&gt; URI::Generic
+</span></code></pre>
+
+<p>You can also automatically sanitize the request parameters <em>in-place</em> by installing this before
+filter:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_before_filter'>before_filter</span> <span class='symbol'>:sanitize_params!</span>
+</code></pre>
+
+<h2>Headers documentation</h2>
+
+<p>Often REST API expect headers to be set in the request and/or set headers in their responses.
+<em>Respect for Rails</em> let&#39;s you document using the <code>headers</code> command available for both
+the request and the response.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_a'>a</span><span class='period'>.</span><span class='id identifier rubyid_request'>request</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span>
+  <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_h'>h</span><span class='op'>|</span>
+    <span class='id identifier rubyid_h'>h</span><span class='period'>.</span><span class='id identifier rubyid_doc'>doc</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Set this header.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_h'>h</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>X-AB-Signature</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>api_public_key</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<h2>Documentation string</h2>
+
+<p>The DSL let you write documentation string at many places. All this string are structured with a title
+on the first line followed by an empty line and a description for the rest of the string. It is much
+like git commit message except that if there is only one paragraph the title will be omit. You can set
+the documentation like this of most of the item using the <code>doc</code> statement or the <code>:doc</code> option when
+available. See this example:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_doc'>doc</span> <span class='heredoc_beg'>&lt;&lt;-EOS</span><span class='period'>.</span><span class='id identifier rubyid_strip_heredoc'>strip_heredoc</span>
+<span class='tstring_content'>  The name of the contact.
+
+  First name and last name are separated by white space.
+</span><span class='heredoc_end'>  EOS
+</span><span class='id identifier rubyid_string'>string</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>name</span><span class='tstring_end'>&quot;</span></span>
+
+<span class='id identifier rubyid_doc'>doc</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>How old is the contact.</span><span class='tstring_end'>&quot;</span></span>
+<span class='id identifier rubyid_integer'>integer</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>age</span><span class='tstring_end'>&quot;</span></span>
+
+<span class='id identifier rubyid_uri'>uri</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>homepage</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>doc:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The URL of the contact's homepage</span><span class='tstring_end'>&quot;</span></span>
+</code></pre>
+
+<h1>Getting started</h1>
+
+<p>The easiest way to install <em>Respect for Rails</em> is to add it to your <code>Gemfile</code>:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>respect-rails</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>require:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>respect/rails</span><span class='tstring_end'>&quot;</span></span>
+</code></pre>
+
+<p>Then, after running the <code>bundle install</code> command, you can mount the Rails engine provided by this library
+by adding this line at the beginning of your <code>config/routes.rb</code> file.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_mount'>mount</span> <span class='const'>Respect</span><span class='op'>::</span><span class='const'>Rails</span><span class='op'>::</span><span class='const'>Engine</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/rest_spec</span><span class='tstring_end'>&quot;</span></span>
+</code></pre>
+
+<p>Then, you can start your application web server as usual at point your web browser to
+<code>http://localhost:3000/rest_spec/doc</code>.</p>
+
+<h1>Getting help</h1>
+
+<p>The easiest way to get help about how to use this library is to post your question on the
+<a href="https://groups.google.com/forum/#!forum/ruby-respect-gem-talk">Respect for Rails discussion group</a>.
+I will be glade to answer. I may have already answered the
+same question so before, you post your question take a bit of time to search the group.</p>
+
+<p>You can also read these documents for further documentation:</p>
+
+<ul>
+<li><a href="https://github.com/nicolasdespres/respect">Respect project</a></li>
+<li><a href="http://nicolasdespres.github.io/respect/">Repect API reference documentation</a></li>
+<li><a href="http://nicolasdespres.github.io/respect-rails">Repect for Rails API reference documentation</a></li>
+<li>The FAQ file.</li>
+</ul>
+
+<h1>Compatibility</h1>
+
+<p><em>Respect for Rails</em> has been tested with:</p>
+
+<ul>
+<li>Ruby 1.9.3-p392 (should be compatible with all 1.9.x family)</li>
+<li>Rails 3.2.13</li>
+<li>Respect 0.1.0</li>
+</ul>
+
+<p>Note that it uses <code>ActiveSupport::JSON</code> to encode/decode JSON objects.</p>
+
+<h1>Feedback</h1>
+
+<p>I would love to hear what you think about this library. Feel free to post any comments/remarks on the
+<a href="https://groups.google.com/forum/#!forum/ruby-respect-gem-talk">Respect for Rails discussion group</a>.</p>
+
+<h1>Contributing patches</h1>
+
+<p>I spent quite a lot of time writing this gem but there is still a lot of work to do. Whether it
+is a bug-fix, a new feature, some code re-factoring, or documentation clarification, I will be
+glade to merge your pull request on GitHub. You just have to create a branch from <code>master</code> and
+send me a pull request.</p>
+
+<h1>License</h1>
+
+<p><em>Respect for Rails</em> is released under the term of the <a href="http://opensource.org/licenses/MIT">MIT License</a>.
+Copyright (c) 2013 Nicolas Despres.</p>
+</div></div>
+
+    <div id="footer">
+  Generated on Mon May 20 13:17:55 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.5.2 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>
