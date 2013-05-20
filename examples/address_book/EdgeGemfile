@@ -1,0 +1,4 @@
+# List edge version of gems needed for development.
+
+gem "respect", path: "#{ENV["HOME"]}/src/respect"
+gem "respect-rails", path: "../.."

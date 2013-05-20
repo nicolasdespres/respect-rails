@@ -105,7 +105,7 @@ it may not do all the checking necessary when user data come from an HTTP reques
 For instance, it may not handle properly a call like this one:
  <code>Circle.from_h(center: { x: &quot;foo&quot;, y: &quot;bar&quot; }, radius: &quot;invalid&quot;)</code></li>
 <li>In case of invalid schema the user may not get an helpful message.  This is perfectly
-acceptable for security reason (see the discussion about error reporting here FIXME).</li>
+acceptable for security reason.</li>
 </ol>
 
 <p>We can get <em>Respect for Rails</em> do this work for you by adding a helper method which create a
@@ -161,7 +161,7 @@ documenting each parameter. See it as a full featured alternative to
 </div></div>
 
     <div id="footer">
-  Generated on Mon May 20 13:32:39 2013 by
+  Generated on Mon May 20 13:43:42 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.5.2 (ruby-1.9.3).
 </div>
