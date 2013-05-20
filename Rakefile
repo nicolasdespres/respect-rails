@@ -14,6 +14,7 @@ YARD::Rake::YardocTask.new do |t|
     'FAQ.md',
     'RELEASE_NOTES.md',
     'RELATED_WORK.md',
+    'examples/screenshots/*.png',
   ]
 end
 

@@ -11,80 +11,87 @@ controller.
 
 # Features
 
-* Based on [Respect](https://github.com/nicolasdespres/respect) to compactly specify the content
-  of the headers and parameters of your requests and the headers and the body of your responses.
-* Controllers' helpers to automatically validates and sanitize incoming parameters.
-* A Rails engine to mount in your application to publish your public REST API documentation.
-  * Your documentation will always be up to date with your application.
-  * Access the full API documentation.
-  * Deployed transparently with your application so you don't have to worry about it.
-* A DSL to specify your controllers' actions schema (URL, body, headers).
-* Generated documentation follows [JSON schema standard](http://json-schema.org/) as much as
-  possible. It currently follows the
-  [draft v3](http://tools.ietf.org/id/draft-zyp-json-schema-03.html) standard version.
-* Routes are automatically collected.
+* A compact DSL from to the [Respect](https://github.com/nicolasdespres/respect) gem to specify your REST API documentation.
+* Filters to automatically validates and sanitize incoming parameters.
+* A Rails engine to serve your public REST API documentation.
 
-Coming soon:
-
-* Describe the schema of your resources.
-* Use routes' constraints as default request's path parameters validation rules.
-* Use models' validators as default request's body parameters validation rules.
-* Generator tasks: helpers, etc...
-* Statistic about how much routes you have documented.
-* Rake tasks to quickly access a controller action schema from the terminal.
-* A web service to inspect your API schema by code.
-* A web service to check a request is valid without actually performing the request.
-* An helper to easily specify nested attributes.
-* Use markdown in documentation string.
-* More appealing documentation rendering.
+See the RELEASE_NOTES file for detailed feature listing.
 
 # Take a tour
+
+This section guides for a walk around the main features available.
+
+## Document an action request
 
 _Respect for Rails_ let's you easily describe the structure of incoming requests and outgoing responses
 using a simple and compact Ruby DSL. Assuming you have the scaffold of a `ContactsController`, the structure
 for its `create` action may look like this:
 
 ```ruby
-# in app/schemas/contacts_controller_schema.rb
-class ContactsControllerSchema < ApplicationControllerSchema
-  def create
-    request do |r|
-      r.headers do |h|
-        h["HTTP_VERSION"] = "HTTP/1.1"
-      end
-      r.body_parameters do |s|
-        s.hash "contact" do |s|
-          s.string "name"
-          s.integer "age"
-          s.uri "homepage"
-        end
-      end
-    end
-    response_for do |status|
-      status.created # contacts/create-created.schema
-      status.unprocessable_entity do |s|
-        s.body do |s|
-          s.string "error"
-        end
+# in app/controllers/contacts_controller_schema.rb
+# POST /contacts
+# POST /contacts.json
+def_action_schema :create do |a|
+  a.documentation "Create a new contact in the address book."
+  a.request do |r|
+    r.body_parameters do |s|
+      # They look like something like that:
+      #   { contact: { name: "Albert", age: 62, homepage: "http://example.org" } }
+      s.hash "contact" do |s|
+        s.string "name", doc: "The name of the contact."
+        s.integer "age", doc: "How old is the contact."
+        s.uri "homepage", doc: "The URL of the contact's homepage"
       end
     end
   end
 end
+def create
+  # ...
+end
 ```
 
-Long response schema may be defined in another file instead of inlined in the controller code:
+Note that we distinguish from where the parameters comes from (path, query or body) for the sake of documentation.
+To see the generated doc, you must mount the provided engine like this:
 
 ```ruby
-# in app/schemas/contacts/create.schema
-body do |s|
-  s.hash "contact" do |s|
-    s.integer "id"
-    s.string "name"
-    s.integer "age"
-    s.uri "homepage"
+# in config/routes.rb
+mount Respect::Rails::Engine => "/rest_spec"
+```
+
+and point your favorite web browser to `http://localhost:3000/rest_spec`. You should see something like that
+
+![Alt Text](/examples/screenshots/controllers_create_request.png "A request documentation")
+
+## Document an action response
+
+When documenting an API it is also important to write how the response will look like. You can add this code
+to specify the body of the response when the status is "created":
+
+```ruby
+# in app/controllers/contacts_controller_schema.rb
+# in def_action_schema :create block
+a.response_for do |status|
+  status.created do |r|
+    r.body do |s|
+      s.integer name, greather_than: 0, doc: "The identifier of this contact."
+      s.string "name", doc: "The name of the contact."
+      s.integer "age", doc: "How old is the contact."
+      s.uri "homepage", doc: "The URL of the contact's homepage"
+      s.datetime "created_at", doc: "When this record has been created."
+      s.datetime "updated_at", doc: "When this record has been updated lastly."
+    end
   end
 end
 ```
+
+The generated documentation would look like that:
+
+![Alt Tesxt](/examples/screenshots/controllers_create_response.png "A response documentation")
+
+The specification standard used to document schema is defined at [json-schema.org](http://json-schema.org/)
+(we currenly follow [draft v3](http://tools.ietf.org/id/draft-zyp-json-schema-03.html)).
+
+## Factor specification code
 
 As you have probably noticed there is some repetition in this code. To avoid it you can create an helper
 like this:
@@ -93,36 +100,48 @@ like this:
 # in app/helpers/respect/application_macros.rb
 module Respect
   module ApplicationMacros
+    def id(name = "id")
+      integer name, greather_than: 0
+    end
+
     def contact_attributes
-      string "name"
-      integer "age"
-      uri "homepage"
+      string "name", doc: "The name of the contact."
+      integer "age", doc: "How old is the contact."
+      uri "homepage", doc: "The URL of the contact's homepage"
+    end
+
+    def contact
+      id
+      contact_attributes
+      record_timestamps
+    end
+
+    def record_timestamps
+      doc "When this record has been created."
+      datetime "created_at"
+      doc "When this record has been updated lastly."
+      datetime "updated_at"
     end
   end
 end
 ```
 
-and install this helper in the schema definition DSL like that:
+Notice that we have also provided a macro for the usual +id+ attribute. This helper must be install in the
+schema definition DSL like that:
 
 ```ruby
-# in app/schemas/application_controller_schema.rb
-class ApplicationControllerSchema < Respect::Rails::ActionSchema
-  helper Respect::ApplicationMacros
+# in config/initializers/respect.rb
+Respect::Rails.setup do |config|
+  config.helpers Respect::ApplicationMacros
 end
 ```
 
 Now the request schema can be rewritten like this:
 
 ```ruby
-# in ContactsControllerSchema#create
-request do |r|
-  r.headers do |h|
-    h["HTTP_VERSION"] = "HTTP/1.1"
-  end
-  r.body_parameters do |s|
-    s.hash "contact" do |s|
-      s.contact_attributes
-    end
+r.body_parameters do |s|
+  s.hash "contact" do |s|
+    s.contact_attributes
   end
 end
 ```
@@ -130,102 +149,50 @@ end
 and the response schema like that:
 
 ```ruby
-# in app/schemas/contacts/create.schema
-body do |s|
+r.body do |s|
   s.hash "contact" do |s|
-    s.integer "id"
-    s.contact_attributes
+    s.contact
   end
 end
 ```
 
-This schema definition will serve you in several purposes:
+## Validate requests and response
 
-1. To automatically generate a reference documentation of your REST API.
-2. To validate the incoming requests and outgoing responses of your Web application.
-3. To sanitize incoming parameters.
-
-To get the generated documentation, you only need to mount the Rails engine provided by this library.
+All the information you have included in the action specification can also be used to drive a
+validation process. To enable it you just have to install an "around" filter in your
+`ApplicationController` like this:
 
 ```ruby
-# in config/routes.rb
-mount Respect::Rails::Engine => "/rest_spec"
+around_filter :validate_schemas!
 ```
 
-This will add a new `/rest_spec` path under which you have access to your REST API documentation.
-In particular `/rest_spec/doc` should render something like that for the `create` request schema:
-
-```json
-{
-  "type": "object",
-  "properties": {
-    "contact": {
-      "type": "object",
-      "required": true,
-      "properties": {
-        "name": {
-          "type": "string",
-          "required": true
-        },
-        "age": {
-          "type": "integer",
-          "required": true
-        },
-        "homepage": {
-          "type": "string",
-          "required": true,
-          "format": "uri"
-        }
-      }
-    }
-  }
-}
-```
-
-To validate the request and response with your schema definition, you simply need to add a filter
-like this:
+Responses formatted in JSON are validated only in development and test mode.
+When validation failed an exception is raised. To help you debug, we provide a more specific
+view than the usual exception reporting view of Rails. You can install this view by adding the
+following line to your `ApplicationController`:
 
 ```ruby
-class ApplicationController < ActionController::Base
-  protect_from_forgery
-
-  around_filter :validate_schemas
-end
+rescue_from_request_validation_error if Rails.env.development?
 ```
 
-The filter searches for a schema associated to a controller's action. If it can find one it validates
-and sanitizes the parameters incoming parameters.
+## Sanitize your incoming parameters
 
-If the request's parameters/headers do not validate the schema a
-`Respect::Rails::RequestValidationError` exception will be raised before your controller's action
-is called. If they are valid, they will be
-sanitized in place. Thus, the `homepage` parameter will be a `URI` object instead of a simple string:
+Incoming requests parameters must often be sanitized since they come from un-trusted users.
+A sanitized version of the request parameters is built along the validation process and stored
+in the `request` object. We can access it using `request.sane_params`. Sanitized object of a
+more specific type than the original parameter value. For instance the `homepage` parameter
+will be a `URI` object instead of a simple string:
 
 ```ruby
-class ContactsController < ApplicationController
-  def create
-    params["homepage"].is_a?(URI::Generic)              #=> true
-  end
-end
+request.sane_params[:contact][:homepage].class  #=> URI::Generic
 ```
 
-The filter you have just installed is an "around" filter which means the response will be validated too.
-Actually, the validation takes place only if the response content type is `application/json`. A
-`Respect::Rails::ResponseValidationError` will be raised in case of error. This validation is executed
-only in development and test mode, so it won't bother you in production.
+You can also automatically sanitize the request parameters *in-place* by installing this before
+filter:
 
-Instead of the usual exception reporting view, you can get a dedicated one for
-`Respect::Rails::RequestValidationError` in development mode. You just have to add something like that
-to your `ApplicationController`:
-
-```ruby
-rescue_from_request_validation_error
+``` ruby
+before_filter :sanitize_params!
 ```
-
-This helper can render the error in both HTML and JSON.
-
-A response validation error handler is also available but only in development. In test mode the exception
-would be raised as usual.
 
 # Getting started
 
@@ -245,8 +212,6 @@ mount Respect::Rails::Engine => "/rest_spec"
 Then, you can start your application web server as usual at point your web browser to
 `http://localhost:3000/rest_spec/doc`.
 
-FIXME: speak about generators ?
-
 # Getting help
 
 The easiest way to get help about how to use this library is to post your question on the
@@ -258,7 +223,7 @@ You can also read these documents for further documentation:
 * [Respect documentation](FIXME)
 * [Repect API reference documentation](FIXME)
 * [Repect for Rails API reference documentation](FIXME)
-* {file:FAQ.md Frequently Asked Question}
+* The FAQ file.
 
 # Compatibility
 
