@@ -50,7 +50,10 @@ def create
 end
 ```
 
+The `def_action_schema` macro only defines a `create_schema` method in your controller.
+
 Note that we distinguish from where the parameters comes from (path, query or body) for the sake of documentation.
+
 To see the generated doc, you must mount the provided engine like this:
 
 ```ruby
