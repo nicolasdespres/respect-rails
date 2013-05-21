@@ -13,7 +13,7 @@ A lot more is coming soon check out the issue tracker.
 
 * Feature: More constraint description in documentation.
 * Bug fix: do not summarize undocumented parameters.
-* Fix: English mistakes in documentation.
+* Fix: English mistakes in documentation and gemspec.
 
 ## Part of the first release 0.1.0
 
