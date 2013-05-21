@@ -1,7 +1,7 @@
 # Respect plugin for Rails
 
-_Respect for Rails_ let's you write the documentation of your REST API using Ruby code. Your app's
-API is published using a Rails engine so it is always deployed along with your application and stay
+_Respect for Rails_ lets you write the documentation of your REST API using Ruby code. Your app's
+API is published using a Rails engine so it is always deployed along with your application and stays
 synchronized. A filter is available so you can also easily validate requests and responses. Thanks
 to that your incoming parameters will also be sanitized so if you expect a URI in a parameter value you will get a URI object instead of a string object containing a URI.
 It follows Rails DRY principle and save you a lot of typing since it
@@ -11,19 +11,19 @@ controller.
 
 # Features
 
-* A compact DSL from to the [Respect](https://github.com/nicolasdespres/respect) gem to specify your REST API documentation.
-* Filters to automatically validates and sanitize incoming parameters.
+* A compact DSL from the [Respect](https://github.com/nicolasdespres/respect) gem to specify your REST API documentation.
+* Filters to automatically validate and sanitize incoming parameters.
 * A Rails engine to serve your public REST API documentation.
 
 See the RELEASE_NOTES file for detailed feature listing.
 
 # Take a tour
 
-This section guides for a walk around the main features available.
+This section guides you for a walk around the main features available.
 
 ## Document an action request
 
-_Respect for Rails_ let's you easily describe the structure of incoming requests and outgoing responses
+_Respect for Rails_ lets you easily describe the structure of incoming requests and outgoing responses
 using a simple and compact Ruby DSL. Assuming you have the scaffold of a `ContactsController`, the structure
 for its `create` action may look like this:
 
@@ -52,7 +52,7 @@ end
 
 The `def_action_schema` macro only defines a `create_schema` method in your controller.
 
-Note that we distinguish from where the parameters comes from (path, query or body) for the sake of documentation.
+Note that we distinguish from where the parameters come from (path, query or body) for the sake of documentation.
 
 To see the generated doc, you must mount the provided engine like this:
 
@@ -61,7 +61,7 @@ To see the generated doc, you must mount the provided engine like this:
 mount Respect::Rails::Engine => "/rest_spec"
 ```
 
-and point your favorite web browser to `http://localhost:3000/rest_spec`. You should see something like that
+Now if you point your favorite web browser to `http://localhost:3000/rest_spec`. You should see something like that
 
 ![Alt Text](examples/screenshots/controllers_create_request.png "A request documentation")
 
@@ -96,7 +96,7 @@ The specification standard used to document schema is defined at [json-schema.or
 
 ## Factor specification code
 
-As you have probably noticed there is some repetition in this code. To avoid it you can create an helper
+As you have probably noticed there is some repetition in this code. To avoid that you can create an helper
 like this:
 
 ```ruby
@@ -129,7 +129,7 @@ module Respect
 end
 ```
 
-Notice that we have also provided a macro for the usual +id+ attribute. This helper must be install in the
+Notice that we have also provided a macro for the usual `id` attribute. This helper must be installed in the
 schema definition DSL like that:
 
 ```ruby
@@ -153,9 +153,7 @@ and the response schema like that:
 
 ```ruby
 r.body do |s|
-  s.hash "contact" do |s|
-    s.contact
-  end
+  s.contact
 end
 ```
 
@@ -180,17 +178,17 @@ rescue_from_request_validation_error if Rails.env.development?
 
 ## Sanitize your incoming parameters
 
-Incoming requests parameters must often be sanitized since they come from un-trusted users.
+Incoming request parameters must often be sanitized since they come from un-trusted users.
 A sanitized version of the request parameters is built along the validation process and stored
-in the `request` object. We can access it using `request.sane_params`. Sanitized object of a
-more specific type than the original parameter value. For instance the `homepage` parameter
-will be a `URI` object instead of a simple string:
+in the `request` object. You can access it using `request.sane_params`. Sanitized object
+may have a more specific type than the original parameter value. For instance the `homepage`
+parameter will be a `URI` object instead of `String` object:
 
 ```ruby
 request.sane_params[:contact][:homepage].class  #=> URI::Generic
 ```
 
-You can also automatically sanitize the request parameters *in-place* by installing this before
+You can also automatically sanitize the request parameters *in-place* by installing this "before"
 filter:
 
 ``` ruby
@@ -199,8 +197,8 @@ before_filter :sanitize_params!
 
 ## Headers documentation
 
-Often REST API expect headers to be set in the request and/or set headers in their responses.
-_Respect for Rails_ let's you document using the `headers` command available for both
+Often REST APIs expect headers to be set in the request and/or responses.
+_Respect for Rails_ lets you document that using the `headers` statement available for both
 the request and the response.
 
 ```ruby
@@ -214,10 +212,10 @@ end
 
 ## Documentation string
 
-The DSL let you write documentation string at many places. All this string are structured with a title
+The DSL lets you write documentation string at many places. All these strings are structured with a title
 on the first line followed by an empty line and a description for the rest of the string. It is much
-like git commit message except that if there is only one paragraph the title will be omit. You can set
-the documentation like this of most of the item using the `doc` statement or the `:doc` option when
+like git commit messages expect that if there is only one paragraph the title will be omit. You can set
+the documentation like this for most of the items using the `doc` statement or the `:doc` option when
 available. See this example:
 
 ```ruby
@@ -264,7 +262,7 @@ by adding this line at the beginning of your `config/routes.rb` file.
 mount Respect::Rails::Engine => "/rest_spec"
 ```
 
-Then, you can start your application web server as usual at point your web browser to
+Then, you can start your application web server as usual and point your web browser to
 `http://localhost:3000/rest_spec/doc`.
 
 # Getting help
@@ -272,7 +270,7 @@ Then, you can start your application web server as usual at point your web brows
 The easiest way to get help about how to use this library is to post your question on the
 [Respect for Rails discussion group](https://groups.google.com/forum/#!forum/ruby-respect-gem-talk).
 I will be glade to answer. I may have already answered the
-same question so before, you post your question take a bit of time to search the group.
+same question so before you post your question take a bit of time to search the group.
 
 You can also read these documents for further documentation:
 
@@ -300,7 +298,7 @@ I would love to hear what you think about this library. Feel free to post any co
 
 I spent quite a lot of time writing this gem but there is still a lot of work to do. Whether it
 is a bug-fix, a new feature, some code re-factoring, or documentation clarification, I will be
-glade to merge your pull request on GitHub. You just have to create a branch from `master` and
+glade to merge your pull-requests on GitHub. You just have to create a branch from `master` and
 send me a pull request.
 
 # License
