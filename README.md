@@ -28,7 +28,7 @@ using a simple and compact Ruby DSL. Assuming you have the scaffold of a `Contac
 for its `create` action may look like this:
 
 ```ruby
-# in app/controllers/contacts_controller_schema.rb
+# in app/controllers/contacts_controller.rb
 # POST /contacts
 # POST /contacts.json
 def_action_schema :create do |a|
@@ -68,7 +68,7 @@ When documenting an API it is also important to write how the response will look
 to specify the body of the response when the status is "created":
 
 ```ruby
-# in app/controllers/contacts_controller_schema.rb
+# in app/controllers/contacts_controller.rb
 # in def_action_schema :create block
 a.response_for do |status|
   status.created do |r|
