@@ -35,5 +35,4 @@ git show master:examples/screenshots/controllers_create_request.png > examples/s
 git show master:examples/screenshots/controllers_create_response.png  > examples/screenshots/controllers_create_response.png
 git add -A .
 git commit -m "Update GitHub Pages site."
-git push origin gh-pages
 git checkout master
