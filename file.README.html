@@ -92,7 +92,7 @@ controller.</p>
 using a simple and compact Ruby DSL. Assuming you have the scaffold of a <code>ContactsController</code>, the structure
 for its <code>create</code> action may look like this:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='comment'># in app/controllers/contacts_controller_schema.rb
+<pre class="code ruby"><code class="ruby"><span class='comment'># in app/controllers/contacts_controller.rb
 </span><span class='comment'># POST /contacts
 </span><span class='comment'># POST /contacts.json
 </span><span class='id identifier rubyid_def_action_schema'>def_action_schema</span> <span class='symbol'>:create</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_a'>a</span><span class='op'>|</span>
@@ -114,8 +114,11 @@ for its <code>create</code> action may look like this:</p>
 </span><span class='kw'>end</span>
 </code></pre>
 
-<p>Note that we distinguish from where the parameters comes from (path, query or body) for the sake of documentation.
-To see the generated doc, you must mount the provided engine like this:</p>
+<p>The <code>def_action_schema</code> macro only defines a <code>create_schema</code> method in your controller.</p>
+
+<p>Note that we distinguish from where the parameters comes from (path, query or body) for the sake of documentation.</p>
+
+<p>To see the generated doc, you must mount the provided engine like this:</p>
 
 <pre class="code ruby"><code class="ruby"><span class='comment'># in config/routes.rb
 </span><span class='id identifier rubyid_mount'>mount</span> <span class='const'>Respect</span><span class='op'>::</span><span class='const'>Rails</span><span class='op'>::</span><span class='const'>Engine</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/rest_spec</span><span class='tstring_end'>&quot;</span></span>
@@ -130,7 +133,7 @@ To see the generated doc, you must mount the provided engine like this:</p>
 <p>When documenting an API it is also important to write how the response will look like. You can add this code
 to specify the body of the response when the status is &quot;created&quot;:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='comment'># in app/controllers/contacts_controller_schema.rb
+<pre class="code ruby"><code class="ruby"><span class='comment'># in app/controllers/contacts_controller.rb
 </span><span class='comment'># in def_action_schema :create block
 </span><span class='id identifier rubyid_a'>a</span><span class='period'>.</span><span class='id identifier rubyid_response_for'>response_for</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_status'>status</span><span class='op'>|</span>
   <span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_created'>created</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span>
@@ -360,7 +363,7 @@ Copyright (c) 2013 Nicolas Despres.</p>
 </div></div>
 
     <div id="footer">
-  Generated on Mon May 20 15:01:02 2013 by
+  Generated on Tue May 21 12:41:18 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.5.2 (ruby-1.9.3).
 </div>
