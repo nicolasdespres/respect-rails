@@ -13,13 +13,13 @@ module Respect
 
       # Whether responses are validated by the +validate_schemas+ around filter.
       # By default this is +true+ in development and test environment and +false+ otherwise.
-      mattr_accessor :validate_response
+      cattr_accessor :validate_response
       self.validate_response = (::Rails.env.development? || ::Rails.env.test?)
 
       # Whether response validation error are caught. The exception will be rendered in JSON
       # and the HTTP status will be set to 500.
       # By default this is +true+ in development mode only.
-      mattr_accessor :catch_response_validation_error
+      cattr_accessor :catch_response_validation_error
       self.catch_response_validation_error = ::Rails.env.development?
 
       # Whether to validate request headers.
@@ -27,12 +27,12 @@ module Respect
       # It is +false+ by default in test mode to let you do non-headers related functional
       # test anyway.
       # See: https://github.com/rails/rails/issues/6513
-      mattr_accessor :disable_request_headers_validation
+      cattr_accessor :disable_request_headers_validation
       self.disable_request_headers_validation = ::Rails.env.test?
 
       # Set the application name use in the documentation. By default it is the same
       # as your application class.
-      mattr_writer :doc_app_name
+      cattr_writer :doc_app_name
       def self.doc_app_name
         @@doc_app_name ||= ::Rails.application.class.parent_name
       end
