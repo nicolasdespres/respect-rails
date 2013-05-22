@@ -1,0 +1,27 @@
+# List edge version of gems needed for development.
+#
+# This my two-cents solution to the problem we have between
+# gemspec and Gemfile. Development dependency must not be
+# listed in the Gemfile but in the gemspec. However, we do
+# not all the bundler option in the gemspec. While working
+# on this project it is convenient to be able to do some
+# adjustments. But these adjustment must not be part of the
+# released Gemfile. That's why we use the EdgeGemfile which
+# is loaded at the end of the Gemfile only if it exists.
+# It is not tracked by git so there is no risk to publish
+# it.
+#
+# This file is a EdgeGemfile example. To use it, you must
+# copy it and un-comment the line you want to feel your
+# needs and your environment.
+#
+# $ cp EdgeGemfile.example EdgeGemfile
+
+# Un-comment this line if you want to work with an edge version
+# of the "respect" project. Adjust the path to the one in
+# your environment.
+# gem "respect", path: "/path/to/respect/repository/on/your/machine"
+
+# mocha emit warnings if it is not loaded at the end of the
+# test_helper.rb file. To fix it un-comment the following line.
+# gem "mocha", require: false
