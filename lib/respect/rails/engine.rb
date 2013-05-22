@@ -42,6 +42,11 @@ module Respect
         block.call(self)
       end
 
+      # See {Engine.app_documentation}.
+      cattr_writer :app_documentation
+
+      self.app_documentation = ""
+
       # Set the documentation of your application. The title would be the first line
       # if followed by an empty line and the description would be the rest.
       # If +text+ is +nil+ the current documentation is returned.
