@@ -89,7 +89,7 @@ module Respect
       end
 
       def engine?
-        rack_app && rack_app.respond_to?(:routes)
+        rack_app && rack_app.respond_to?(:routes) && rack_app < ::Rails::Engine
       end
 
       def anchor
