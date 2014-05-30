@@ -284,7 +284,8 @@ You can also read these documents for further documentation:
 _Respect for Rails_ has been tested with:
 
 * Ruby 1.9.3-p392 (should be compatible with all 1.9.x family)
-* Rails 3.2.13
+* Ruby 2.0.0-p481 (should be compatible with all 2.0.0 family)
+* Rails 3.2.13 and above (3.2.1x)
 * Respect 0.1.0
 
 Note that it uses `ActiveSupport::JSON` to encode/decode JSON objects.
