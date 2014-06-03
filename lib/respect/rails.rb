@@ -1,3 +1,7 @@
+require 'respect'
+
+require 'respect/explain_options'
+
 require 'respect/rails/engine'
 
 module Respect
