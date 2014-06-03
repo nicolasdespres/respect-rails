@@ -6,7 +6,6 @@ module Respect
         Respect::JSONSchemaHTMLFormatter.new(json_schema).dump.html_safe
       end
 
-      # FIXME(Nicolas Despres): Test me.
       def describe_option(name, value)
         result = describe_option_internal(name, value)
         result.html_safe if result
@@ -29,7 +28,6 @@ module Respect
         flat_each_rec([], hash, &block)
       end
 
-      # FIXME(Nicolas Despres): Test me
       def build_parameter_name(path)
         path.first.to_s + path[1..-1].reduce(""){|r, x| r + "[#{x}]" }
       end
