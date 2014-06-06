@@ -1,0 +1,26 @@
+<strong><%= name %></strong>
+<br>
+<span class="constraint">
+  <%= schema.optional? ? "optional" : "required" %>
+  <%= schema.class.statement_name %>
+</span>
+</td>
+<td>
+<% if schema.title %>
+  <%= schema.title %>
+  <br>
+<% end %>
+<% if schema.description %>
+  <%= schema.description %>
+  <br>
+<% end %>
+<ul>
+  <%
+    schema.options.each do |name, value|
+      desc = describe_option(name, value)
+      if desc
+  %>
+        <li><span class="constraint"><%= desc %></span></li>
+      <% end %>
+  <% end %>
+</ul>
