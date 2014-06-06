@@ -23,7 +23,7 @@ export LC_ALL=C
 
 set -x
 
-rake test
-(cd examples/address_book && rake test)
+bundle exec rake test
+(cd examples/address_book && bundle exec rake test)
 ./test/request_headers_validation_in_dev_mode.sh
 ./test/headers_can_dumped_in_json.sh
